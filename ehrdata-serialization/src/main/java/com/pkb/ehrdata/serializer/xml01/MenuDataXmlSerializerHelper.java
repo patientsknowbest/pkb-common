@@ -32,6 +32,9 @@ public class MenuDataXmlSerializerHelper {
             .quantile(0.99, 0.001)
             .register();
 
+    private MenuDataXmlSerializerHelper() {
+    }
+
     @NotNull
     public static byte[] marshalEncryptedFields(@NotNull Map<String, Object> encryptedFields) {
         XMLOutputFactory factory = XMLOutputFactory.newInstance();
