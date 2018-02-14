@@ -15,6 +15,7 @@ import javax.xml.stream.XMLStreamWriter;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import io.prometheus.client.Summary;
 
@@ -75,7 +76,7 @@ public class MenuDataXmlSerializerHelper {
         writer.writeEndElement();
     }
 
-    private static void writeXmlFieldValue(@NotNull XMLStreamWriter writer, @NotNull Object value) throws XMLStreamException {
+    private static void writeXmlFieldValue(@NotNull XMLStreamWriter writer, @Nullable Object value) throws XMLStreamException {
         if ((value == null)
                 || ((value instanceof String) && ((String) value).isEmpty())
                 || ((value instanceof Collection<?>) && ((Collection) value).isEmpty())) {

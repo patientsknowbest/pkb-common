@@ -16,7 +16,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-public class MenuDataXmlParserTest {
+public class MenuDataXmlParserHelperTest {
 
     private static final String DIAGNOSIS = unchecked(() -> loadResourceXml("diagnosis.xml")).get();
     private static final String ALLERGY = unchecked(() -> loadResourceXml("allergy.xml")).get();
@@ -214,7 +214,7 @@ public class MenuDataXmlParserTest {
     }
 
     private static String loadResourceXml(String filename) throws IOException {
-        try (InputStream inputStream = MenuDataXmlParserTest.class.getResourceAsStream(filename)) {
+        try (InputStream inputStream = MenuDataXmlParserHelperTest.class.getResourceAsStream(filename)) {
             return IOUtils.toString(inputStream, Charsets.UTF_8);
         }
     }

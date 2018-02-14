@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fields cdataEncoding="Base64">
+    <field name="comments" type="null"/>
+    <field name="loincTestId" type="String"><![CDATA[MTkwMw==]]></field>
+    <field name="textValue" type="null"/>
+    <field name="rangeLow" type="Double"><![CDATA[MjAuMA==]]></field>
+    <field name="sourceText" type="null"/>
+    <field name="sourceFileId" type="null"/>
+    <field name="deletedByPersonId" type="null"/>
+    <field name="serviceNameFromSource" type="null"/>
+    <field name="rangeHigh" type="Double"><![CDATA[NTAuMA==]]></field>
+    <field name="rangeHighInclusive" type="Boolean"><![CDATA[dHJ1ZQ==]]></field>
+    <field name="hospitalServiceCode" type="null"/>
+    <field name="textRange" type="null"/>
+    <field name="testCodingSystemFromSource" type="null"/>
+    <field name="rangeLowInclusive" type="Boolean"><![CDATA[dHJ1ZQ==]]></field>
+    <field name="delayDisplayDays" type="null"/>
+    <field name="testCodeFromSource" type="null"/>
+    <field name="value" type="Double"><![CDATA[MTAwLjA=]]></field>
+    <field name="dataEntererId" type="null"/>
+</fields>
