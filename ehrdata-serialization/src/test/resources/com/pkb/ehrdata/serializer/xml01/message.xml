@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fields cdataEncoding="Base64">
+    <field name="participantsNonPKB" type="null"/>
+    <field name="onBehalfAuthorId" type="null"/>
+    <field name="htmlAllowed" type="Boolean"><![CDATA[ZmFsc2U=]]></field>
+    <field name="subject" type="String"><![CDATA[VGVzdCBtZXNzYWdl]]></field>
+    <field name="sourceText" type="null"/>
+    <field name="content" type="String"><![CDATA[U2F5aW5nIGhlbGxv]]></field>
+    <field name="encounterStatus" type="null"/>
+    <field name="hospitalServiceCode" type="null"/>
+    <field name="location" type="null"/>
+    <field name="reasonCode" type="null"/>
+    <field name="indication" type="null"/>
+    <field name="delayDisplayDays" type="null"/>
+    <field name="participants" type="List&lt;String>">
+        <item><![CDATA[MTYyMg==]]></item>
+        <item><![CDATA[MTc3Mg==]]></item>
+    </field>
+</fields>
