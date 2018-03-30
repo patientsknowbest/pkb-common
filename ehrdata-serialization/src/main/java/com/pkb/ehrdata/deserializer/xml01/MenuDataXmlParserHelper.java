@@ -53,7 +53,7 @@ public class MenuDataXmlParserHelper {
     private MenuDataXmlParserHelper() {}
 
     @NotNull
-    public static Map<String, Object> unmarshalEncryptedFields(final byte[] plaintext) {
+    public static Map<String, Object> unmarshalEncryptedFields(byte[] plaintext) {
 
         if (ArrayUtils.isNotEmpty(plaintext)) {
             return unchecked(() -> {
@@ -73,7 +73,7 @@ public class MenuDataXmlParserHelper {
     }
 
     @NotNull
-    private static XMLStreamReader createXMLStreamReader(final byte[] plaintext) throws XMLStreamException, IOException {
+    private static XMLStreamReader createXMLStreamReader(byte[] plaintext) throws XMLStreamException, IOException {
         try (ByteArrayInputStream bais = new ByteArrayInputStream(plaintext)) {
             return XML_INPUT_FACTORY.createXMLStreamReader(bais, "UTF-8");
         }
