@@ -9,32 +9,10 @@
     </parent>
 
     <artifactId>pkb-common</artifactId>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-all</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.tngtech.java</groupId>
-            <artifactId>junit-dataprovider</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.karsaig</groupId>
-            <artifactId>approvalcrest</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
+    <packaging>pom</packaging>
+    
+    <modules>
+        <module>config</module>
+    </modules>
 
 </project>
