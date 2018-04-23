@@ -6,6 +6,7 @@ import static java.util.Collections.unmodifiableList;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class LayeredLoader {
 
@@ -32,11 +33,19 @@ public class LayeredLoader {
     }
 
     public RawConfigStorage load() {
-        PropertyFileBasedLoader propFileLoader = new PropertyFileBasedLoader();
         return propertyFiles.stream()
                 .map(filePath -> filePath + ".properties")
-                .map(propFileLoader::load)
+                .map(this::attemptToLoad)
+                .filter(Objects::nonNull)
                 .reduce(RawConfigStorage.EMPTY, RawConfigStorage::merge);
+    }
+
+    private RawConfigStorage attemptToLoad(String propFilePath) {
+        try {
+            return new PropertyFileBasedLoader().load(propFilePath);
+        } catch (ConfigurationException e) {
+            return null;
+        }
     }
 
 }
