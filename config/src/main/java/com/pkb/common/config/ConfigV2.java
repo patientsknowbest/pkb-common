@@ -1,547 +1,655 @@
 package com.pkb.common.config;
 
+import java.net.URL;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
+
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Proxy class of {@link ConfigV1} to make code easier to test.
  */
 public class ConfigV2 {
 
-    private final static ConfigV1 config = ConfigV1.getConfig();
+    private static final Logger LOGGER = LoggerFactory.getLogger(java.lang.invoke.MethodHandles.lookup().lookupClass());
+
+    private final RawConfigStorage appConfig;
+
+    public ConfigV2() {
+        this(RawConfigStorage.createDefault());
+    }
+
+    public ConfigV2(@NotNull RawConfigStorage config) {
+        appConfig = config;
+    }
+
+    /**
+     * @param protocol
+     *            defaults to http
+     * @param host
+     *            valid value required
+     * @param port
+     *            defaults to none specified (defaults ports 80/443 if specified will be removed)
+     * @return example: protocol://host:port/application, or protocol://host
+     *         no trailing slash unless included in application parameter
+     */
+    private String buildCleanUrl(String protocol, String host, String port) {
+        if ((protocol == null) || protocol.isEmpty()) {
+            protocol = "http";
+        }
+        protocol = protocol.toLowerCase();
+
+        if ((host == null) || host.isEmpty()) {
+            throw new IllegalArgumentException("valid host is required");
+        }
+
+        String colonPort = ":" + port;
+        if ((port == null) || port.isEmpty()) {
+            colonPort = "";
+        } else if (port.equals("80") || port.equals("443")) {
+            colonPort = "";
+        } else if ((port.equals("80") && protocol.equals("https")) ||
+                (port.equals("443") && protocol.equals("http"))) {
+            throw new IllegalArgumentException("incompatible: protocol " + protocol + " and port " + port);
+        }
+
+        return protocol + "://" + host + colonPort;
+    }
 
     public String getBaseURL() {
-        return config.getBaseURL();
+
+        // parse it so that we can clean it (don't show port if default, etc.)
+        URL baseURL = null;
+
+        try {
+            baseURL = new URL(appConfig.getString("baseURL"));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("invalid URL value for baseURL: " + appConfig.getString("baseURL"), e);
+        }
+        int portInt = baseURL.getPort();
+        String port = (portInt > 0) ? String.valueOf(portInt) : "";
+
+        if (!baseURL.getPath().isEmpty()) {
+            throw new IllegalArgumentException("path not permitted in baseURL: " + baseURL.getPath());
+        }
+
+        return buildCleanUrl(
+                baseURL.getProtocol(),
+                baseURL.getHost(),
+                port);
     }
 
     public String getExchangeHostName() {
-        return config.getExchangeHostName();
+        return appConfig.getString("echangeHostName", "");
     }
 
     public String getIMAPUserId() {
-        return config.getIMAPUserId();
+        return appConfig.getString("imapUserId", "");
     }
 
     public String getIMAPPassword() {
-        return config.getIMAPPassword();
+        return appConfig.getString("imapPassword", "");
     }
 
     public boolean isIMAPSSLEnabled() {
-        return config.isIMAPSSLEnabled();
+        return appConfig.getBoolean("sslEnabled", true);
     }
 
     public String getIncomingMailProtocol() {
-        return config.getIncomingMailProtocol();
+        return appConfig.getString("incomingmailProtocol", "imaps");
     }
 
     public int getIncomingMailPort() {
-        return config.getIncomingMailPort();
+        return appConfig.getInt("incomingmailPort", 0);
     }
 
     public String getFromEmailAddress() {
-        return config.getFromEmailAddress();
+        return appConfig.getString("fromEmailAddress", "");
     }
 
     public String getFromEmailName() {
-        return config.getFromEmailName();
+        return appConfig.getString("fromEmailName", "");
     }
 
     public String getRecaptchaPrivateKey() {
-        return config.getRecaptchaPrivateKey();
+        return appConfig.getString("recaptchaPrivateKey", "");
     }
 
     public String getRecaptchaPublicKey() {
-        return config.getRecaptchaPublicKey();
+        return appConfig.getString("recaptchaPublicKey", "");
     }
 
     public int getInboxPageSize() {
-        return config.getInboxPageSize();
+        return appConfig.getInt("inboxPageSize");
     }
 
     public int getPatientFilesPerPage() {
-        return config.getPatientFilesPerPage();
+        return appConfig.getInt("patientFilesPerPage");
     }
 
     public int getPatientDiaryEntriesPerPage() {
-        return config.getPatientDiaryEntriesPerPage();
+        return appConfig.getInt("patientDiaryEntriesPerPage");
     }
 
     public String getPKBLogoURL() {
-        return config.getPKBLogoURL();
+        return appConfig.getString("pkbLogoURL", "");
     }
 
     public String getTestEmailId() {
-        return config.getTestEmailId();
+        return appConfig.getString("testEmailId", "");
     }
 
     public String getHelpPhone() {
-        return config.getHelpPhone();
+        return appConfig.getString("helpPhoneNumber", "");
     }
 
     public String getHelpEmailAddress() {
-        return config.getHelpEmailAddress();
+        return appConfig.getString("helpEmailAddress", "");
     }
 
     public String getHelpWebSite() {
-        return config.getHelpWebSite();
+        return appConfig.getString("helpWebSite", "");
     }
 
+    /** always ends with / if there's a value (enforced in this method) */
     public String getInstituteLogoBaseDir() {
-        return config.getInstituteLogoBaseDir();
+        String baseUrl = appConfig.getString("instituteLogoBaseDirectory", "");
+        if (isNotBlank(baseUrl) && !baseUrl.endsWith("/")) {
+            baseUrl += "/";
+        }
+        return baseUrl;
+    }
+
+    private static boolean isNotBlank(String str) {
+        return str != null && !str.trim().equals("");
     }
 
     public String getPHPlanTemplateImageBaseDir() {
-        return config.getPHPlanTemplateImageBaseDir();
+        return appConfig.getString("pHPlanTemplateImageBaseDirectory", "");
     }
 
     public String getImageUploadLogoBaseDirectory() {
-        return config.getImageUploadLogoBaseDirectory();
+        return appConfig.getString("imageUploadLogoBaseDirectory", "");
     }
 
     public String getImageUploadPHPlanTemplateImageBaseDirectory() {
-        return config.getImageUploadPHPlanTemplateImageBaseDirectory();
+        return appConfig.getString("imageUploadPHPlanTemplateImageBaseDirectory", "");
     }
 
     public String getSftpBaseDir() {
-        return config.getSftpBaseDir();
+        return appConfig.getString("sftpBaseDir", "");
     }
 
     public String getHelpName() {
-        return config.getHelpName();
+        return appConfig.getString("helpName", "");
     }
 
     public int getRecipientColumnSize() {
-        return config.getRecipientColumnSize();
+        return appConfig.getInt("recipientColumnSize", 3);
     }
 
     public int getThumbnailImageWidth() {
-        return config.getThumbnailImageWidth();
+        return appConfig.getInt("thumbnailImageWidth", 400);
     }
 
     public int getThumbnailImageHeight() {
-        return config.getThumbnailImageHeight();
+        return appConfig.getInt("thumbnailImageHeight", 400);
     }
 
     public int getRadiologyReportExtractLength() {
-        return config.getRadiologyReportExtractLength();
+        return appConfig.getInt("radiologyReportExtractLength", 200);
     }
 
     public String getThumbnailImageFormat() {
-        return config.getThumbnailImageFormat();
+        return appConfig.getString("thumbnailImageFormat", "png");
     }
 
     public boolean getSendReminderEmailsEnabled() {
-        return config.getSendReminderEmailsEnabled();
+        return appConfig.getBoolean("sendReminderEmailsEnabled", false);
     }
 
     public String getWithingsOauthKey() {
-        return config.getWithingsOauthKey();
+        return appConfig.getString("withingsOauthKey", "");
     }
 
     public String getWithingsOauthSecret() {
-        return config.getWithingsOauthSecret();
+        return appConfig.getString("withingsOauthSecret", "");
     }
 
     public String getVitaDockOauthKey() {
-        return config.getVitaDockOauthKey();
+        return appConfig.getString("vitaDockOauthKey", "");
     }
 
     public String getVitaDockOauthSecret() {
-        return config.getVitaDockOauthSecret();
+        return appConfig.getString("vitaDockOauthSecret", "");
     }
 
     public String getSciStoreEndpoint() {
-        return config.getSciStoreEndpoint();
+        return appConfig.getString("sciStoreEndpoint");
     }
 
     public String getSciStoreUsername() {
-        return config.getSciStoreUsername();
+        return appConfig.getString("sciStoreUsername");
     }
 
     public String getSciStorePassword() {
-        return config.getSciStorePassword();
+        return appConfig.getString("sciStorePassword");
     }
 
     public String getPacrEndpoint() {
-        return config.getPacrEndpoint();
+        return appConfig.getString("pacrEndpoint");
     }
 
     public String getPacrClientId() {
-        return config.getPacrClientId();
+        return appConfig.getString("pacrClientId");
     }
 
     public String getPacrClientUsername() {
-        return config.getPacrClientUsername();
+        return appConfig.getString("pacrClientUsername");
     }
 
     public String getPacrClientPassword() {
-        return config.getPacrClientPassword();
+        return appConfig.getString("pacrClientPassword");
     }
 
     public String getFakeS3Endpoint() {
-        return config.getFakeS3Endpoint();
+        return appConfig.getString("fakeS3Endpoint");
     }
 
     public boolean isDefinedFakeS3Endpoint() {
-        return config.isDefinedFakeS3Endpoint();
+        return appConfig.containsKey("fakeS3Endpoint");
     }
 
     public String getFakeS3EndpointPublishedURL() {
-        return config.getFakeS3EndpointPublishedURL();
-    }
-
-    public boolean isClientCachingOfStaticFilesEnabled() {
-        return config.isClientCachingOfStaticFilesEnabled();
-    }
-
-    public int getFileChunkSizeInBytes() {
-        return config.getFileChunkSizeInBytes();
-    }
-
-    public int getDocDeleteBatchSize() {
-        return config.getDocDeleteBatchSize();
-    }
-
-    public int getDocDeleteIntervalInHours() {
-        return config.getDocDeleteIntervalInHours();
-    }
-
-    public Boolean getPrometheusReportingEnabled() {
-        return config.getPrometheusReportingEnabled();
-    }
-
-    public String getLibraryUploadDirectory() {
-        return config.getLibraryUploadDirectory();
-    }
-
-    public String getNonCryptoAccessKey() {
-        return config.getNonCryptoAccessKey();
-    }
-
-    public String getNonCryptoSecretKey() {
-        return config.getNonCryptoSecretKey();
-    }
-
-    public String getNonCryptoBucket() {
-        return config.getNonCryptoBucket();
-    }
-
-    public String getProxyHost() {
-        return config.getProxyHost();
-    }
-
-    public int getProxyPort() {
-        return config.getProxyPort();
-    }
-
-    public String getEmisEsDownloadBaseDir() {
-        return config.getEmisEsDownloadBaseDir();
-    }
-
-    public String getEmisEsSftpHost() {
-        return config.getEmisEsSftpHost();
-    }
-
-    public int getEmisEsSftpPort() {
-        return config.getEmisEsSftpPort();
-    }
-
-    public String getEmisEsSftpUser() {
-        return config.getEmisEsSftpUser();
-    }
-
-    public String getEmisEsSftpPrivateKeyFile() {
-        return config.getEmisEsSftpPrivateKeyFile();
-    }
-
-    public String getEmisEsSftpPrivateKeyFilePassphrase() {
-        return config.getEmisEsSftpPrivateKeyFilePassphrase();
-    }
-
-    public String getEmisEsSftpRemoteDirectory() {
-        return config.getEmisEsSftpRemoteDirectory();
-    }
-
-    public String getEmisEsPgpPrivateKeyFile() {
-        return config.getEmisEsPgpPrivateKeyFile();
-    }
-
-    public String getEmisEsPgpPrivateKeyFilePassphrase() {
-        return config.getEmisEsPgpPrivateKeyFilePassphrase();
-    }
-
-    public Boolean isEmisEsNotificationEnabled() {
-        return config.isEmisEsNotificationEnabled();
-    }
-
-    public Set<String> getEmisEsPatientIdentifierFilterSet() {
-        return config.getEmisEsPatientIdentifierFilterSet();
-    }
-
-    public String getEmisEsCsvEncoding() {
-        return config.getEmisEsCsvEncoding();
-    }
-
-    public String getEmisEsConfigBaseDir() {
-        return config.getEmisEsConfigBaseDir();
-    }
-
-    public Boolean isEmisEsWhiteListEnabled() {
-        return config.isEmisEsWhiteListEnabled();
-    }
-
-    public int getEmisFailureGracePeriodHours() {
-        return config.getEmisFailureGracePeriodHours();
-    }
-
-    public boolean getUseProxy() {
-        return config.getUseProxy();
-    }
-
-    public boolean getProxyConfigured() {
-        return config.getProxyConfigured();
-    }
-
-    public boolean getUseHttpForS3() {
-        return config.getUseHttpForS3();
-    }
-
-    public String getSmtpHostname() {
-        return config.getSmtpHostname();
-    }
-
-    public int getSmtpPort() {
-        return config.getSmtpPort();
-    }
-
-    public String getSmtpUser() {
-        return config.getSmtpUser();
-    }
-
-    public String getSmtpPassword() {
-        return config.getSmtpPassword();
-    }
-
-    public String getSmtpAuth() {
-        return config.getSmtpAuth();
-    }
-
-    public String getSmtpStartTlsEnable() {
-        return config.getSmtpStartTlsEnable();
-    }
-
-    public String getSmtpSocketFactoryClass() {
-        return config.getSmtpSocketFactoryClass();
-    }
-
-    public String getSmtpSocketFactoryFallback() {
-        return config.getSmtpSocketFactoryFallback();
-    }
-
-    public String getTestTeamCoord() {
-        return config.getTestTeamCoord();
-    }
-
-    public String getTestClinician() {
-        return config.getTestClinician();
-    }
-
-    public String getTestPatient() {
-        return config.getTestPatient();
+        return appConfig.getString("fakeS3EndpointPublishedURL");
     }
 
     public int getOrgAdminDashboardPageSize() {
-        return config.getOrgAdminDashboardPageSize();
+        return appConfig.getInt("orgAdminDashboardPageSize");
     }
 
     public String getCoreDevicesOrganizationId() {
-        return config.getCoreDevicesOrganizationId();
+        return appConfig.getString("coreDevicesOrganizationId");
     }
 
     public String getCoreDevicesAccessToken() {
-        return config.getCoreDevicesAccessToken();
+        return appConfig.getString("coreDevicesAccessToken");
     }
 
     public int getSciStoreNewPatientLimit() {
-        return config.getSciStoreNewPatientLimit();
+        return appConfig.getInt("integration.scistore.newpatientlimit", 0);
     }
 
     public int getLatestResultsInitialThreshold() {
-        return config.getLatestResultsInitialThreshold();
+        return appConfig.getInt("latestResultsInitialThreshold");
     }
 
     public int getHighchartsThreshold() {
-        return config.getHighchartsThreshold();
-    }
-
-    public int getLetterInvitationTokenSize() {
-        return config.getLetterInvitationTokenSize();
-    }
-
-    public int getLetterInvitationAccessCodeSize() {
-        return config.getLetterInvitationAccessCodeSize();
-    }
-
-    public int getLetterInvitationExpiry() {
-        return config.getLetterInvitationExpiry();
-    }
-
-    public long getUploadMaxFileSize() {
-        return config.getUploadMaxFileSize();
-    }
-
-    public String getUploadMaxFileText() {
-        return config.getUploadMaxFileText();
-    }
-
-    public long getImageUploadMaxFileSize() {
-        return config.getImageUploadMaxFileSize();
-    }
-
-    public String getEmisEsJobCron() {
-        return config.getEmisEsJobCron();
-    }
-
-    public String getSciStoreNotificationCron() {
-        return config.getSciStoreNotificationCron();
-    }
-
-    public String getScriStorePatientSyncCron() {
-        return config.getScriStorePatientSyncCron();
-    }
-
-    public String getChildBirthNotificationCron() {
-        return config.getChildBirthNotificationCron();
-    }
-
-    public String getExpiredConsentRemoverCron() {
-        return config.getExpiredConsentRemoverCron();
-    }
-
-    public String getSymptomsNotificationCron() {
-        return config.getSymptomsNotificationCron();
-    }
-
-    public String getImageUploadMaxFileText() {
-        return config.getImageUploadMaxFileText();
-    }
-
-    public long getGeneticsUploadMaxFileSize() {
-        return config.getGeneticsUploadMaxFileSize();
-    }
-
-    public String getGeneticsUploadMaxFileText() {
-        return config.getGeneticsUploadMaxFileText();
+        return appConfig.getInt("highchartsThreshold");
     }
 
     public boolean getSortEmisCsvs() {
-        return config.getSortEmisCsvs();
-    }
-
-    public long getPlanUploadMaxFileSize() {
-        return config.getPlanUploadMaxFileSize();
-    }
-
-    public String getPlanUploadMaxFileText() {
-        return config.getPlanUploadMaxFileText();
-    }
-
-    public String getAuthorizationEndpointAddress() {
-        return config.getAuthorizationEndpointAddress();
-    }
-
-    public String getRestApiClientId() {
-        return config.getRestApiClientId();
-    }
-
-    public boolean isEmisEsEnabled() {
-        return config.isEmisEsEnabled();
-    }
-
-    public boolean isTimelineEnabled() {
-        return config.isTimelineEnabled();
-    }
-
-    public String getTimelineFrontendFetchURL() {
-        return config.getTimelineFrontendFetchURL();
-    }
-
-    public String getTimelineFrontendBrowserBaseURL() {
-        return config.getTimelineFrontendBrowserBaseURL();
-    }
-
-    public int getTimelineHtmlExpiryInSeconds() {
-        return config.getTimelineHtmlExpiryInSeconds();
+        return appConfig.getBoolean("integrations.emis.csv.sort", true);
     }
 
     public String getLabtestsonlineSearchURL() {
-        return config.getLabtestsonlineSearchURL();
+        return appConfig.getString("labtestsonlineSearchURL");
     }
 
     public String getLabtestsonlineRefURL() {
-        return config.getLabtestsonlineRefURL();
+        return appConfig.getString("labtestsonlineRefURL");
     }
 
     public String getHelpTextURL() {
-        return config.getHelpTextURL();
+        return appConfig.getString("helpTextURL");
     }
 
-    public boolean isTrackingEnabled() {
-        return config.isTrackingEnabled();
+    public int getFileChunkSizeInBytes() {
+        return Integer.parseInt(appConfig.getString("fileChunkSizeInBytes"));
+    }
+
+    public int getDocDeleteBatchSize() {
+        return Integer.parseInt(appConfig.getString("docDeleteBatchSize", "20"));
+    }
+
+    public int getDocDeleteIntervalInHours() {
+        return Integer.parseInt(appConfig.getString("docDeleteIntervalInHours", "8"));
+    }
+
+    public Boolean getPrometheusReportingEnabled() {
+        return appConfig.getBoolean("prometheusReportingEnabled", Boolean.TRUE);
+    }
+
+    public String getLibraryUploadDirectory() {
+        return appConfig.getString("libraryUploadBaseDirectory");
+    }
+
+    public String getNonCryptoAccessKey() {
+        return appConfig.getString("nonCryptoAccessKey");
+    }
+
+    public String getNonCryptoSecretKey() {
+        return appConfig.getString("nonCryptoSecretKey");
+    }
+
+    public String getNonCryptoBucket() {
+        return appConfig.getString("nonCryptoBucket");
+    }
+
+    public String getProxyHost() {
+        return appConfig.getString("proxyHost");
+    }
+
+    public int getProxyPort() {
+        return appConfig.getInt("proxyPort");
+    }
+
+    public String getEmisEsDownloadBaseDir() {
+        return appConfig.getString("emisEsDownloadBaseDir");
+    }
+
+    public String getEmisEsSftpHost() {
+        return appConfig.getString("emisEsSftpHost");
+    }
+
+    public int getEmisEsSftpPort() {
+        return appConfig.getInt("emisEsSftpPort");
+    }
+
+    public String getEmisEsSftpUser() {
+        return appConfig.getString("emisEsSftpUser");
+    }
+
+    public String getEmisEsSftpPrivateKeyFile() {
+        return appConfig.getString("emisEsSftpPrivateKeyFile");
+    }
+
+    public String getEmisEsSftpPrivateKeyFilePassphrase() {
+        return appConfig.getString("emisEsSftpPrivateKeyFilePassphrase", "");
+    }
+
+    public String getEmisEsSftpRemoteDirectory() {
+        return appConfig.getString("emisEsSftpRemoteDirectory");
+    }
+
+    public String getEmisEsPgpPrivateKeyFile() {
+        return appConfig.getString("emisEsPgpPrivateKeyFile");
+    }
+
+    public String getEmisEsPgpPrivateKeyFilePassphrase() {
+        return appConfig.getString("emisEsPgpPrivateKeyFilePassphrase", "");
+    }
+
+    public Boolean isEmisEsNotificationEnabled() {
+        return appConfig.getBoolean("emisEsNotificationEnabled", false);
+    }
+
+    public String getEmisEsCsvEncoding() {
+        return appConfig.getString("emisEsCsvEncoding", "UTF-8");
+    }
+
+    public String getEmisEsConfigBaseDir() {
+        return appConfig.getString("emisEsConfigBaseDir", "/pkb/emis");
+    }
+
+    public Boolean isEmisEsWhiteListEnabled() {
+        return appConfig.getBoolean("emisEsWhiteListEnabled", true);
+    }
+
+    public int getEmisFailureGracePeriodHours() {
+        return appConfig.getInt("emisEsFailureGracePeriodHours");
+    }
+
+    public boolean getUseProxy() {
+
+        boolean available = false;
+
+        try {
+
+            available = appConfig.getBoolean("useProxy");
+
+        } catch (Exception e) {
+
+            LOGGER.error("error parsing config for proxy setting: useProxy", e);
+
+        }
+        return available;
+    }
+
+    public boolean getProxyConfigured() {
+
+        try {
+
+            String proxyHost = getProxyHost();
+            if (proxyHost == null || proxyHost.trim().equals("")) {
+                return false;
+            }
+            return appConfig.getInt("proxyPort", -1) != -1;
+        } catch (Exception e) {
+
+            LOGGER.error("error parsing config for proxy settings", e);
+            return false;
+        }
+
+    }
+
+    public boolean getUseHttpForS3() {
+        try {
+
+            return appConfig.getBoolean("useHTTPForS3", false);
+
+        } catch (Exception e) {
+
+            LOGGER.error("error parsing config for S3 http(s) scheme settings", e);
+            return false;
+        }
+    }
+
+    public String getSmtpHostname() {
+        return appConfig.getString("smtpHostname");
+    }
+
+    public int getSmtpPort() {
+        return appConfig.getInt("smtpPort");
+    }
+
+    public String getSmtpUser() {
+        return appConfig.getString("smtpUser");
+    }
+
+    public String getSmtpPassword() {
+        return appConfig.getString("smtpPassword");
+    }
+
+    public String getSmtpAuth() {
+        return appConfig.getString("smtpAuth");
+    }
+
+    public String getSmtpStartTlsEnable() {
+        return appConfig.getString("smtpStartTlsEnable");
+    }
+
+    public String getSmtpSocketFactoryClass() {
+        return appConfig.getString("smtpSocketFactoryClass");
+    }
+
+    public String getSmtpSocketFactoryFallback() {
+        return appConfig.getString("smtpSocketFactoryFallback");
+    }
+
+    public String getTestTeamCoord() {
+        return appConfig.getString("com.pkb.test.testTeamCoord", "");
+    }
+
+    public String getTestClinician() {
+        return appConfig.getString("com.pkb.test.testClinician", "az.pro.1@pkbtest.com");
+    }
+
+    public String getTestPatient() {
+        return appConfig.getString("com.pkb.test.testPatient", "az.patient.1@pkbtest.com");
+    }
+
+    public int getLetterInvitationTokenSize() {
+        return appConfig.getInt("letter.invitation.token.size", LetterInvitationSettings.DEFAULT_TOKEN_SIZE);
+    }
+
+    public int getLetterInvitationAccessCodeSize() {
+        return appConfig.getInt("letter.invitation.access.code.size", LetterInvitationSettings.DEFAULT_ACCESS_CODE_SIZE);
+    }
+
+    public int getLetterInvitationExpiry() {
+        return appConfig.getInt("letter.invitation.token.expiry", LetterInvitationSettings.DEFAULT_EXPIRY_IN_SECONDS);
+    }
+
+    public long getUploadMaxFileSize() {
+        return appConfig.getLong("com.pkb.upload.maxFileSize", 10000000000L);
+    }
+
+    public String getUploadMaxFileText() {
+        return appConfig.getString("com.pkb.upload.maxFileText", "10");
+    }
+
+    public long getImageUploadMaxFileSize() {
+        return appConfig.getLong("com.pkb.upload.maxImageFileSize", 1000000000L);
+    }
+
+    public String getEmisEsJobCron() {
+        return appConfig.getString("emisEsJobCron");
+    }
+
+    public String getSciStoreNotificationCron() {
+        return appConfig.getString("sciStoreNotificationCron");
+    }
+
+    public String getScriStorePatientSyncCron() {
+        return appConfig.getString("sciStorePatientSyncCron");
+    }
+
+    public String getChildBirthNotificationCron() {
+        return appConfig.getString("childBirthNotificationCron");
+    }
+
+    public String getExpiredConsentRemoverCron() {
+        return appConfig.getString("expiredConsentRemoverCron");
+    }
+
+    public String getSymptomsNotificationCron() {
+        return appConfig.getString("symptomsNotificationCron");
+    }
+
+    public String getImageUploadMaxFileText() {
+        return appConfig.getString("com.pkb.upload.maxImageFileText", "1");
+    }
+
+    public long getGeneticsUploadMaxFileSize() {
+        return appConfig.getLong("com.pkb.upload.maxGeneticsFileSize", 1000000000L);
+    }
+
+    public String getGeneticsUploadMaxFileText() {
+        return appConfig.getString("com.pkb.upload.maxGeneticsFileTextGB", "1");
+    }
+
+    public long getPlanUploadMaxFileSize() {
+        return appConfig.getLong("com.pkb.upload.maxPlanFileSize", 20000000L);
+    }
+
+    public String getPlanUploadMaxFileText() {
+        return appConfig.getString("com.pkb.upload.maxPlanFileTextMB", "20");
+    }
+
+    public boolean isEmisEsEnabled() {
+        return appConfig.getBoolean("feature.emis.es.enabled");
+    }
+
+    public String getAuthorizationEndpointAddress() {
+        return appConfig.getString("authorization.endpoint.address", "http://localhost");
+    }
+
+    public String getRestApiClientId() {
+        return appConfig.getString("com.pkb.api.util.DefaultInternalAccessTokenIssuer.clientId");
     }
 
     public String getEMISSSOMonitoringProfEmail() {
-        return config.getEMISSSOMonitoringProfEmail();
+        return appConfig.getString("emis.sso.monitoring.prof.email");
+    }
+
+    public boolean isTimelineEnabled() {
+        return appConfig.getBoolean("timelineEnabled", false);
+    }
+
+    public String getTimelineFrontendFetchURL() {
+        return appConfig.getString("timelineFrontendFetchURL");
+    }
+
+    public String getTimelineFrontendBrowserBaseURL() {
+        return appConfig.getString("timelineFrontendBrowserBaseURL");
+    }
+
+    public int getTimelineHtmlExpiryInSeconds() {
+        return appConfig.getInt("timelineHtmlExpiryInSeconds");
     }
 
     public String getValidicURL() {
-        return config.getValidicURL();
+        return appConfig.getString("validicUrl");
     }
 
     public int getValidicConnectionTimeoutMillis() {
-        return config.getValidicConnectionTimeoutMillis();
+        return appConfig.getInt("validicConnectionTimeoutMillis");
     }
 
     public int getValidicReadTimeoutMillis() {
-        return config.getValidicReadTimeoutMillis();
+        return appConfig.getInt("validicReadTimeoutMillis");
     }
 
     public long getComposeMessageMaxFileSize() {
-        return config.getComposeMessageMaxFileSize();
+        return appConfig.getLong("com.pkb.upload.ComposeMessage.maxFileSize");
     }
 
     public String getComposeMessageFileSizeText() {
-        return config.getComposeMessageFileSizeText();
+        return appConfig.getString("com.pkb.upload.ComposeMessage.maxFileText");
     }
 
     public boolean isCSRFProtectionEnabled() {
-        return config.isCSRFProtectionEnabled();
+        return appConfig.getBoolean("csrf.protection.enabled");
+    }
+
+    public boolean isTrackingEnabled() {
+        return appConfig.getBoolean("trackingEnabled", false);
     }
 
     public boolean isScistoreEnabled() {
-        return config.isScistoreEnabled();
+        return appConfig.getBoolean("feature.scistore.enabled", false);
     }
 
     public int getMenudataQueryBatchSize() {
-        return config.getMenudataQueryBatchSize();
+        return appConfig.getInt("menudataQueryBatchSize", 5000);
+    }
+
+    public boolean isClientCachingOfStaticFilesEnabled() {
+        return appConfig.getBoolean("clientCachingOfStaticFiles");
     }
 
     public boolean isDisplayOfSensitiveErrorInformationEnabled() {
-        return config.isDisplayOfSensitiveErrorInformationEnabled();
+        return appConfig.getBoolean("security.display.sensitive.error.info.enabled", false);
     }
 
     public boolean isSkipHL7IpWhitelistEnabled() {
-        return config.isSkipHL7IpWhitelistEnabled();
+        return appConfig.getBoolean("security.skip.hl7.whitelist.enabled", false);
     }
 
     public boolean isTestUsersEnabled() {
-        return config.isTestUsersEnabled();
+        return appConfig.getBoolean("security.test.users.enabled", false);
     }
 
     public boolean isFhirApiExperimental() {
-        return config.isFhirApiExperimental();
+        return appConfig.getBoolean("fhir.api.experimental");
     }
 
     public int getEmisEsProcessingBatchSize() {
-        return config.getEmisEsProcessingBatchSize();
+        return appConfig.getInt("emisEsBatchSize");
     }
+
 }
