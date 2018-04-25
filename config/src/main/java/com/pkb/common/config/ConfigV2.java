@@ -625,4 +625,24 @@ public class ConfigV2 {
         return storage.getInt("emisEsBatchSize");
     }
 
+    public boolean isFhirPatientResourceEnabled() {
+        return storage.getBoolean("fhir.api.Patient.enabled");
+    }
+
+    public boolean isFhirPractitionerResourceEnabled() {
+        return storage.getBoolean("fhir.api.Practitioner.enabled");
+    }
+
+    public boolean isFhirOrganizationResourceEnabled() {
+        return storage.getBoolean("fhir.api.Organization.enabled");
+    }
+
+    public boolean isFhirNamingSystemResourceEnabled() {
+        return storage.getBoolean("fhir.api.NamingSystem.enabled");
+    }
+
+    public boolean isFhirConsentResourceEnabled() {
+        return storage.getBoolean("fhir.api.Consent.enabled");
+    }
+
 }
