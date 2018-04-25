@@ -645,4 +645,8 @@ public class ConfigV2 {
         return storage.getBoolean("fhir.api.Consent.enabled");
     }
 
+    public boolean isFhirPurviewOperationEnabled() {
+        return storage.getBoolean("fhir.api.purview.enabled");
+    }
+
 }
