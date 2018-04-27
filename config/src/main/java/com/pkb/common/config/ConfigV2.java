@@ -6,9 +6,6 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Proxy class of {@link ConfigV1} to make code easier to test.
- */
 public class ConfigV2 {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(java.lang.invoke.MethodHandles.lookup().lookupClass());
