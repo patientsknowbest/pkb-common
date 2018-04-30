@@ -12,14 +12,22 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PropertyFileBasedLoader {
+public class PropertyFileBasedLoader implements ConfigLoader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PropertyFileBasedLoader.class);
 
-    public RawConfigStorage load(String propFilePath) {
+    private final String propFilePath;
+
+    public PropertyFileBasedLoader(@NotNull String propFilePath) {
+        this.propFilePath = propFilePath;
+    }
+
+    @Override
+    public RawConfigStorage load() {
         Properties props = new Properties();
         URL resource = Thread.currentThread().getContextClassLoader().getResource(propFilePath);
         try (InputStream stream = inputStreamOfPropertyFile(propFilePath)){
