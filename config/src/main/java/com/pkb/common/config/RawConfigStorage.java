@@ -40,7 +40,7 @@ public class RawConfigStorage {
         this.storage = storage;
     }
 
-    private <P> Either<ConfigurationException, P> readValue(String key, Parser<P> parser) {
+    private <P> Either<ConfigurationException, P> readValue(String key, Class<P> expectedType, Parser<P> parser) {
         String rawValue = storage.get(key);
         return parser.parse(rawValue)
                 // noinspection
@@ -50,16 +50,17 @@ public class RawConfigStorage {
                     if (rawValue == null) {
                         exception = new MissingValueException(key);
                     } else {
-                        exception = new MalformedValueException(key, Boolean.class, rawValue);
+                        exception = new MalformedValueException(key, expectedType, rawValue);
                     }
                     return Either.left(exception);
                 });
     }
 
     private Optional<Boolean> parseBooleanLiteral(String str) {
-        if ("true".equalsIgnoreCase(str)) {
+        String normalizedRawString = str == null ? "" : str.trim().toLowerCase();
+        if ("true".equals(normalizedRawString)) {
             return Optional.of(true);
-        } else if ("false".equalsIgnoreCase(str)) {
+        } else if ("false".equals(normalizedRawString)) {
             return Optional.of(false);
         }
         return Optional.empty();
@@ -77,11 +78,11 @@ public class RawConfigStorage {
 
 
     public Boolean getBoolean(String key) {
-        return readValue(key, this::parseBooleanLiteral).getOrElseThrow(identity());
+        return readValue(key, Boolean.class, this::parseBooleanLiteral).getOrElseThrow(identity());
     }
 
     public Boolean getBoolean(String key, Boolean defaultValue) {
-        return readValue(key, this::parseBooleanLiteral).getOrElseGet(exc -> Match(exc).of(
+        return readValue(key, Boolean.class, this::parseBooleanLiteral).getOrElseGet(exc -> Match(exc).of(
                 Case($(instanceOf(MissingValueException.class)), defaultValue),
                 Case($(instanceOf(MalformedValueException.class)), e -> {throw e;})
         ));
@@ -96,19 +97,19 @@ public class RawConfigStorage {
     }
 
     public int getInt(String key) {
-        return readValue(key, createNumberParser(Integer::parseInt)).getOrElseThrow(identity());
+        return readValue(key, Integer.class, createNumberParser(Integer::parseInt)).getOrElseThrow(identity());
     }
 
     public int getInt(String key, int defaultValue) {
-        return readValue(key, createNumberParser(Integer::parseInt)).getOrElse(defaultValue);
+        return readValue(key, Integer.class, createNumberParser(Integer::parseInt)).getOrElse(defaultValue);
     }
 
     public long getLong(String key) {
-        return readValue(key, createNumberParser(Long::parseLong)).getOrElseThrow(identity());
+        return readValue(key, Long.class, createNumberParser(Long::parseLong)).getOrElseThrow(identity());
     }
 
     public long getLong(String key, long defaultValue) {
-        return readValue(key, createNumberParser(Long::parseLong)).getOrElse(defaultValue);
+        return readValue(key, Long.class, createNumberParser(Long::parseLong)).getOrElse(defaultValue);
     }
 
     public boolean containsKey(String key) {
