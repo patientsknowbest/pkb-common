@@ -43,7 +43,6 @@ public class RawConfigStorage {
     private <P> Either<ConfigurationException, P> readValue(String key, Class<P> expectedType, Parser<P> parser) {
         String rawValue = storage.get(key);
         return parser.parse(rawValue)
-                // noinspection
                 .map(p -> Either.<ConfigurationException, P>right(p))
                 .orElseGet(() -> {
                     ConfigurationException exception;
