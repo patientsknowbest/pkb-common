@@ -622,4 +622,8 @@ public class ConfigV2 {
         return storage.getInt("emisEsBatchSize");
     }
 
+    public int getAutosaveTimeoutInMilliseconds() {
+        return storage.getInt("ui.autosaveTimeoutInMilliseconds");
+    }
+
 }
