@@ -47,6 +47,9 @@ public class PropertyFileBasedLoader implements ConfigLoader {
         }
         URL resource = Thread.currentThread().getContextClassLoader().getResource(propFile);
         if (resource == null) {
+            resource = ClassLoader.getSystemResource(propFile);
+        }
+        if (resource == null) {
             LOGGER.warn("failed to look up config file {}", propFile);
             throw new ConfigurationException(format("could not find property file [%s]", propFile));
         }
