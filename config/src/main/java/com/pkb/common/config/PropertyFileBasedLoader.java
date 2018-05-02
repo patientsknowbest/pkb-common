@@ -9,9 +9,11 @@ import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,16 +30,26 @@ public class PropertyFileBasedLoader implements ConfigLoader {
 
     @Override
     public RawConfigStorage load() {
-        Properties props = new Properties();
-        URL resource = Thread.currentThread().getContextClassLoader().getResource(propFilePath);
-        try (InputStream stream = inputStreamOfPropertyFile(propFilePath)){
-            props.load(stream);
-            Map<String, String> storage = new HashMap<>(props.size());
-            props.forEach((k, v) -> storage.put((String) k, (String) v));
+        try {
+            PropertiesConfiguration c = new PropertiesConfiguration(propFilePath);
+            Iterator<String> it = c.getKeys();
+            Map<String, String> storage = new HashMap<>();
+            it.forEachRemaining(key -> storage.put(key, c.getProperty(key).toString()));
             return new RawConfigStorage(storage);
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
+        } catch (org.apache.commons.configuration.ConfigurationException e) {
+            e.printStackTrace();
+            throw new ConfigurationException(e.getMessage());
         }
+//        Properties props = new Properties();
+//        URL resource = Thread.currentThread().getContextClassLoader().getResource(propFilePath);
+//        try (InputStream stream = inputStreamOfPropertyFile(propFilePath)){
+//            props.load(stream);
+//            Map<String, String> storage = new HashMap<>(props.size());
+//            props.forEach((k, v) -> storage.put((String) k, (String) v));
+//            return new RawConfigStorage(storage);
+//        } catch (IOException e) {
+//            throw new UncheckedIOException(e);
+//        }
     }
 
     private InputStream inputStreamOfPropertyFile(String propFile) throws IOException {
