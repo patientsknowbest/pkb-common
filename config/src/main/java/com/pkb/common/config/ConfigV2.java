@@ -6,29 +6,38 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ConfigV2 {
+public class ConfigV2 implements Configuration {
+    private static final class ConfigV2InstanceHolder {
+        private static final ConfigV2 INSTANCE = new ConfigV2();
+    }
+
+    // FIXME: this is just a workaround to avoid loading config files multiple times.
+
+    /**
+     * @deprecated Use CDI or Spring to wire an instance into your service.
+     */
+    @Deprecated
+    public static @NotNull ConfigV2 getInstance() {
+        return ConfigV2InstanceHolder.INSTANCE;
+    }
 
     private static final Logger LOGGER = LoggerFactory.getLogger(java.lang.invoke.MethodHandles.lookup().lookupClass());
 
     private final RawConfigStorage storage;
 
-    public ConfigV2() {
-        this(RawConfigStorage.createDefault());
-    }
-
-    public ConfigV2(@NotNull RawConfigStorage storage) {
-        this.storage = storage;
+    private ConfigV2() {
+        this.storage = RawConfigStorage.createDefault();
     }
 
     /**
      * @param protocol
-     *            defaults to http
+     *         defaults to http
      * @param host
-     *            valid value required
+     *         valid value required
      * @param port
-     *            defaults to none specified (defaults ports 80/443 if specified will be removed)
+     *         defaults to none specified (defaults ports 80/443 if specified will be removed)
      * @return example: protocol://host:port/application, or protocol://host
-     *         no trailing slash unless included in application parameter
+     * no trailing slash unless included in application parameter
      */
     private String buildCleanUrl(String protocol, String host, String port) {
         if ((protocol == null) || protocol.isEmpty()) {
@@ -594,6 +603,7 @@ public class ConfigV2 {
         return storage.getBoolean("feature.scistore.enabled", false);
     }
 
+    @Override
     public int getMenudataQueryBatchSize() {
         return storage.getInt("menudataQueryBatchSize", 5000);
     }
@@ -614,6 +624,7 @@ public class ConfigV2 {
         return storage.getBoolean("security.test.users.enabled", false);
     }
 
+    @Override
     public boolean isFhirApiExperimental() {
         return storage.getBoolean("fhir.api.experimental");
     }
