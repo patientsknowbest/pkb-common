@@ -1,14 +1,19 @@
 package com.pkb.common.config;
 
+import static java.lang.invoke.MethodHandles.lookup;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static java.util.Collections.unmodifiableList;
 import static java.util.stream.Collectors.toList;
+import static org.slf4j.LoggerFactory.getLogger;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+
 public class LayeredLoader implements ConfigLoader {
+    private static final Logger LOGGER = getLogger(lookup().lookupClass());
 
     private static final String PKB_SERVICE_CONFIG = "PKB_SERVICE_CONFIG";
 
@@ -41,6 +46,7 @@ public class LayeredLoader implements ConfigLoader {
         }
         return propertyFiles.stream()
                 .map(filePath -> filePath + ".properties")
+                .peek(path -> LOGGER.info("Will load property from path=[{}]", path))
                 .collect(toList());
     }
 
