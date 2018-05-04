@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class ConfigV2Test {
 
-    private final ConfigV2 underTest = new ConfigV2();
+    private final ConfigV2 underTest = ConfigV2.getInstance();
 
     @Test
     public void testLetterConfigurationUsesDefaults() throws Exception {
