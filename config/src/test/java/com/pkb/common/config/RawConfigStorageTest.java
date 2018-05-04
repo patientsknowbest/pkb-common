@@ -5,13 +5,16 @@ import static org.junit.Assert.assertEquals;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class RawConfigStorageTest {
 
     private RawConfigStorage createStorage() {
         Map<String, String> map = new HashMap<>();
         map.put("booleanKey", "true");
+        map.put("booleanKeyWithSpaces", " true  ");
         map.put("uppercaseBooleanKey", "TRUE");
         map.put("emptyKey", "");
         map.put("intKey", "2");
@@ -19,6 +22,9 @@ public class RawConfigStorageTest {
         map.put("stringKey", "string value");
         return new RawConfigStorage(map);
     }
+
+    @Rule
+    public ExpectedException exc = ExpectedException.none();
 
     @Test
     public void getBoolean_success() {
@@ -31,6 +37,11 @@ public class RawConfigStorageTest {
     }
 
     @Test
+    public void getBoolean_withSpaces_Success() {
+        assertEquals(Boolean.TRUE, createStorage().getBoolean("booleanKeyWithSpaces"));
+    }
+
+    @Test
     public void getBoolean_default_missingKey() {
         assertEquals(Boolean.FALSE, createStorage().getBoolean("missingKey", Boolean.FALSE));
     }
@@ -40,18 +51,27 @@ public class RawConfigStorageTest {
         createStorage().getBoolean("missingKey");
     }
 
-    @Test(expected = MalformedValueException.class)
+    @Test
     public void getBoolean_emptyKeyFailure() {
+        exc.expect(MalformedValueException.class);
+        exc.expectMessage("malformed value=[] for configuration key=[emptyKey] (expected type=[Boolean])");
+
         createStorage().getBoolean("emptyKey");
     }
 
-    @Test(expected = MalformedValueException.class)
+    @Test
     public void getBoolean_malformedValueFailure() {
+        exc.expect(MalformedValueException.class);
+        exc.expectMessage("malformed value=[2] for configuration key=[intKey] (expected type=[Boolean])");
+
         createStorage().getBoolean("intKey");
     }
 
-    @Test(expected = MalformedValueException.class)
+    @Test
     public void getBoolean_withDefault_malformedValue() {
+        exc.expect(MalformedValueException.class);
+        exc.expectMessage("malformed value=[2] for configuration key=[intKey] (expected type=[Boolean])");
+
         createStorage().getBoolean("intKey", true);
     }
 
@@ -85,8 +105,11 @@ public class RawConfigStorageTest {
         createStorage().getInt("missingKey");
     }
 
-    @Test(expected = MalformedValueException.class)
+    @Test
     public void getInt_malformedValue() {
+        exc.expect(MalformedValueException.class);
+        exc.expectMessage("malformed value=[string value] for configuration key=[stringKey] (expected type=[Integer])");
+
         createStorage().getInt("stringKey");
     }
 
@@ -111,8 +134,11 @@ public class RawConfigStorageTest {
         createStorage().getLong("missingKey");
     }
 
-    @Test(expected = MalformedValueException.class)
+    @Test
     public void getLong_malformedValue() {
+        exc.expect(MalformedValueException.class);
+        exc.expectMessage("malformed value=[string value] for configuration key=[stringKey] (expected type=[Long])");
+
         createStorage().getLong("stringKey");
     }
 
@@ -125,7 +151,5 @@ public class RawConfigStorageTest {
     public void getLong_defaultNotUsed() {
         assertEquals(22, createStorage().getLong("longKey", 33));
     }
-
-
 
 }
