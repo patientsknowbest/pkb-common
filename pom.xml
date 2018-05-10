@@ -8,7 +8,9 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
+    <groupId>com.pkb.common</groupId>
     <artifactId>pkb-common</artifactId>
+
     <packaging>pom</packaging>
     
     <modules>
