@@ -673,6 +673,6 @@ public class ConfigV2 implements Configuration {
 
     @Override
     public boolean isFhirApiEnabled() {
-        return storage.getBoolean("fhir.api.enabled", false);
+        return storage.getBoolean("fhir.api.enabled", true);
     }
 }
