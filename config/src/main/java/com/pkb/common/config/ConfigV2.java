@@ -643,7 +643,7 @@ public class ConfigV2 implements Configuration {
 
     @Override
     public boolean isFhirPatientResourceEnabled() {
-        return storage.getBoolean("fhir.api.Patient.enabled");
+        return storage.getBoolean("fhir.api.Patient.enabled", true);
     }
 
     @Override
