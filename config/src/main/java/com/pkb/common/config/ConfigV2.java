@@ -628,6 +628,14 @@ public class ConfigV2 implements Configuration {
         return storage.getBoolean("security.test.users.enabled", false);
     }
 
+    public int getNumberOfRecentLoginAttmptsAllowed() {
+        return storage.getInt("numberOfRecentLoginAttmptsAllowed");
+    }
+
+    public int getDefinitionOfRecentLoginAttemptInSeconds() {
+        return storage.getInt("definitionOfRecentLoginAttemptInSeconds");
+    }
+
     @Override
     public boolean isFhirApiExperimental() {
         return storage.getBoolean("fhir.api.experimental");
