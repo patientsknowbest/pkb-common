@@ -628,8 +628,8 @@ public class ConfigV2 implements Configuration {
         return storage.getBoolean("security.test.users.enabled", false);
     }
 
-    public int getNumberOfRecentLoginAttmptsAllowed() {
-        return storage.getInt("numberOfRecentLoginAttmptsAllowed");
+    public int getNumberOfRecentLoginAttemptsAllowed() {
+        return storage.getInt("numberOfRecentLoginAttemptsAllowed");
     }
 
     public int getDefinitionOfRecentLoginAttemptInSeconds() {
