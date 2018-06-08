@@ -649,6 +649,8 @@ public class ConfigV2 implements Configuration {
         return storage.getInt("ui.autosaveTimeoutInMilliseconds");
     }
 
+    public int getAppointmentsCalendarMonths() { return storage.getInt("appointments.calendar.months", 6); }
+
     @Override
     public boolean isFhirPatientResourceEnabled() {
         return storage.getBoolean("fhir.api.Patient.enabled", true);
