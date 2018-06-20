@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.pkb</groupId>
         <artifactId>pkb-pom</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>${revision}${changelist}</version>
     </parent>
 
     <groupId>com.pkb.common</groupId>
