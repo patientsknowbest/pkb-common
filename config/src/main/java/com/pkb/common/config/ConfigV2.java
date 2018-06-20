@@ -685,4 +685,8 @@ public class ConfigV2 implements Configuration {
     public boolean isFhirApiEnabled() {
         return storage.getBoolean("fhir.api.enabled", true);
     }
+
+    public boolean isClamAvScanningEnabled() {
+        return storage.getBoolean("clamav.scanning.enabled", false);
+    }
 }
