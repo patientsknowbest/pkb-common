@@ -687,6 +687,6 @@ public class ConfigV2 implements Configuration {
     }
 
     public boolean isClamAvScanningEnabled() {
-        return storage.getBoolean("clamav.scanning.enabled", false);
+        return storage.getBoolean("clamav.scanning.enabled", true);
     }
 }
