@@ -705,7 +705,7 @@ public class ConfigV2 implements Configuration {
         }
 
         LOGGER.info("Virus Scanning is {}enabled{}",
-                maybeHostName.isPresent() ? "": "not ",
+                maybeHostName.map($ -> "").orElse("not "),
                 maybeHostName.map(hostname -> format(", using hostname=[%s].", hostname)).orElse(""));
 
         return maybeHostName;
