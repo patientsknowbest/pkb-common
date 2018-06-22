@@ -1,6 +1,10 @@
 package com.pkb.common.config;
 
+import static java.lang.String.format;
+import static java.util.Optional.empty;
+
 import java.net.URL;
+import java.util.Optional;
 
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -40,8 +44,7 @@ public class ConfigV2 implements Configuration {
      *         valid value required
      * @param port
      *         defaults to none specified (defaults ports 80/443 if specified will be removed)
-     * @return example: protocol://host:port/application, or protocol://host
-     * no trailing slash unless included in application parameter
+     * @return example: protocol://host:port/application, or protocol://host no trailing slash unless included in application parameter
      */
     private String buildCleanUrl(String protocol, String host, String port) {
         if ((protocol == null) || protocol.isEmpty()) {
@@ -649,7 +652,9 @@ public class ConfigV2 implements Configuration {
         return storage.getInt("ui.autosaveTimeoutInMilliseconds");
     }
 
-    public int getAppointmentsCalendarMonths() { return storage.getInt("appointments.calendar.months", 6); }
+    public int getAppointmentsCalendarMonths() {
+        return storage.getInt("appointments.calendar.months", 6);
+    }
 
     @Override
     public boolean isFhirPatientResourceEnabled() {
@@ -686,8 +691,29 @@ public class ConfigV2 implements Configuration {
         return storage.getBoolean("fhir.api.enabled", true);
     }
 
+
     @Override
     public boolean isFhirPersonResourceEnabled() {
         return storage.getBoolean("fhir.api.Person.enabled");
+    }
+
+    public Optional<String> clamAvHost() {
+        Optional<String> maybeHostName = empty();
+
+        if (storage.getBoolean("clamav.scanning.enabled", true)) {
+            String host = storage.getString("clamav.host", "clamav");
+
+            if (host.trim().isEmpty()) {
+                throw new IllegalStateException("'clamav.host' is blank");
+            }
+
+            maybeHostName = Optional.of(host);
+        }
+
+        LOGGER.info("Virus Scanning is {}enabled{}",
+                maybeHostName.map($ -> "").orElse("not "),
+                maybeHostName.map(hostname -> format(", using hostname=[%s].", hostname)).orElse(""));
+
+        return maybeHostName;
     }
 }
