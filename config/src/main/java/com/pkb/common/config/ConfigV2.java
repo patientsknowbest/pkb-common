@@ -685,4 +685,9 @@ public class ConfigV2 implements Configuration {
     public boolean isFhirApiEnabled() {
         return storage.getBoolean("fhir.api.enabled", true);
     }
+
+    @Override
+    public boolean isFhirPersonResourceEnabled() {
+        return storage.getBoolean("fhir.api.Person.enabled");
+    }
 }
