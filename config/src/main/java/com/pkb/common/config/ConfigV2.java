@@ -710,4 +710,9 @@ public class ConfigV2 implements Configuration {
 
         return maybeHostName;
     }
+
+    @Override
+    public boolean isFhirDocumentReferenceResourceEnabled() {
+        return storage.getBoolean("fhir.api.DocumentReference.enabled");
+    }
 }
