@@ -8,6 +8,8 @@ public interface Configuration {
 
     int getMenudataQueryBatchSize();
 
+    boolean isFhirPersonResourceEnabled();
+
     boolean isFhirPatientResourceEnabled();
 
     boolean isFhirPractitionerResourceEnabled();
