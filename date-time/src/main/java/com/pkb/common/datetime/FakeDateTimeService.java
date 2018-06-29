@@ -7,9 +7,15 @@ public class FakeDateTimeService implements DateTimeService {
 
     private volatile Clock currentFixedClock;
 
+    private final DateTimeService fallbackService;
+
+    public FakeDateTimeService(DateTimeService fallbackService) {
+        this.fallbackService = fallbackService;
+    }
+
     @Override public Clock clock() {
         if (currentFixedClock == null) {
-            throw new IllegalStateException("current datetime is not set");
+            return fallbackService.clock();
         }
         return currentFixedClock;
     }
@@ -17,6 +23,10 @@ public class FakeDateTimeService implements DateTimeService {
     public void setCurrentTime(String input) {
         ZonedDateTime zdt = ZonedDateTime.parse(input);
         currentFixedClock = Clock.fixed(zdt.toInstant(), zdt.getZone());
+    }
+
+    public void forgetCurrentTime() {
+        this.currentFixedClock = null;
     }
 
 }
