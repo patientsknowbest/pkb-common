@@ -12,7 +12,7 @@ public class DateTimeServiceTest {
 
     @Test
     public void firstDayOfMonth() {
-        FakeDateTimeService underTest = new FakeDateTimeService();
+        FakeDateTimeService underTest = new FakeDateTimeService(null);
         underTest.setCurrentTime("2010-10-10T22:22:22Z");
 
         Instant actual = underTest.firstDayOfMonth().toInstant();
