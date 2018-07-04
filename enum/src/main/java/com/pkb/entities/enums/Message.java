@@ -92,6 +92,7 @@ public enum Message {
     HANDOVER_DISCUSSION_NOTIFICATION_TO_OTHER_PERSON,
     /* notification to patient about changes made to account by clinical team  */
     ACTIVITY_NOTIFICATION_TO_PATIENT(MessageCategory.THROTTLEABLE),
+    ACTIVITY_NOTIFICATION_TO_PATIENT_V2(MessageCategory.THROTTLEABLE),
     /* notification to carer about changes made to account by clinical team  */
     ACTIVITY_NOTIFICATION_TO_CARER(MessageCategory.THROTTLEABLE),
     /* notification to clinician about changes made to account by clinical team  */
@@ -153,6 +154,7 @@ public enum Message {
     SWITCH_NOTIFICATION_TO_INST_ADMIN,
     /* notification to user about his/her own action - e.g. adding new contact */
     ACTIVITY_NOTIFICATION_TO_SELF(MessageCategory.THROTTLEABLE),
+    ACTIVITY_NOTIFICATION_TO_SELF_V2(MessageCategory.THROTTLEABLE),
     /**/
     NOTIFY_TEAM_COORD_TO_UPDATE_SYMPTOM_ALARMS,
     /**/
