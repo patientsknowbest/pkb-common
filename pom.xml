@@ -15,6 +15,7 @@
     
     <modules>
         <module>config</module>
+        <module>date-time</module>
     </modules>
 
 </project>
