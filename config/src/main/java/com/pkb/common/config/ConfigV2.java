@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ConfigV2 implements Configuration {
+
     private static final class ConfigV2InstanceHolder {
         private static final ConfigV2 INSTANCE = new ConfigV2();
     }
@@ -663,27 +664,27 @@ public class ConfigV2 implements Configuration {
 
     @Override
     public boolean isFhirPractitionerResourceEnabled() {
-        return storage.getBoolean("fhir.api.Practitioner.enabled");
+        return storage.getBoolean("fhir.api.Practitioner.enabled", true);
     }
 
     @Override
     public boolean isFhirOrganizationResourceEnabled() {
-        return storage.getBoolean("fhir.api.Organization.enabled");
+        return storage.getBoolean("fhir.api.Organization.enabled", true);
     }
 
     @Override
     public boolean isFhirNamingSystemResourceEnabled() {
-        return storage.getBoolean("fhir.api.NamingSystem.enabled");
+        return storage.getBoolean("fhir.api.NamingSystem.enabled", true);
     }
 
     @Override
     public boolean isFhirConsentResourceEnabled() {
-        return storage.getBoolean("fhir.api.Consent.enabled");
+        return storage.getBoolean("fhir.api.Consent.enabled", true);
     }
 
     @Override
     public boolean isFhirPurviewOperationEnabled() {
-        return storage.getBoolean("fhir.api.purview.enabled");
+        return storage.getBoolean("fhir.api.purview.enabled", true);
     }
 
     @Override
@@ -694,7 +695,7 @@ public class ConfigV2 implements Configuration {
 
     @Override
     public boolean isFhirPersonResourceEnabled() {
-        return storage.getBoolean("fhir.api.Person.enabled");
+        return storage.getBoolean("fhir.api.Person.enabled", false);
     }
 
     public Optional<String> clamAvHost() {
@@ -716,6 +717,11 @@ public class ConfigV2 implements Configuration {
 
         return maybeHostName;
     }
+
+    public boolean isFakeDateTimeServiceEnabled() {
+        return storage.getBoolean("fakedatetimeservice.enabled", false);
+    }
+
 
     @Override
     public boolean isFhirDocumentReferenceResourceEnabled() {
