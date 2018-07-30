@@ -23,4 +23,6 @@ public interface Configuration {
     boolean isFhirPurviewOperationEnabled();
 
     boolean isFhirApiEnabled();
+
+    String getVcMaxWarningDate();
 }
