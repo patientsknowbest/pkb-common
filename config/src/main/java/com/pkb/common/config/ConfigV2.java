@@ -722,4 +722,8 @@ public class ConfigV2 implements Configuration {
         return storage.getBoolean("fakedatetimeservice.enabled", false);
     }
 
+    @Override
+    public String getVcMaxWarningDate() {
+        return storage.getString("vc_max_warning_date", "2018-07-30T00:00:00Z");
+    }
 }
