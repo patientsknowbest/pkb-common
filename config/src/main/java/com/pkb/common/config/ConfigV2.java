@@ -559,6 +559,10 @@ public class ConfigV2 implements Configuration {
         return storage.getString("com.pkb.api.util.DefaultInternalAccessTokenIssuer.clientId");
     }
 
+    public String getRestApiClientIdForSPA() {
+        return storage.getString("rest.api.client.id.singlePageApp", "pkb-spa-user");
+    }
+
     public String getEMISSSOMonitoringProfEmail() {
         return storage.getString("emis.sso.monitoring.prof.email");
     }
