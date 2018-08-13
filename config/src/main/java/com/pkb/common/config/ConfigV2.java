@@ -725,7 +725,7 @@ public class ConfigV2 implements Configuration {
         return storage.getBoolean("fakedatetimeservice.enabled", false);
     }
 
-    public boolean hideHelpIcons() {
-        return storage.getBoolean("hideHelpIcons");
+    public boolean isFakeHelpPageBaseUrlProviderEnabled() {
+        return storage.getBoolean("fakehelppagebaseurlprovider.enabled", false);
     }
 }
