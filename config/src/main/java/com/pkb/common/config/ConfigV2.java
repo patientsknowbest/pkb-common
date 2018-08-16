@@ -728,4 +728,9 @@ public class ConfigV2 implements Configuration {
     public boolean isFakeHelpPageBaseUrlProviderEnabled() {
         return storage.getBoolean("fakehelppagebaseurlprovider.enabled", false);
     }
+
+    @Override
+    public boolean isFhirDocumentReferenceResourceEnabled() {
+        return storage.getBoolean("fhir.api.DocumentReference.enabled", false);
+    }
 }
