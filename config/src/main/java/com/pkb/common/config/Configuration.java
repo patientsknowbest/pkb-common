@@ -25,4 +25,6 @@ public interface Configuration {
     boolean isFhirApiEnabled();
 
     String getVcMaxWarningDate();
+
+    boolean isFhirDocumentReferenceResourceEnabled();
 }
