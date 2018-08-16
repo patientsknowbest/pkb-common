@@ -3,10 +3,10 @@ package com.pkb.common.datetime;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoField;
-import java.util.Date;
+
+import static java.time.ZoneOffset.UTC;
 
 public interface DateTimeService {
 
@@ -16,7 +16,7 @@ public interface DateTimeService {
     }
 
     default LocalDate today() {
-        return ZonedDateTime.ofInstant(clock().instant(), clock().getZone()).toLocalDate();
+        return LocalDate.now(UTC);
     }
 
     Clock clock();
@@ -28,10 +28,6 @@ public interface DateTimeService {
                 .with(ChronoField.MINUTE_OF_HOUR, 0)
                 .with(ChronoField.HOUR_OF_DAY, 0);
         return zdt;
-    }
-
-    default LocalDate convertToLocalDateAtUTC(Date date){
-        return ZonedDateTime.ofInstant(Instant.ofEpochMilli(date.getTime()), ZoneOffset.UTC).toLocalDate();
     }
 
 }
