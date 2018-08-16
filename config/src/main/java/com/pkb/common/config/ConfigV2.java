@@ -730,4 +730,9 @@ public class ConfigV2 implements Configuration {
     public String getVcMaxWarningDate() {
         return storage.getString("vc_max_warning_date", "2018-07-26T00:00:00Z");
     }
+
+    @Override
+    public boolean isFhirDocumentReferenceResourceEnabled() {
+        return storage.getBoolean("fhir.api.DocumentReference.enabled", false);
+    }
 }
