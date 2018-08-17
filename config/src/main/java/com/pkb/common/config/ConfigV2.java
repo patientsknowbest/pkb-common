@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ConfigV2 implements Configuration {
-
     private static final class ConfigV2InstanceHolder {
         private static final ConfigV2 INSTANCE = new ConfigV2();
     }
@@ -559,6 +558,10 @@ public class ConfigV2 implements Configuration {
         return storage.getString("com.pkb.api.util.DefaultInternalAccessTokenIssuer.clientId");
     }
 
+    public String getRestApiClientIdForSPA() {
+        return storage.getString("rest.api.client.id.singlePageApp", "pkb-spa-user");
+    }
+
     public String getEMISSSOMonitoringProfEmail() {
         return storage.getString("emis.sso.monitoring.prof.email");
     }
@@ -722,4 +725,12 @@ public class ConfigV2 implements Configuration {
         return storage.getBoolean("fakedatetimeservice.enabled", false);
     }
 
+    public boolean isFakeHelpPageBaseUrlProviderEnabled() {
+        return storage.getBoolean("fakehelppagebaseurlprovider.enabled", false);
+    }
+
+    @Override
+    public boolean isFhirDocumentReferenceResourceEnabled() {
+        return storage.getBoolean("fhir.api.DocumentReference.enabled", false);
+    }
 }
