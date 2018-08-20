@@ -567,7 +567,11 @@ public class ConfigV2 implements Configuration {
     }
 
     public boolean isTimelineEnabled() {
-        return storage.getBoolean("timelineEnabled", false);
+        return storage.getBoolean("feature.timeline.enabled", false);
+    }
+
+    public boolean isPatientBannerEnabled() {
+        return storage.getBoolean("feature.patientbanner.enabled", false);
     }
 
     public String getTimelineFrontendFetchURL() {
