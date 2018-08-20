@@ -37,12 +37,11 @@ public interface DateTimeService {
     }
 
     default ZonedDateTime firstDayOfMonth() {
-        ZonedDateTime zdt = ZonedDateTime.now(clock()).with(ChronoField.DAY_OF_MONTH, 1)
+        return ZonedDateTime.now(clock()).with(ChronoField.DAY_OF_MONTH, 1)
                 .with(ChronoField.MILLI_OF_SECOND, 0)
                 .with(ChronoField.SECOND_OF_MINUTE, 0)
                 .with(ChronoField.MINUTE_OF_HOUR, 0)
                 .with(ChronoField.HOUR_OF_DAY, 0);
-        return zdt;
     }
 
     default LocalDate convertToLocalDateAtUTC(Date date) {
@@ -108,5 +107,9 @@ public interface DateTimeService {
     @Deprecated
     default Date newDateDepracated() {
         return Date.from(now());
+    }
+
+    default LocalDateTime convertNowToLocalDateAtTimezone(ZoneId zoneId) {
+        return LocalDateTime.ofInstant(now(), zoneId);
     }
 }
