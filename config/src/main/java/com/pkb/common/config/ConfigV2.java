@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ConfigV2 implements Configuration {
-
     private static final class ConfigV2InstanceHolder {
         private static final ConfigV2 INSTANCE = new ConfigV2();
     }
@@ -729,6 +728,11 @@ public class ConfigV2 implements Configuration {
     @Override
     public String getVcMaxWarningDate() {
         return storage.getString("vc_max_warning_date", "2018-07-26T00:00:00Z");
+    }
+
+    public boolean isFakeHelpPageBaseUrlProviderEnabled() {
+        return storage.getBoolean("fakehelppagebaseurlprovider.enabled", false);
+
     }
 
     @Override
