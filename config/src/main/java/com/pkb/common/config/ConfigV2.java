@@ -301,6 +301,10 @@ public class ConfigV2 implements Configuration {
         return Integer.parseInt(storage.getString("docDeleteBatchSize", "20"));
     }
 
+    public long getPatientBannerErrorTimeoutMillis() {
+        return storage.getLong("feature.patientbanner.errorTimeoutMillis", 3000L);
+    }
+
     public int getDocDeleteIntervalInHours() {
         return Integer.parseInt(storage.getString("docDeleteIntervalInHours", "8"));
     }
