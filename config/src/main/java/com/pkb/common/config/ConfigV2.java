@@ -301,6 +301,10 @@ public class ConfigV2 implements Configuration {
         return Integer.parseInt(storage.getString("docDeleteBatchSize", "20"));
     }
 
+    public long getPatientBannerErrorTimeoutMillis() {
+        return storage.getLong("feature.patientbanner.errorTimeoutMillis", 3000L);
+    }
+
     public int getDocDeleteIntervalInHours() {
         return Integer.parseInt(storage.getString("docDeleteIntervalInHours", "8"));
     }
@@ -738,5 +742,9 @@ public class ConfigV2 implements Configuration {
     @Override
     public boolean isFhirDocumentReferenceResourceEnabled() {
         return storage.getBoolean("fhir.api.DocumentReference.enabled", false);
+    }
+
+    public int getEncounterTimelineRangeMonths() {
+        return storage.getInt("encounterTimelineRangeMonths", 6);
     }
 }
