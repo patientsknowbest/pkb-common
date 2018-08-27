@@ -741,4 +741,6 @@ public class ConfigV2 implements Configuration {
     public int getEncounterTimelineRangeMonths() {
         return storage.getInt("encounterTimelineRangeMonths", 6);
     }
+
+    public int getUserAgentAnalyzerCacheSize() { return storage.getInt("userAgentAnalyzerCacheSize", 1000); }
 }
