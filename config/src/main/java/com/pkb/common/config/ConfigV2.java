@@ -741,4 +741,8 @@ public class ConfigV2 implements Configuration {
     public boolean isFhirDocumentReferenceResourceEnabled() {
         return storage.getBoolean("fhir.api.DocumentReference.enabled", false);
     }
+
+    public int getEncounterTimelineRangeMonths() {
+        return storage.getInt("encounterTimelineRangeMonths", 6);
+    }
 }
