@@ -22,6 +22,7 @@ enum MessageCategory {
 /**
  * This enumeration defines the Message types-
  */
+@SuppressWarnings("unused")
 public enum Message {
 
     /** Initial or resent email confirmation on user activation . */
@@ -29,7 +30,7 @@ public enum Message {
     EMAIL_VERIFICATION(MessageCategory.REGISTRATION),
     /**/
     INVITE_CLINICIAN(MessageCategory.REGISTRATION),
-    /* conversation copying, adding new message to conversation, Instant Medical History Data (IMHM) mesage, call message, notification to receiver about a patient ? */
+    /* conversation copying, adding new message to conversation, Instant Medical History Data (IMHM) message, call message, notification to receiver about a patient ? */
     NOTIFICATION_TO_RECEIVER,
     /* not used anywhere ? */
     NOTIFICATION_TO_SENDER,
@@ -42,11 +43,11 @@ public enum Message {
 
     /* patient account created by coord, Emis api or HL7*/
     NOTIFY_PATIENT_OF_CREATED_ACCOUNT(MessageCategory.REGISTRATION),
-    /* clinician created by coord, upgrade invitied clinician by coord, clinician reminder */
+    /* clinician created by coord, upgrade invited clinician by coord, clinician reminder */
     NOTIFY_CLINICIAN_OF_CREATED_ACCOUNT(MessageCategory.REGISTRATION),
     /* */
     NOTIFICATION_CLINICIAN_ACCEPTED_INVITATION,
-    /* upgrade clinician, switch clinitian account*/
+    /* upgrade clinician, switch clinician account*/
     NOTIFICATION_TO_INST_ADMIN,
 
     /* inviteClinician (single & bulk), createOrInvitePatient, invitations (single & bulk)  */
@@ -126,7 +127,7 @@ public enum Message {
     ACCESS_GRANTED_NOTIFICATION_TO_PATIENT,
     /*notification for patient about revoking access from clinician */
     ACCESS_REVOKED_NOTIFICATION_TO_PATIENT,
-    /*notification to patient that a third party has revoked access to an indiv pro or carer */
+    /*notification to patient that a third party has revoked access to an individual pro or carer */
     INDIV_ACCESS_REVOKED_NOTIFICATION_TO_PATIENT,
     /*notification for patient's carer about granting access to clinician */
     ACCESS_GRANTED_NOTIFICATION_TO_CARER,
@@ -247,11 +248,14 @@ public enum Message {
     NOTIFY_PATIENT_SHARING_ENABLED,
 
     /* forgotPassword email notification */
-    FORGOT_PASSWORD;
+    FORGOT_PASSWORD,
+
+    /* notify patient of HL7 MDM message */
+    NOTIFY_PATIENT_OF_DOCUMENT_RECEIVED;
 
     private final Set<MessageCategory> categories;
 
-    private Message(MessageCategory... categoryList) {
+    Message(MessageCategory... categoryList) {
         categories = Collections.unmodifiableSet(Sets.newEnumSet(Arrays.asList(categoryList), MessageCategory.class));
     }
 
