@@ -733,8 +733,14 @@ public class ConfigV2 implements Configuration {
         return storage.getBoolean("fakedatetimeservice.enabled", false);
     }
 
+    @Override
+    public String getVcMaxWarningDate() {
+        return storage.getString("vc_max_warning_date", "2018-07-26T00:00:00Z");
+    }
+
     public boolean isFakeHelpPageBaseUrlProviderEnabled() {
         return storage.getBoolean("fakehelppagebaseurlprovider.enabled", false);
+
     }
 
     @Override
@@ -745,4 +751,6 @@ public class ConfigV2 implements Configuration {
     public int getEncounterTimelineRangeMonths() {
         return storage.getInt("encounterTimelineRangeMonths", 6);
     }
+
+    public int getUserAgentAnalyzerCacheSize() { return storage.getInt("userAgentAnalyzerCacheSize", 1000); }
 }
