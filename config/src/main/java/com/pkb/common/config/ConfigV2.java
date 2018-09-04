@@ -753,4 +753,8 @@ public class ConfigV2 implements Configuration {
     }
 
     public int getUserAgentAnalyzerCacheSize() { return storage.getInt("userAgentAnalyzerCacheSize", 1000); }
+
+    public boolean enforceSecureCookies() {
+        return storage.getBoolean("feature.enforce.secure.cookies", true);
+    }
 }
