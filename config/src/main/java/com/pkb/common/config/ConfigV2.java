@@ -4,6 +4,8 @@ import static java.lang.String.format;
 import static java.util.Optional.empty;
 
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 import org.jetbrains.annotations.NotNull;
@@ -39,11 +41,11 @@ public class ConfigV2 implements Configuration {
 
     /**
      * @param protocol
-     *         defaults to http
+     *            defaults to http
      * @param host
-     *         valid value required
+     *            valid value required
      * @param port
-     *         defaults to none specified (defaults ports 80/443 if specified will be removed)
+     *            defaults to none specified (defaults ports 80/443 if specified will be removed)
      * @return example: protocol://host:port/application, or protocol://host no trailing slash unless included in application parameter
      */
     private String buildCleanUrl(String protocol, String host, String port) {
@@ -341,26 +343,6 @@ public class ConfigV2 implements Configuration {
         return storage.getString("emisEsDownloadBaseDir");
     }
 
-    public String getEmisEsSftpHost() {
-        return storage.getString("emisEsSftpHost");
-    }
-
-    public int getEmisEsSftpPort() {
-        return storage.getInt("emisEsSftpPort");
-    }
-
-    public String getEmisEsSftpUser() {
-        return storage.getString("emisEsSftpUser");
-    }
-
-    public String getEmisEsSftpPrivateKeyFile() {
-        return storage.getString("emisEsSftpPrivateKeyFile");
-    }
-
-    public String getEmisEsSftpPrivateKeyFilePassphrase() {
-        return storage.getString("emisEsSftpPrivateKeyFilePassphrase", "");
-    }
-
     public String getEmisEsSftpRemoteDirectory() {
         return storage.getString("emisEsSftpRemoteDirectory");
     }
@@ -391,6 +373,10 @@ public class ConfigV2 implements Configuration {
 
     public int getEmisFailureGracePeriodHours() {
         return storage.getInt("emisEsFailureGracePeriodHours");
+    }
+
+    public Path getEmisEsSftpConfigYamlPath() {
+        return Paths.get(storage.getString("emisEsSftpConfigYaml"));
     }
 
     public boolean getUseProxy() {
@@ -751,7 +737,9 @@ public class ConfigV2 implements Configuration {
         return storage.getInt("encounterTimelineRangeMonths", 6);
     }
 
-    public int getUserAgentAnalyzerCacheSize() { return storage.getInt("userAgentAnalyzerCacheSize", 1000); }
+    public int getUserAgentAnalyzerCacheSize() {
+        return storage.getInt("userAgentAnalyzerCacheSize", 1000);
+    }
 
     public boolean enforceSecureCookies() {
         return storage.getBoolean("feature.enforce.secure.cookies", true);
