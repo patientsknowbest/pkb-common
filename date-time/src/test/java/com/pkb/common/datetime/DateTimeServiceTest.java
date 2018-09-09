@@ -21,5 +21,4 @@ public class DateTimeServiceTest {
         Instant expected = Instant.parse("2010-10-01T00:00:00Z");
         assertEquals(expected, actual);
     }
-
 }
