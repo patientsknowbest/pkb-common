@@ -561,7 +561,7 @@ public class ConfigV2 implements Configuration {
     }
 
     public boolean isPatientBannerEnabled() {
-        return storage.getBoolean("feature.patientbanner.enabled", false);
+        return storage.getBoolean("feature.patientbanner.enabled", true);
     }
 
     public String getTimelineFrontendFetchURL() {
@@ -639,7 +639,7 @@ public class ConfigV2 implements Configuration {
 
     @Override
     public boolean isFhirApiExperimental() {
-        return storage.getBoolean("fhir.api.experimental");
+        return storage.getBoolean("fhir.api.experimental", false);
     }
 
     public int getEmisEsProcessingBatchSize() {
