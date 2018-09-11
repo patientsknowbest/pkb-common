@@ -17,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public enum NationalIdType implements Serializable {
 
+    // http://oid-info.com/get/2.16.840.1.113883.2.1.4.1
     NHS_NUMBER("NHS number", new String[] { "GB-ENG", "GB-WLS" }, "NHS", "NH", "https://fhir.nhs.uk/Id/nhs-number") {
         @Override
         public String cleanInput(String id) {
@@ -74,7 +75,8 @@ public enum NationalIdType implements Serializable {
         }
     },
 
-    CHI_NUMBER("CHI number", "GB-SCT", "NHS Scotland", "NH") {
+    // http://oid-info.com/get/2.16.840.1.113883.2.1.3.2 -> http://www.hl7.org.uk/version3group/downloads/OidRootHl7UkOnly.html
+    CHI_NUMBER("CHI number", "GB-SCT", "NHS Scotland", "NH", "urn:oid:2.16.840.1.113883.2.1.3.2.4.16.53") {
         @Override
         public String cleanInput(String id) {
             // strip out dashes and spaces
@@ -147,6 +149,7 @@ public enum NationalIdType implements Serializable {
         }
     },
 
+    // http://oid-info.com/get/2.16.840.1.113883.3.1061 (http://www.hl7.org/oid/index.cfm?Comp_OID=2.16.840.1.113883.3.1061)
     H_AND_C_NUMBER("Health and Care number", "GB-NIR", "DHSSPS", "NH") {
         @Override
         public String cleanInput(String id) {
@@ -200,6 +203,7 @@ public enum NationalIdType implements Serializable {
         }
     },
 
+    // TODO: find URI for identifier system
     PPS_NUMBER("PPS number", "IE", "DSP", "NI") {
         @Override
         public String cleanInput(String id) {
@@ -273,6 +277,8 @@ public enum NationalIdType implements Serializable {
         }
     },
 
+    // http://oid-info.com/get/2.16.840.1.113883.4.1 (http://www.hl7.org/oid/index.cfm?Comp_OID=2.16.840.1.113883.4.1)
+    // and https://www.hl7.org/fhir/identifier-registry.html (http://hl7.org/fhir/sid/us-ssn)
     SSN_USA("SSN", "US", "USA", "NI") {
         @Override
         public String cleanInput(String id) {
@@ -321,6 +327,7 @@ public enum NationalIdType implements Serializable {
         }
     },
 
+    // http://oid-info.com/get/2.16.840.1.113883.4.272 (http://www.hl7.org/oid/index.cfm?Comp_OID=2.16.840.1.113883.4.272)
     SIN_CA("SIN", "CA", "CA", "NI") {
         @Override
         public String cleanInput(String id) {
@@ -362,6 +369,7 @@ public enum NationalIdType implements Serializable {
         }
     },
 
+    // TODO: find URI for identifier system
     HKID_HK("HKID", "HK", "HK", "NI") {
         @Override
         public String cleanInput(String id) {
@@ -451,7 +459,7 @@ public enum NationalIdType implements Serializable {
         }
     },
 
-    // http://oid-info.com/get/2.16.840.1.113883.2.4.6.3
+    // http://oid-info.com/get/2.16.840.1.113883.2.4.6.3 (http://www.hl7.org/oid/index.cfm?Comp_OID=2.16.840.1.113883.2.4.6.3)
     BSN_NL("BSN", "NL", "NL", "NI", "urn:oid:2.16.840.1.113883.2.4.6.3") {
         @Override
         public String cleanInput(String id) {
@@ -506,7 +514,9 @@ public enum NationalIdType implements Serializable {
         }
     },
 
-    KVN_DE("Krankenversichertennummer", "DE", "DE", "NH") {
+    // Maybe: http://oid-info.com/get/2.16.840.1.113883.2.6
+    // or http://fhir.de/NamingSystem/gkv/kvnr-30
+    KVN_DE("Krankenversichertennummer", "DE", "DE", "NH", "http://fhir.de/NamingSystem/gkv/kvnr-30") {
         @Override
         public String cleanInput(String id) {
             return Optional.ofNullable(id)
@@ -556,6 +566,7 @@ public enum NationalIdType implements Serializable {
         }
     },
 
+    // TODO: find URI for identifier system
     CIVIL_ID_KW("Civil ID", "KW", "KW", "NI") {
         // http://dr-mahbob.com/blog/2008/12/23/civil-id-equation-for-check-digit/
         // Sample code from Django: https://github.com/django/django-localflavor/blob/master/localflavor/kw/forms.py
