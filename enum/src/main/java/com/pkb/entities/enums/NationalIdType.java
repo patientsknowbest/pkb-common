@@ -451,7 +451,8 @@ public enum NationalIdType implements Serializable {
         }
     },
 
-    BSN_NL("BSN", "NL", "NL", "NI") {
+    // http://oid-info.com/get/2.16.840.1.113883.2.4.6.3
+    BSN_NL("BSN", "NL", "NL", "NI", "urn:oid:2.16.840.1.113883.2.4.6.3") {
         @Override
         public String cleanInput(String id) {
             // strip out spaces
