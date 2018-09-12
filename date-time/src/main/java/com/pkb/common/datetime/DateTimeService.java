@@ -33,6 +33,10 @@ public interface DateTimeService {
         return LocalDateTime.now(clock());
     }
 
+    default ZonedDateTime nowZonedDateTime() {
+        return ZonedDateTime.now(clock());
+    }
+
     default ZonedDateTime firstDayOfMonth() {
         ZonedDateTime zdt = ZonedDateTime.now(clock()).with(ChronoField.DAY_OF_MONTH, 1)
                 .with(ChronoField.MILLI_OF_SECOND, 0)
