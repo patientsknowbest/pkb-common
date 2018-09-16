@@ -89,8 +89,25 @@ public interface DateTimeService {
         return Date.from(Instant.from(formatter.parse(input)));
     }
 
+    /**
+     * @deprecated Use {@link java.time} instead of {@link Date}, then there is no need for this method.
+     * @param input
+     * @param formatter
+     * @return
+     */
     @Deprecated
     default String dateToString(Date input, DateTimeFormatter formatter) {
         return input.toInstant().atZone(ZoneId.systemDefault()).format(formatter);
+    }
+
+    /**
+     * Create new {@link Date}.
+     * 
+     * @deprecated Use {@link java.time} instead of {@link Date}, then there is no need for this method.
+     * @return
+     */
+    @Deprecated
+    default Date newDateDepracated() {
+        return Date.from(now());
     }
 }
