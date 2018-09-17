@@ -379,6 +379,17 @@ public class ConfigV2 implements Configuration {
         return Paths.get(storage.getString("emisEsSftpConfigYaml"));
     }
 
+    public Optional<Path> getEmisEsWhitelistYamlPath() {
+
+        Optional<Path> whitelistYamlPath = empty();
+
+        if (storage.getString("emisEsWhitelistYaml")!=null) {
+            whitelistYamlPath = Optional.of(Paths.get(storage.getString("emisEsWhitelistYaml")));
+
+        }
+        return whitelistYamlPath;
+    }
+
     public boolean getUseProxy() {
 
         boolean available = false;
