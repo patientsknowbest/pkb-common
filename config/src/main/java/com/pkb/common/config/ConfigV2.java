@@ -646,6 +646,14 @@ public class ConfigV2 implements Configuration {
         return storage.getInt("emisEsBatchSize");
     }
 
+    public int getEmisEsCodingBatchSize() {
+        return 4000;
+    }
+
+    public boolean isEmisEsStateResumeEnabled() {
+        return true;
+    }
+
     public int getAutosaveTimeoutInMilliseconds() {
         return storage.getInt("ui.autosaveTimeoutInMilliseconds");
     }
