@@ -19,7 +19,6 @@ import io.vavr.Tuple2;
 public interface DateTimeService {
 
     default Instant now() {
-        ZonedDateTime.ofInstant(clock().instant(), clock().getZone());
         return clock().instant();
     }
 
