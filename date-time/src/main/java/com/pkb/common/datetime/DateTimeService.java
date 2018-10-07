@@ -26,6 +26,10 @@ public interface DateTimeService {
         return ZonedDateTime.ofInstant(clock().instant(), clock().getZone()).toLocalDate();
     }
 
+    default LocalDate tomorrow() {
+        return today().plusDays(1L);
+    }
+
     Clock clock();
 
     default LocalDateTime nowLocalDateTime() {
