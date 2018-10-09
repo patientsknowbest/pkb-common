@@ -17,7 +17,9 @@ import org.jetbrains.annotations.NotNull;
  */
 public enum NationalIdType implements Serializable {
 
-    // http://oid-info.com/get/2.16.840.1.113883.2.1.4.1
+    /**
+     * Source: http://oid-info.com/get/2.16.840.1.113883.2.1.4.1
+     */
     NHS_NUMBER("NHS number", new String[] { "GB-ENG", "GB-WLS" }, "NHS", "NH", "https://fhir.nhs.uk/Id/nhs-number") {
         @Override
         public String cleanInput(String id) {
@@ -75,7 +77,9 @@ public enum NationalIdType implements Serializable {
         }
     },
 
-    // http://oid-info.com/get/2.16.840.1.113883.2.1.3.2 -> http://www.hl7.org.uk/version3group/downloads/OidRootHl7UkOnly.html
+    /**
+     * Source: http://oid-info.com/get/2.16.840.1.113883.2.1.3.2 -> http://www.hl7.org.uk/version3group/downloads/OidRootHl7UkOnly.html
+     */
     CHI_NUMBER("CHI number", "GB-SCT", "NHS Scotland", "NH", "urn:oid:2.16.840.1.113883.2.1.3.2.4.16.53") {
         @Override
         public String cleanInput(String id) {
@@ -149,7 +153,9 @@ public enum NationalIdType implements Serializable {
         }
     },
 
-    // http://oid-info.com/get/2.16.840.1.113883.3.1061 (http://www.hl7.org/oid/index.cfm?Comp_OID=2.16.840.1.113883.3.1061)
+    /**
+     * Source: http://oid-info.com/get/2.16.840.1.113883.3.1061 (http://www.hl7.org/oid/index.cfm?Comp_OID=2.16.840.1.113883.3.1061)
+     */
     H_AND_C_NUMBER("Health and Care number", "GB-NIR", "DHSSPS", "NH") {
         @Override
         public String cleanInput(String id) {
@@ -277,9 +283,10 @@ public enum NationalIdType implements Serializable {
         }
     },
 
-    // http://oid-info.com/get/2.16.840.1.113883.4.1 (http://www.hl7.org/oid/index.cfm?Comp_OID=2.16.840.1.113883.4.1)
-    // and https://www.hl7.org/fhir/identifier-registry.html (http://hl7.org/fhir/sid/us-ssn)
-    SSN_USA("SSN", "US", "USA", "NI") {
+    /**
+     * Source: https://www.hl7.org/fhir/identifier-registry.html (http://hl7.org/fhir/sid/us-ssn)
+     */
+    SSN_USA("SSN", "US", "USA", "NI", "http://hl7.org/fhir/sid/us-ssn") {
         @Override
         public String cleanInput(String id) {
             // strip out dashes
@@ -327,7 +334,9 @@ public enum NationalIdType implements Serializable {
         }
     },
 
-    // http://oid-info.com/get/2.16.840.1.113883.4.272 (http://www.hl7.org/oid/index.cfm?Comp_OID=2.16.840.1.113883.4.272)
+    /**
+     * Source: http://oid-info.com/get/2.16.840.1.113883.4.272 (http://www.hl7.org/oid/index.cfm?Comp_OID=2.16.840.1.113883.4.272)
+     */
     SIN_CA("SIN", "CA", "CA", "NI") {
         @Override
         public String cleanInput(String id) {
@@ -459,8 +468,10 @@ public enum NationalIdType implements Serializable {
         }
     },
 
-    // http://oid-info.com/get/2.16.840.1.113883.2.4.6.3 (http://www.hl7.org/oid/index.cfm?Comp_OID=2.16.840.1.113883.2.4.6.3)
-    BSN_NL("BSN", "NL", "NL", "NI", "urn:oid:2.16.840.1.113883.2.4.6.3") {
+    /**
+     * Source: https://simplifier.net/nictizdstu2/unnamednamingsystem8
+     */
+    BSN_NL("BSN", "NL", "NL", "NI", "http://fhir.nl/fhir/NamingSystem/bsn") {
         @Override
         public String cleanInput(String id) {
             // strip out spaces
@@ -514,8 +525,9 @@ public enum NationalIdType implements Serializable {
         }
     },
 
-    // Maybe: http://oid-info.com/get/2.16.840.1.113883.2.6
-    // or http://fhir.de/NamingSystem/gkv/kvnr-30
+    /**
+     * Source: Maybe: http://oid-info.com/get/2.16.840.1.113883.2.6 or http://fhir.de/NamingSystem/gkv/kvnr-30
+     */
     KVN_DE("Krankenversichertennummer", "DE", "DE", "NH", "http://fhir.de/NamingSystem/gkv/kvnr-30") {
         @Override
         public String cleanInput(String id) {
@@ -643,7 +655,6 @@ public enum NationalIdType implements Serializable {
     /**
      * This is a list of ISO country codes for which the corresponding
      * NationalIdType applies.
-     *
      * A list is needed because there is not quite a 1-to-1 between
      * NationalIdType and "country". For example, NHS_NUMBER is used by both
      * England and Wales.
@@ -652,7 +663,9 @@ public enum NationalIdType implements Serializable {
 
     private String hl7IdAuthority;
 
-    /** "NH" for National Health Plan ID, "NI" for National Unique Individual ID... see HL7 Spy */
+    /**
+     * "NH" for National Health Plan ID, "NI" for National Unique Individual ID... see HL7 Spy
+     */
     private String hl7IdType;
 
     private String fhirIdentifierSystem;
