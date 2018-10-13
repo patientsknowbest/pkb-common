@@ -713,6 +713,11 @@ public class ConfigV2 implements Configuration {
         return storage.getBoolean("fhir.api.Person.enabled", false);
     }
 
+    @Override
+    public boolean isFhirObservationResourceEnabled() {
+        return storage.getBoolean("fhir.api.Observation.enabled", false);
+    }
+
     public Optional<String> clamAvHost() {
         Optional<String> maybeHostName = empty();
 
@@ -763,4 +768,5 @@ public class ConfigV2 implements Configuration {
     public boolean enforceSecureCookies() {
         return storage.getBoolean("feature.enforce.secure.cookies", true);
     }
+
 }
