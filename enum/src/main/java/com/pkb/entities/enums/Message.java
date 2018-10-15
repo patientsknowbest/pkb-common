@@ -92,7 +92,6 @@ public enum Message {
     /* notification to patient about handing over discussion*/
     HANDOVER_DISCUSSION_NOTIFICATION_TO_OTHER_PERSON,
     /* notification to patient about changes made to account by clinical team  */
-    ACTIVITY_NOTIFICATION_TO_PATIENT(MessageCategory.THROTTLEABLE),
     ACTIVITY_NOTIFICATION_TO_PATIENT_V2(MessageCategory.THROTTLEABLE),
     /* notification to carer about changes made to account by clinical team  */
     ACTIVITY_NOTIFICATION_TO_CARER(MessageCategory.THROTTLEABLE),
