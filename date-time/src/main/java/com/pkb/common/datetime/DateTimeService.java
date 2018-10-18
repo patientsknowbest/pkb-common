@@ -110,7 +110,7 @@ public interface DateTimeService {
      * @return
      */
     @Deprecated
-    default Date newDateDepracated() {
+    default Date newDateDeprecated() {
         return Date.from(now());
     }
 }
