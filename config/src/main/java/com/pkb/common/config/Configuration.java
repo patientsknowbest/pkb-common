@@ -29,4 +29,6 @@ public interface Configuration {
     boolean isFhirDocumentReferenceResourceEnabled();
 
     boolean isFhirObservationResourceEnabled();
+
+    int getFhirObservationMaxNumberOfResources();
 }
