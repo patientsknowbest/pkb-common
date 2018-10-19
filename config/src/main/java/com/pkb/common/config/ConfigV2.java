@@ -227,22 +227,6 @@ public class ConfigV2 implements Configuration {
         return storage.getString("sciStorePassword");
     }
 
-    public String getPacrEndpoint() {
-        return storage.getString("pacrEndpoint");
-    }
-
-    public String getPacrClientId() {
-        return storage.getString("pacrClientId");
-    }
-
-    public String getPacrClientUsername() {
-        return storage.getString("pacrClientUsername");
-    }
-
-    public String getPacrClientPassword() {
-        return storage.getString("pacrClientPassword");
-    }
-
     public String getFakeS3Endpoint() {
         return storage.getString("fakeS3Endpoint");
     }
@@ -383,7 +367,7 @@ public class ConfigV2 implements Configuration {
 
         Optional<Path> whitelistYamlPath = empty();
 
-        if (storage.getString("emisEsWhitelistYaml")!=null) {
+        if (storage.getString("emisEsWhitelistYaml") != null) {
             whitelistYamlPath = Optional.of(Paths.get(storage.getString("emisEsWhitelistYaml")));
 
         }
