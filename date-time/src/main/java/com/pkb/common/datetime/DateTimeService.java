@@ -6,6 +6,7 @@ import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -18,15 +19,19 @@ import io.vavr.Tuple2;
 
 public interface DateTimeService {
 
+    Clock clock();
+
     default Instant now() {
         return clock().instant();
     }
 
     default LocalDate today() {
-        return ZonedDateTime.ofInstant(clock().instant(), clock().getZone()).toLocalDate();
+        return todayAtZoneId(clock().getZone());
     }
 
-    Clock clock();
+    default LocalDate todayAtZoneId(ZoneId zoneId) {
+        return ZonedDateTime.ofInstant(clock().instant(), zoneId).toLocalDate();
+    }
 
     default LocalDateTime nowLocalDateTime() {
         return LocalDateTime.now(clock());
@@ -37,16 +42,11 @@ public interface DateTimeService {
     }
 
     default ZonedDateTime firstDayOfMonth() {
-        ZonedDateTime zdt = ZonedDateTime.now(clock()).with(ChronoField.DAY_OF_MONTH, 1)
+        return ZonedDateTime.now(clock()).with(ChronoField.DAY_OF_MONTH, 1)
                 .with(ChronoField.MILLI_OF_SECOND, 0)
                 .with(ChronoField.SECOND_OF_MINUTE, 0)
                 .with(ChronoField.MINUTE_OF_HOUR, 0)
                 .with(ChronoField.HOUR_OF_DAY, 0);
-        return zdt;
-    }
-
-    default LocalDate convertToLocalDateAtUTC(Date date) {
-        return ZonedDateTime.ofInstant(Instant.ofEpochMilli(date.getTime()), ZoneOffset.UTC).toLocalDate();
     }
 
     /**
@@ -108,5 +108,25 @@ public interface DateTimeService {
     @Deprecated
     default Date newDateDepracated() {
         return Date.from(now());
+    }
+
+    default LocalDateTime convertNowToLocalDateAtTimezone(ZoneId zoneId) {
+        return LocalDateTime.ofInstant(now(), zoneId);
+    }
+
+    default ZonedDateTime ofLocalDateTime(LocalDateTime localDateTime, ZoneId zoneId) {
+        return ZonedDateTime.of(localDateTime, zoneId);
+    }
+
+    default LocalDate convertToLocalDateAtUTC(Date date){
+        return convertToLocalDateAtZoneId(date, ZoneOffset.UTC);
+    }
+
+    default LocalDate convertToLocalDateAtZoneId(Date date, ZoneId zoneId) {
+        return ZonedDateTime.ofInstant(Instant.ofEpochMilli(date.getTime()), zoneId).toLocalDate();
+    }
+
+    default LocalTime convertNowToLocalTimeAtZoneId(ZoneId zoneId) {
+        return LocalTime.from(now().atZone(zoneId));
     }
 }
