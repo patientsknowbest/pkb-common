@@ -8,6 +8,9 @@ import static java.util.stream.Collectors.toMap;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -181,6 +184,8 @@ public class MenuDataXmlParserHelper {
             value = readCData(reader, cdataIsBase64);
         } else if ("Date".equals(type)) {
             value = new Date(Long.parseLong(readCData(reader, cdataIsBase64)));
+        } else if ("ZonedDateTime".equals(type)) {
+            value = ZonedDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(readCData(reader, cdataIsBase64))), ZoneId.systemDefault());
         } else if ("Long".equals(type)) {
             value = Long.parseLong(readCData(reader, cdataIsBase64));
         } else if ("Boolean".equals(type)) {

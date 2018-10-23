@@ -3,6 +3,7 @@ package com.pkb.ehrdata.serializer.xml01;
 import static io.vavr.API.unchecked;
 
 import java.io.ByteArrayOutputStream;
+import java.time.ZonedDateTime;
 import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
@@ -81,27 +82,24 @@ public class MenuDataXmlSerializerHelper {
                 || ((value instanceof String) && ((String) value).isEmpty())
                 || ((value instanceof Collection<?>) && ((Collection) value).isEmpty())) {
             writer.writeAttribute("type", "null");
-            return;
         } else if (value instanceof String) {
             writer.writeAttribute("type", "String");
             writer.writeCData(toBase64(value.toString()));
-            return;
         } else if (value instanceof Date) {
             writer.writeAttribute("type", "Date");
             writer.writeCData(toBase64(Long.toString(((Date) value).getTime())));
-            return;
+        } else if (value instanceof ZonedDateTime) {
+            writer.writeAttribute("type", "ZonedDateTime");
+            writer.writeCData(toBase64(Long.toString(((ZonedDateTime) value).toInstant().toEpochMilli())));
         } else if (value instanceof Long) {
             writer.writeAttribute("type", "Long");
             writer.writeCData(toBase64(value.toString()));
-            return;
         } else if (value instanceof Boolean) {
             writer.writeAttribute("type", "Boolean");
             writer.writeCData(toBase64(value.toString()));
-            return;
         } else if (value instanceof Double) {
             writer.writeAttribute("type", "Double");
             writer.writeCData(toBase64(value.toString()));
-            return;
         } else if (value instanceof List<?>) {
             Object firstItem = ((List) value).get(0);
             if (firstItem instanceof String) {
