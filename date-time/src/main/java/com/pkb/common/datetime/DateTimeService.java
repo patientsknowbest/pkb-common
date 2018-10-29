@@ -29,6 +29,10 @@ public interface DateTimeService {
         return todayAtZoneId(clock().getZone());
     }
 
+    default LocalDate tomorrow() {
+        return today().plusDays(1L);
+    }
+
     default LocalDate todayAtZoneId(ZoneId zoneId) {
         return ZonedDateTime.ofInstant(clock().instant(), zoneId).toLocalDate();
     }
@@ -106,7 +110,7 @@ public interface DateTimeService {
      * @return
      */
     @Deprecated
-    default Date newDateDepracated() {
+    default Date newDateDeprecated() {
         return Date.from(now());
     }
 
