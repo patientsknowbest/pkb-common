@@ -93,7 +93,7 @@ public enum Message {
     HANDOVER_DISCUSSION_NOTIFICATION_TO_OTHER_PERSON,
     /* notification to patient about changes made to account by clinical team  */
     ACTIVITY_NOTIFICATION_TO_PATIENT_V2(MessageCategory.THROTTLEABLE),
-    /* notification to carer about changes made to account by clinical team  */
+    /* notification to carer about changes made to account by patient */
     ACTIVITY_NOTIFICATION_TO_CARER(MessageCategory.THROTTLEABLE),
     /* notification to clinician about changes made to account by clinical team  */
     ACTIVITY_NOTIFICATION_TO_CLINICIAN,
@@ -250,7 +250,31 @@ public enum Message {
     FORGOT_PASSWORD,
 
     /* notify patient of HL7 MDM message */
-    NOTIFY_PATIENT_OF_DOCUMENT_RECEIVED;
+    NOTIFY_PATIENT_OF_DOCUMENT_RECEIVED,
+
+    /* notification to carer about change made to patient account by clinical team */
+    ACTIVITY_NOTIFICATION_TO_CARER_FOR_PATIENT(MessageCategory.THROTTLEABLE),
+
+    /* invitation to patient sent to carer */
+    INVITE_TO_CARER_FOR_PATIENT(MessageCategory.REGISTRATION),
+
+    /* notify carer of patient consent granted to team */
+    TEAM_ACCESS_GRANTED_NOTIFICATION_TO_CARER_FOR_PATIENT,
+
+    /* notify carer of patient discharged from organisation */
+    NOTIFY_CARER_OF_PATIENT_DISCHARGE_FROM_ORG,
+
+    /* invite the carer to take the survey for the patient */
+    INVITE_CARER_TO_TAKE_SURVEY_FOR_PATIENT,
+
+    /* notification to carer for the patient about handing over discussion*/
+    HANDOVER_DISCUSSION_NOTIFICATION_TO_OTHER_CARER_FOR_PATIENT,
+
+    /* notification to patient about changes made to a privacy label by anyone other than the patient */
+    PRIVACY_LABEL_NOTIFICATION_TO_PATIENT(MessageCategory.THROTTLEABLE),
+
+    /* notification to carer about changes made to a patient privacy label by clinical team */
+    PRIVACY_LABEL_NOTIFICATION_TO_CARER(MessageCategory.THROTTLEABLE);
 
     private final Set<MessageCategory> categories;
 
