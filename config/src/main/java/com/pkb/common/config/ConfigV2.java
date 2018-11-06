@@ -758,4 +758,9 @@ public class ConfigV2 implements Configuration {
         return storage.getInt("fhir.api.Observation.maxNumberOfResources", 1000);
     }
 
+    @Override
+    public int getMaxPageSize() {
+        return storage.getInt("repository.max.page.size", 1000);
+    }
+
 }

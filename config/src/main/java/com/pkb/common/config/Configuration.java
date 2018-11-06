@@ -31,4 +31,6 @@ public interface Configuration {
     boolean isFhirObservationResourceEnabled();
 
     int getFhirObservationMaxNumberOfResources();
+    
+    int getMaxPageSize();
 }
