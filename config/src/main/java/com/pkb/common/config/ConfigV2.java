@@ -608,6 +608,10 @@ public class ConfigV2 implements Configuration {
         return storage.getInt("menudataQueryBatchSize", 5000);
     }
 
+    public int getDBQueryBatchSize() {
+        return storage.getInt("dbQueryBatchSize", 10000);
+    }
+
     public boolean isClientCachingOfStaticFilesEnabled() {
         return storage.getBoolean("clientCachingOfStaticFiles");
     }
