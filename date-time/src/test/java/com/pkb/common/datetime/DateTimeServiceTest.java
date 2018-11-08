@@ -24,6 +24,7 @@ import io.vavr.Tuple2;
 @RunWith(DataProviderRunner.class)
 public class DateTimeServiceTest {
 
+    private static final ZoneId DUTCH = ZoneId.of("Europe/Amsterdam");
     private static final ZoneId UTC = ZoneId.of("UTC");
 
     @Test
@@ -48,12 +49,12 @@ public class DateTimeServiceTest {
                 },
                 {
                         "30/10/2018 09:00",
-                        DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withLocale(new Locale("nl", "NL")).withZone(ZoneId.of("Europe/Amsterdam")),
+                        DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withLocale(new Locale("nl", "NL")).withZone(DUTCH),
                         ZonedDateTime.of(2018, 10, 30, 8, 0, 0, 0, UTC)
                 },
                 {
                         "30/10/2018 09:00",
-                        DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withLocale(Locale.UK).withZone(ZoneId.of("Europe/Amsterdam")),
+                        DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withLocale(Locale.UK).withZone(DUTCH),
                         ZonedDateTime.of(2018, 10, 30, 8, 0, 0, 0, UTC)
                 },
                 {
@@ -104,12 +105,12 @@ public class DateTimeServiceTest {
                 },
                 {
                         "30/10/2018 09:00",
-                        DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withLocale(new Locale("nl", "NL")).withZone(ZoneId.of("Europe/Amsterdam")),
+                        DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withLocale(new Locale("nl", "NL")).withZone(DUTCH),
                         ZonedDateTime.of(2018, 10, 30, 8, 0, 0, 0, UTC)
                 },
                 {
                         "30/10/2018 09:00",
-                        DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withLocale(Locale.UK).withZone(ZoneId.of("Europe/Amsterdam")),
+                        DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withLocale(Locale.UK).withZone(DUTCH),
                         ZonedDateTime.of(2018, 10, 30, 8, 0, 0, 0, UTC)
                 },
                 {
@@ -145,12 +146,12 @@ public class DateTimeServiceTest {
                 },
                 {
                         ZonedDateTime.of(2018, 10, 30, 8, 0, 0, 0, UTC),
-                        DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withLocale(new Locale("nl", "NL")).withZone(ZoneId.of("Europe/Amsterdam")),
+                        DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withLocale(new Locale("nl", "NL")).withZone(DUTCH),
                         "30/10/2018 09:00"
                 },
                 {
                         ZonedDateTime.of(2018, 10, 30, 8, 0, 0, 0, UTC),
-                        DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withLocale(Locale.UK).withZone(ZoneId.of("Europe/Amsterdam")),
+                        DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withLocale(Locale.UK).withZone(DUTCH),
                         "30/10/2018 09:00"
                 },
                 {
