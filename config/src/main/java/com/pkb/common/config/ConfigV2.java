@@ -757,4 +757,9 @@ public class ConfigV2 implements Configuration {
         return storage.getBoolean("feature.enforce.secure.cookies", true);
     }
 
+    @Override
+    public int getFhirObservationMaxNumberOfResources() {
+        return storage.getInt("fhir.api.Observation.maxNumberOfResources", 1000);
+    }
+
 }
