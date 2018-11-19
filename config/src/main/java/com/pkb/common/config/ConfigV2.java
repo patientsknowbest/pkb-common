@@ -263,6 +263,10 @@ public class ConfigV2 implements Configuration {
         return storage.getInt("highchartsThreshold");
     }
 
+    public boolean getUseUTCInHighcharts() {
+        return storage.getBoolean("useUTCInHighcharts");
+    }
+
     public boolean getSortEmisCsvs() {
         return storage.getBoolean("integrations.emis.csv.sort", true);
     }
