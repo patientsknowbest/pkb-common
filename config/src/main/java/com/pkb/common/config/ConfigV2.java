@@ -264,7 +264,7 @@ public class ConfigV2 implements Configuration {
     }
 
     public boolean getUseUTCInHighcharts() {
-        return storage.getBoolean("useUTCInHighcharts");
+        return storage.getBoolean("useUTCInHighcharts", false);
     }
 
     public boolean getSortEmisCsvs() {
