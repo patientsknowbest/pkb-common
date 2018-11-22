@@ -706,6 +706,11 @@ public class ConfigV2 implements Configuration {
         return storage.getBoolean("fhir.api.Observation.enabled", false);
     }
 
+    @Override
+    public boolean isFhirDiagnosticReportResourceEnabled() {
+        return storage.getBoolean("fhir.api.DiagnosticReport.enabled", false);
+    }
+
     public Optional<String> clamAvHost() {
         Optional<String> maybeHostName = empty();
 

@@ -24,6 +24,8 @@ public interface Configuration {
 
     boolean isFhirApiEnabled();
 
+    boolean isFhirDiagnosticReportResourceEnabled();
+
     String getVcMaxWarningDate();
 
     boolean isFhirDocumentReferenceResourceEnabled();
