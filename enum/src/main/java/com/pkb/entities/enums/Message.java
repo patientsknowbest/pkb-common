@@ -138,6 +138,10 @@ public enum Message {
     ACCESS_REVOKED_NOTIFICATION_TO_CLINICIAN,
     /*notification to patient to update symptoms before appointment */
     SYMPTOMS_REMINDER,
+    /*notification to user about an unread message (1 day old)*/
+    UNREAD_MESSAGE_REMINDER,
+    /*notification to user about an unread document (1 day old)*/
+    UNREAD_DOCUMENT_REMINDER,
     /**/
     CHILD_BIRTHDAY_REMINDER,
     /**/
