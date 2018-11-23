@@ -662,6 +662,11 @@ public class ConfigV2 implements Configuration {
     }
 
     @Override
+    public boolean isFhirAppointmentResourceEnabled() {
+        return storage.getBoolean("fhir.api.Appointment.enabled", true);
+    }
+
+    @Override
     public boolean isFhirPatientResourceEnabled() {
         return storage.getBoolean("fhir.api.Patient.enabled", true);
     }
