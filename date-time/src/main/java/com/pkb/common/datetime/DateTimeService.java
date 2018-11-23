@@ -17,6 +17,7 @@ import java.util.Date;
 
 import io.vavr.Tuple2;
 
+@SuppressWarnings({"UseOfObsoleteDateTimeApi", "SSBasedInspection"})
 public interface DateTimeService {
 
     Clock clock();
