@@ -36,12 +36,12 @@ public class LayeredLoader implements ConfigLoader {
             propertyFiles = singletonList(DEFAULT_CONFIG_FILE_PATH);
         } else {
             String[] filePaths = colonSeparatedFileList.split(":");
-            if (!filePaths[0].trim().equals(DEFAULT_CONFIG_FILE_PATH)) {
+            if (filePaths[0].trim().equals(DEFAULT_CONFIG_FILE_PATH)) {
+                propertyFiles = asList(filePaths);
+            } else {
                 propertyFiles = new ArrayList<>(filePaths.length + 1);
                 propertyFiles.add(DEFAULT_CONFIG_FILE_PATH);
                 propertyFiles.addAll(asList(filePaths));
-            } else {
-                propertyFiles = asList(filePaths);
             }
         }
         return propertyFiles.stream()
