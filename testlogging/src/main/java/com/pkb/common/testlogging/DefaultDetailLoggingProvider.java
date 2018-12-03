@@ -1,22 +1,30 @@
 package com.pkb.common.testlogging;
 
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class DefaultDetailLoggingProvider implements DetailLoggingProvider {
     public static final DefaultDetailLoggingProvider INSTANCE = new DefaultDetailLoggingProvider();
+    private static final DetailLogger NOOP_LOGGER = new NoopDetailLogger();
     private volatile boolean isDetailedLoggingRequired = false;
 
     @Override
-    public Logger obtainLogger(Class<?> clazz) {
+    public DetailLogger obtainLogger(Class<?> clazz) {
         if (isDetailedLoggingRequired) {
-            return Logger.getLogger(clazz.getName());
-        } else {
-            Logger noopLogger = Logger.getLogger("NOOP_LOGGER");
-            noopLogger.setLevel(Level.OFF);
-            return noopLogger;
+            Logger logger = LoggerFactory.getLogger(clazz);
+            return new DefaultDetailLogger(logger);
         }
+        return NOOP_LOGGER;
+    }
+
+    @Override
+    public DetailLogger obtainLogger(Logger logger) {
+        if (isDetailedLoggingRequired) {
+            return new DefaultDetailLogger(logger);
+        }
+        return NOOP_LOGGER;
     }
 
     @Override
