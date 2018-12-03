@@ -6,13 +6,12 @@ import static io.vavr.API.Match;
 import static io.vavr.Predicates.instanceOf;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.unmodifiableMap;
+import static java.util.function.Function.identity;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
-
-import static java.util.function.Function.identity;
 
 import io.vavr.control.Either;
 
