@@ -33,4 +33,6 @@ public interface Configuration {
     boolean isFhirObservationResourceEnabled();
 
     int getFhirObservationMaxNumberOfResources();
+
+    int getFhirAppointmentMaxNumberOfResources();
 }
