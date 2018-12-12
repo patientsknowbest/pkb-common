@@ -244,6 +244,10 @@ public class ConfigV2 implements Configuration {
         return storage.getInt("orgAdminDashboardPageSize");
     }
 
+    public int getAccessLogPageSize() {
+        return storage.getInt("accessLogPageSize");
+    }
+
     public String getCoreDevicesOrganizationId() {
         return storage.getString("coreDevicesOrganizationId");
     }
@@ -772,9 +776,12 @@ public class ConfigV2 implements Configuration {
         return storage.getInt("fhir.api.Observation.maxNumberOfResources", 1000);
     }
 
+    @Override
+    public int getFhirAppointmentMaxNumberOfResources() {
+        return storage.getInt("fhir.api.Appointment.maxNumberOfResources", 1000);
+    }
     public String getHospitalMapIframeSrc() {
         return storage.getString("webapp.hospitalMapIframeSrc", "https://viewer.blipstar.com/show?uid=1832224&search=geoip&gui=true&rc=&width=auto&tag=false");
     }
-
 
 }
