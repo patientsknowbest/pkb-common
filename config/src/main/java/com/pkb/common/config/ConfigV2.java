@@ -243,6 +243,10 @@ public class ConfigV2 implements Configuration {
         return storage.getInt("orgAdminDashboardPageSize");
     }
 
+    public int getAccessLogPageSize() {
+        return storage.getInt("accessLogPageSize");
+    }
+
     public String getCoreDevicesOrganizationId() {
         return storage.getString("coreDevicesOrganizationId");
     }
