@@ -784,4 +784,10 @@ public class ConfigV2 implements Configuration {
     public int getFhirAppointmentMaxNumberOfResources() {
         return storage.getInt("fhir.api.Appointment.maxNumberOfResources", 1000);
     }
+
+    @Override
+    public int getFhirDiagnosticReportMaxNumberOfResources() {
+        return storage.getInt("fhir.api.DiagnosticReport.maxNumberOfResources", 1000);
+    }
+
 }
