@@ -278,7 +278,22 @@ public enum Message {
     PRIVACY_LABEL_NOTIFICATION_TO_PATIENT(MessageCategory.THROTTLEABLE),
 
     /* notification to carer about changes made to a patient privacy label by clinical team */
-    PRIVACY_LABEL_NOTIFICATION_TO_CARER(MessageCategory.THROTTLEABLE);
+    PRIVACY_LABEL_NOTIFICATION_TO_CARER(MessageCategory.THROTTLEABLE),
+
+    /* notification to carer about other user inviting new carer */
+    OTHER_USER_INVITES_CARER_NOTIFY_CARER,
+
+    /* notification to carer about created patient account */
+    NOTIFY_CARER_OF_CREATED_PATIENT_ACCOUNT,
+
+    /* notification to carer about activation of patient account */
+    ACCOUNT_ACTIVATION_CARER_NOTIFICATION,
+
+    /* notification to carer about other carer accepting invitation from other user */
+    CARER_ACCEPTS_INVITATION_FROM_OTHER_USER_NOTIFY_CARER,
+
+    /* notification to carer about patient primary contact change */
+    PRIMARY_CONTACT_CHANGE_CARER_NOTIFICATION;
 
     private final Set<MessageCategory> categories;
 
