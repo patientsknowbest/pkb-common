@@ -3,6 +3,7 @@ package com.pkb.common.config;
 import static java.lang.String.format;
 import static java.util.Optional.empty;
 
+import java.lang.invoke.MethodHandles;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -18,7 +19,6 @@ public class ConfigV2 implements Configuration {
     }
 
     // FIXME: this is just a workaround to avoid loading config files multiple times.
-
     /**
      * @deprecated Use CDI or Spring to wire an instance into your service.
      */
@@ -27,7 +27,7 @@ public class ConfigV2 implements Configuration {
         return ConfigV2InstanceHolder.INSTANCE;
     }
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(java.lang.invoke.MethodHandles.lookup().lookupClass());
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private final RawConfigStorage storage;
 
@@ -197,6 +197,14 @@ public class ConfigV2 implements Configuration {
 
     public boolean getSendReminderEmailsEnabled() {
         return storage.getBoolean("sendReminderEmailsEnabled", false);
+    }
+
+    public boolean getUnreadMessageReminderEnabled() {
+        return storage.getBoolean("sendUnreadMessageReminderEnabled", false);
+    }
+
+    public boolean getUnreadDocumentReminderEnabled() {
+        return storage.getBoolean("sendUnreadDocumentReminderEnabled", false);
     }
 
     public String getWithingsOauthKey() {
@@ -517,6 +525,10 @@ public class ConfigV2 implements Configuration {
 
     public String getSymptomsNotificationCron() {
         return storage.getString("symptomsNotificationCron");
+    }
+
+    public String getUnreadNotificationCron() {
+        return storage.getString("unreadNotificationCron");
     }
 
     public String getImageUploadMaxFileText() {

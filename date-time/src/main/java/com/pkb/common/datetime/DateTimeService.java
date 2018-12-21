@@ -17,7 +17,7 @@ import java.util.Date;
 
 import io.vavr.Tuple2;
 
-@SuppressWarnings({"UseOfObsoleteDateTimeApi", "SSBasedInspection"})
+@SuppressWarnings({ "UseOfObsoleteDateTimeApi", "SSBasedInspection" })
 public interface DateTimeService {
 
     Clock clock();
@@ -32,6 +32,10 @@ public interface DateTimeService {
 
     default LocalDate tomorrow() {
         return today().plusDays(1L);
+    }
+
+    default LocalDate yesterday() {
+        return today().minusDays(1L);
     }
 
     default LocalDate todayAtZoneId(ZoneId zoneId) {
@@ -123,7 +127,7 @@ public interface DateTimeService {
         return ZonedDateTime.of(localDateTime, zoneId);
     }
 
-    default LocalDate convertToLocalDateAtUTC(Date date){
+    default LocalDate convertToLocalDateAtUTC(Date date) {
         return convertToLocalDateAtZoneId(date, ZoneOffset.UTC);
     }
 
