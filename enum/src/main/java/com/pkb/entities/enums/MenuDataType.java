@@ -17,6 +17,7 @@ public enum MenuDataType {
     diaryEntry,
     disability,
     employment,
+    encounterEvent,
     event,
     failedMessage,
     familyMemberHistory,
