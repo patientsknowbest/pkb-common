@@ -3,6 +3,7 @@ package com.pkb.common.config;
 import static java.lang.String.format;
 import static java.util.Optional.empty;
 
+import java.lang.invoke.MethodHandles;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,7 +20,6 @@ public class ConfigV2 implements Configuration {
     }
 
     // FIXME: this is just a workaround to avoid loading config files multiple times.
-
     /**
      * @deprecated Use CDI or Spring to wire an instance into your service.
      */
@@ -28,7 +28,7 @@ public class ConfigV2 implements Configuration {
         return ConfigV2InstanceHolder.INSTANCE;
     }
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(java.lang.invoke.MethodHandles.lookup().lookupClass());
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private final RawConfigStorage storage;
 
@@ -198,6 +198,14 @@ public class ConfigV2 implements Configuration {
 
     public boolean getSendReminderEmailsEnabled() {
         return storage.getBoolean("sendReminderEmailsEnabled", false);
+    }
+
+    public boolean getUnreadMessageReminderEnabled() {
+        return storage.getBoolean("sendUnreadMessageReminderEnabled", false);
+    }
+
+    public boolean getUnreadDocumentReminderEnabled() {
+        return storage.getBoolean("sendUnreadDocumentReminderEnabled", false);
     }
 
     public String getWithingsOauthKey() {
@@ -520,6 +528,10 @@ public class ConfigV2 implements Configuration {
         return storage.getString("symptomsNotificationCron");
     }
 
+    public String getUnreadNotificationCron() {
+        return storage.getString("unreadNotificationCron");
+    }
+
     public String getImageUploadMaxFileText() {
         return storage.getString("com.pkb.upload.maxImageFileText", "1");
     }
@@ -720,6 +732,11 @@ public class ConfigV2 implements Configuration {
         return storage.getBoolean("fhir.api.Observation.enabled", false);
     }
 
+    @Override
+    public boolean isFhirDiagnosticReportResourceEnabled() {
+        return storage.getBoolean("fhir.api.DiagnosticReport.enabled", false);
+    }
+
     public Optional<String> clamAvHost() {
         Optional<String> maybeHostName = empty();
 
@@ -780,6 +797,12 @@ public class ConfigV2 implements Configuration {
     public int getFhirAppointmentMaxNumberOfResources() {
         return storage.getInt("fhir.api.Appointment.maxNumberOfResources", 1000);
     }
+
+    @Override
+    public int getFhirDiagnosticReportMaxNumberOfResources() {
+        return storage.getInt("fhir.api.DiagnosticReport.maxNumberOfResources", 1000);
+    }
+
     public String getHospitalMapIframeSrc() {
         return storage.getString("webapp.hospitalMapIframeSrc", "https://viewer.blipstar.com/show?uid=1832224&search=geoip&gui=true&rc=&width=auto&tag=false");
     }
