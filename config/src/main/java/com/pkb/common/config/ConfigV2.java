@@ -575,6 +575,26 @@ public class ConfigV2 implements Configuration {
         return storage.getBoolean("feature.timeline.enabled", false);
     }
 
+    public boolean isTimelineCalendarEnabled() {
+        return storage.getBoolean("feature.timeline.calendar.enabled", false);
+    }
+
+    public boolean isTimelineTestsEnabled() {
+        return storage.getBoolean("feature.timeline.tests.enabled", false);
+    }
+
+    public boolean isTimelineRadiologyEnabled() {
+        return storage.getBoolean("feature.timeline.radiology.enabled", false);
+    }
+
+    public boolean isTimelineSymptomsEnabled() {
+        return storage.getBoolean("feature.timeline.symptoms.enabled", false);
+    }
+
+    public boolean isTimelineMeasurmentsEnabled() {
+        return storage.getBoolean("feature.timeline.measurements.enabled", false);
+    }
+
     public boolean isPatientBannerEnabled() {
         return storage.getBoolean("feature.patientbanner.enabled", true);
     }
