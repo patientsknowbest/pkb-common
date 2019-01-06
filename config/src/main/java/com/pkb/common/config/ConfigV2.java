@@ -591,7 +591,7 @@ public class ConfigV2 implements Configuration {
         return storage.getBoolean("feature.timeline.symptoms.enabled", false);
     }
 
-    public boolean isTimelineMeasurmentsEnabled() {
+    public boolean isTimelineMeasurementsEnabled() {
         return storage.getBoolean("feature.timeline.measurements.enabled", false);
     }
 
