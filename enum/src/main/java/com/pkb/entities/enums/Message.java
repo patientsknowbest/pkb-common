@@ -256,6 +256,9 @@ public enum Message {
     /* notify patient of HL7 MDM message */
     NOTIFY_PATIENT_OF_DOCUMENT_RECEIVED,
 
+    /* notify carer of HL7 MDM message */
+    NOTIFY_CARER_OF_DOCUMENT_RECEIVED_BY_PATIENT,
+
     /* notification to carer about change made to patient account by clinical team */
     ACTIVITY_NOTIFICATION_TO_CARER_FOR_PATIENT(MessageCategory.THROTTLEABLE),
 
