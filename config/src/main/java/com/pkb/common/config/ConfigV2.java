@@ -809,7 +809,7 @@ public class ConfigV2 implements Configuration {
 
     @Override
     public int getFhirObservationMaxNumberOfResources() {
-        return storage.getInt("fhir.api.Observation.maxNumberOfResources", 1000);
+        return storage.getInt("fhir.api.Observation.maxNumberOfResources", 60000);
     }
 
     @Override
