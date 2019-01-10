@@ -532,7 +532,7 @@ public class ConfigV2 implements Configuration {
     }
 
     public String getImageUploadMaxFileText() {
-        return storage.getString("com.pkb.upload.maxImageFileText", "1");
+        return storage.getString("com.pkb.upload.maxImageFileText", "1 GB");
     }
 
     public long getGeneticsUploadMaxFileSize() {
