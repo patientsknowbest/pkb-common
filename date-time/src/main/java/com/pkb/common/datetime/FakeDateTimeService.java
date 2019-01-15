@@ -28,8 +28,8 @@ public class FakeDateTimeService implements DateTimeService {
     }
 
     @Override
-    public void setFixedCurrentTimeForTesting(String input) {
-        ZonedDateTime zdt = ZonedDateTime.parse(input);
+    public void setFixedCurrentTimeForTesting(String isoZonedDateTime) {
+        ZonedDateTime zdt = ZonedDateTime.parse(isoZonedDateTime);
         currentFixedClock = Clock.fixed(zdt.toInstant(), zdt.getZone());
         LOGGER.info("Set fixed fake date time to: {}", currentFixedClock);
     }
