@@ -23,10 +23,11 @@ public interface DateTimeService {
     Clock clock();
 
     /**
-     * @param input in ISO format; see ZonedDateTime.parse(input);
+     * @param isoZonedDateTime formatted ISO format date for a fixed "now"
+     * @see java.time.ZonedDateTime#parse(CharSequence) for format
      * @throws IllegalStateException outside of testing environments
      */
-    void setFixedCurrentTimeForTesting(String input);
+    void setFixedCurrentTimeForTesting(String isoZonedDateTime);
 
     /**
      * @throws IllegalStateException outside of testing environments
