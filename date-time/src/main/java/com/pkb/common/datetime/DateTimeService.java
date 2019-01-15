@@ -22,6 +22,17 @@ public interface DateTimeService {
 
     Clock clock();
 
+    /**
+     * @param input in ISO format; see ZonedDateTime.parse(input);
+     * @throws IllegalStateException outside of testing environments
+     */
+    void setFixedCurrentTimeForTesting(String input);
+
+    /**
+     * @throws IllegalStateException outside of testing environments
+     */
+    void forgetFixedCurrentTimeForTesting();
+
     default Instant now() {
         return clock().instant();
     }
