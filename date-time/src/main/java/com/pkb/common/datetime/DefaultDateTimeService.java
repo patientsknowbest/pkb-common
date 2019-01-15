@@ -10,7 +10,7 @@ public class DefaultDateTimeService implements DateTimeService {
     }
 
     @Override
-    public void setFixedCurrentTimeForTesting(String input) {
+    public void setFixedCurrentTimeForTesting(String ignored) {
         throw new IllegalStateException("Not currently in a test environment");
     }
 
