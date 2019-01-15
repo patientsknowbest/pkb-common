@@ -27,15 +27,17 @@ public class FakeDateTimeService implements DateTimeService {
         return currentFixedClock;
     }
 
-    public void setCurrentTime(String input) {
+    @Override
+    public void setFixedCurrentTimeForTesting(String input) {
         ZonedDateTime zdt = ZonedDateTime.parse(input);
         currentFixedClock = Clock.fixed(zdt.toInstant(), zdt.getZone());
-        LOGGER.info("Set fake date time to: {}", currentFixedClock);
+        LOGGER.info("Set fixed fake date time to: {}", currentFixedClock);
     }
 
-    public void forgetCurrentTime() {
+    @Override
+    public void forgetFixedCurrentTimeForTesting() {
         this.currentFixedClock = null;
-        LOGGER.info("Cleared fake date time.");
+        LOGGER.info("Cleared fixed fake date time.");
     }
 
 }
