@@ -708,7 +708,7 @@ public class ConfigV2 implements Configuration {
 
     @Override
     public boolean isFhirEncounterResourceEnabled() {
-        return storage.getBoolean("fhir.api.Encounter.enabled", true);
+        return storage.getBoolean("fhir.api.Encounter.enabled", false);
     }
 
     @Override
