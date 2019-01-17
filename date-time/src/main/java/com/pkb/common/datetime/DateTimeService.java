@@ -79,6 +79,11 @@ public interface DateTimeService {
         return new Tuple2<>(Date.from(Instant.from(formatter.parse(input, remainder))), remainder);
     }
 
+    default Tuple2<Instant, ParsePosition> parseToInstantBackwardCompatibleWay(String input, DateTimeFormatter formatter) {
+        ParsePosition remainder = new ParsePosition(0);
+        return new Tuple2<>(Instant.from(formatter.parse(input, remainder)), remainder);
+    }
+
     /**
      * Parses the given {@link String} into a {@link Date} with the given {@link DateTimeFormatter}, almost the same way as
      * {@link SimpleDateFormat} did. All of the input {@link String} must be parsed.
