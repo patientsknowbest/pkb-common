@@ -776,6 +776,7 @@ public class ConfigV2 implements Configuration {
         return maybeHostName;
     }
 
+    @Override
     public boolean isFakeDateTimeServiceEnabled() {
         return storage.getBoolean("fakedatetimeservice.enabled", false);
     }
