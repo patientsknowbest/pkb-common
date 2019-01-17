@@ -8,6 +8,8 @@ public interface Configuration {
 
     int getMenudataQueryBatchSize();
 
+    boolean isFakeDateTimeServiceEnabled();
+
     boolean isFhirAppointmentResourceEnabled();
 
     boolean isFhirEncounterResourceEnabled();
