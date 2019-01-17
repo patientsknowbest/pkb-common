@@ -532,7 +532,7 @@ public class ConfigV2 implements Configuration {
     }
 
     public String getImageUploadMaxFileText() {
-        return storage.getString("com.pkb.upload.maxImageFileText", "1");
+        return storage.getString("com.pkb.upload.maxImageFileText", "1 GB");
     }
 
     public long getGeneticsUploadMaxFileSize() {
@@ -748,7 +748,7 @@ public class ConfigV2 implements Configuration {
 
     @Override
     public boolean isFhirObservationResourceEnabled() {
-        return storage.getBoolean("fhir.api.Observation.enabled", false);
+        return storage.getBoolean("fhir.api.Observation.enabled", true);
     }
 
     @Override
@@ -809,7 +809,7 @@ public class ConfigV2 implements Configuration {
 
     @Override
     public int getFhirObservationMaxNumberOfResources() {
-        return storage.getInt("fhir.api.Observation.maxNumberOfResources", 1000);
+        return storage.getInt("fhir.api.Observation.maxNumberOfResources", 60000);
     }
 
     @Override
