@@ -572,7 +572,7 @@ public class ConfigV2 implements Configuration {
     }
 
     public boolean isTimelineEnabled() {
-        return storage.getBoolean("feature.timeline.enabled", false);
+        return storage.getBoolean("feature.timeline.enabled", true);
     }
 
     public boolean isTimelineCalendarEnabled() {
@@ -580,11 +580,11 @@ public class ConfigV2 implements Configuration {
     }
 
     public boolean isTimelineTestsEnabled() {
-        return storage.getBoolean("feature.timeline.tests.enabled", false);
+        return storage.getBoolean("feature.timeline.tests.enabled", true);
     }
 
     public boolean isTimelineRadiologyEnabled() {
-        return storage.getBoolean("feature.timeline.radiology.enabled", false);
+        return storage.getBoolean("feature.timeline.radiology.enabled", true);
     }
 
     public boolean isTimelineSymptomsEnabled() {
@@ -758,7 +758,7 @@ public class ConfigV2 implements Configuration {
 
     @Override
     public boolean isFhirDiagnosticReportResourceEnabled() {
-        return storage.getBoolean("fhir.api.DiagnosticReport.enabled", false);
+        return storage.getBoolean("fhir.api.DiagnosticReport.enabled", true);
     }
 
     public Optional<String> clamAvHost() {
