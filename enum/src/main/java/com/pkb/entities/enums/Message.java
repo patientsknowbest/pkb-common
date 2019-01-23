@@ -296,7 +296,13 @@ public enum Message {
     CARER_ACCEPTS_INVITATION_FROM_OTHER_USER_NOTIFY_CARER,
 
     /* notification to carer about patient primary contact change */
-    PRIMARY_CONTACT_CHANGE_CARER_NOTIFICATION;
+    PRIMARY_CONTACT_CHANGE_CARER_NOTIFICATION,
+
+    /* notification to patient about a break the glass event */
+    BREAK_THE_GLASS_PATIENT_NOTIFICATION,
+
+    /* notification to carer about a break the glass event */
+    BREAK_THE_GLASS_CARER_NOTIFICATION;
 
     private final Set<MessageCategory> categories;
 
