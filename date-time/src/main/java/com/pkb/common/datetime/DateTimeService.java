@@ -13,6 +13,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalUnit;
 import java.util.Date;
 
 import io.vavr.Tuple2;
@@ -28,6 +29,8 @@ public interface DateTimeService {
      * @throws IllegalStateException outside of testing environments
      */
     void setFixedCurrentTimeForTesting(String isoZonedDateTime);
+
+    void moveTime(long amountToAdd, TemporalUnit unit);
 
     /**
      * @throws IllegalStateException outside of testing environments
