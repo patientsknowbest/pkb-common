@@ -278,10 +278,10 @@ public enum Message {
     HANDOVER_DISCUSSION_NOTIFICATION_TO_OTHER_CARER_FOR_PATIENT,
 
     /* notification to patient about changes made to a privacy label by anyone other than the patient */
-    PRIVACY_LABEL_NOTIFICATION_TO_PATIENT(MessageCategory.THROTTLEABLE),
+    PRIVACY_LABEL_NOTIFICATION_TO_PATIENT,
 
     /* notification to carer about changes made to a patient privacy label by clinical team */
-    PRIVACY_LABEL_NOTIFICATION_TO_CARER(MessageCategory.THROTTLEABLE),
+    PRIVACY_LABEL_NOTIFICATION_TO_CARER,
 
     /* notification to carer about other user inviting new carer */
     OTHER_USER_INVITES_CARER_NOTIFY_CARER,
