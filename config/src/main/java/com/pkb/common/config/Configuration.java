@@ -12,6 +12,8 @@ public interface Configuration {
 
     boolean isFhirAppointmentResourceEnabled();
 
+    boolean isFhirEncounterResourceEnabled();
+
     boolean isFhirPersonResourceEnabled();
 
     boolean isFhirPatientResourceEnabled();
@@ -41,4 +43,7 @@ public interface Configuration {
     int getFhirAppointmentMaxNumberOfResources();
 
     int getFhirDiagnosticReportMaxNumberOfResources();
+
+    int getFhirEncounterMaxNumberOfResources();
+
 }
