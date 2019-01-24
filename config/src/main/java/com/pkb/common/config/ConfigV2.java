@@ -707,6 +707,11 @@ public class ConfigV2 implements Configuration {
     }
 
     @Override
+    public boolean isFhirEncounterResourceEnabled() {
+        return storage.getBoolean("fhir.api.Encounter.enabled", false);
+    }
+
+    @Override
     public boolean isFhirPatientResourceEnabled() {
         return storage.getBoolean("fhir.api.Patient.enabled", true);
     }
@@ -823,4 +828,8 @@ public class ConfigV2 implements Configuration {
         return storage.getInt("fhir.api.DiagnosticReport.maxNumberOfResources", 1000);
     }
 
+    @Override
+    public int getFhirEncounterMaxNumberOfResources() {
+        return storage.getInt("fhir.api.Encounter.maxNumberOfResources", 1000);
+    }
 }
