@@ -44,4 +44,5 @@ public interface Configuration {
 
     int getFhirEncounterMaxNumberOfResources();
 
+    boolean isExceptionForNullUniqueIdEnabled();
 }
