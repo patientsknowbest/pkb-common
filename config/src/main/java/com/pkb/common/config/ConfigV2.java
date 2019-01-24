@@ -836,4 +836,9 @@ public class ConfigV2 implements Configuration {
     public int getFhirDocumentReferenceMaxNumberOfResources() {
         return storage.getInt("fhir.api.DocumentReference.maxNumberOfResources", 10000);
     }
+
+    @Override
+    public boolean isExceptionForNullUniqueIdEnabled() {
+        return storage.getBoolean("consistency.check.data.point.unique.id.null.exception", true);
+    }
 }
