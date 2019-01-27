@@ -5,6 +5,8 @@ public enum MenuDataType {
     appointment,
     appointmentRequest,
     assessment,
+    audio,
+    audioResult,
     baby,
     clinicalImpression,
     communication,
