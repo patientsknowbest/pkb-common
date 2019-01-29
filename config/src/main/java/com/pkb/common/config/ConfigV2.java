@@ -834,6 +834,6 @@ public class ConfigV2 implements Configuration {
 
     @Override
     public int getFhirDocumentReferenceMaxNumberOfResources() {
-        return storage.getInt("fhir.api.DocumentReference.maxNumberOfResources", 1000);
+        return storage.getInt("fhir.api.DocumentReference.maxNumberOfResources", 10000);
     }
 }
