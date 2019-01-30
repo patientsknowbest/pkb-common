@@ -47,4 +47,6 @@ public interface Configuration {
     int getFhirEncounterMaxNumberOfResources();
 
     int getFhirDocumentReferenceMaxNumberOfResources();
+
+    boolean isExceptionForNullUniqueIdEnabled();
 }
