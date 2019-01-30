@@ -32,6 +32,7 @@ public enum Message {
     INVITE_CLINICIAN(MessageCategory.REGISTRATION),
     /* conversation copying, adding new message to conversation, Instant Medical History Data (IMHM) message, call message, notification to receiver about a patient ? */
     NOTIFICATION_TO_RECEIVER,
+    NOTIFICATION_TO_CARER,
     /* not used anywhere ? */
     NOTIFICATION_TO_SENDER,
     /* Invitations/reminders */
