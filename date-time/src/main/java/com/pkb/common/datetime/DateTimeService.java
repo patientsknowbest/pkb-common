@@ -13,6 +13,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalUnit;
 import java.util.Date;
 
 import io.vavr.Tuple2;
@@ -21,6 +22,20 @@ import io.vavr.Tuple2;
 public interface DateTimeService {
 
     Clock clock();
+
+    /**
+     * @param isoZonedDateTime formatted ISO format date for a fixed "now"
+     * @see java.time.ZonedDateTime#parse(CharSequence) for format
+     * @throws IllegalStateException outside of testing environments
+     */
+    void setFixedCurrentTimeForTesting(String isoZonedDateTime);
+
+    void moveTime(long amountToAdd, TemporalUnit unit);
+
+    /**
+     * @throws IllegalStateException outside of testing environments
+     */
+    void forgetFixedCurrentTimeForTesting();
 
     default Instant now() {
         return clock().instant();
