@@ -306,7 +306,13 @@ public enum Message {
     BREAK_THE_GLASS_PATIENT_NOTIFICATION,
 
     /* notification to carer about a break the glass event */
-    BREAK_THE_GLASS_CARER_NOTIFICATION;
+    BREAK_THE_GLASS_CARER_NOTIFICATION,
+
+    /* notification to patient about invitation with requested privacy labels */
+    NOTIFY_PATIENT_OF_INVITATION_WITH_PRIVACY_LABELS,
+
+    /* notification to carer about patient invitation with requested privacy labels */
+    NOTIFY_CARER_OF_PATIENT_INVITATION_WITH_PRIVACY_LABELS;
 
     private final Set<MessageCategory> categories;
 
