@@ -533,7 +533,7 @@ public class ConfigV2 implements Configuration {
     }
 
     public String getImageUploadMaxFileText() {
-        return storage.getString("com.pkb.upload.maxImageFileText", "1");
+        return storage.getString("com.pkb.upload.maxImageFileText", "1 GB");
     }
 
     public long getGeneticsUploadMaxFileSize() {
@@ -573,7 +573,27 @@ public class ConfigV2 implements Configuration {
     }
 
     public boolean isTimelineEnabled() {
-        return storage.getBoolean("feature.timeline.enabled", false);
+        return storage.getBoolean("feature.timeline.enabled", true);
+    }
+
+    public boolean isTimelineCalendarEnabled() {
+        return storage.getBoolean("feature.timeline.calendar.enabled", false);
+    }
+
+    public boolean isTimelineTestsEnabled() {
+        return storage.getBoolean("feature.timeline.tests.enabled", true);
+    }
+
+    public boolean isTimelineRadiologyEnabled() {
+        return storage.getBoolean("feature.timeline.radiology.enabled", true);
+    }
+
+    public boolean isTimelineSymptomsEnabled() {
+        return storage.getBoolean("feature.timeline.symptoms.enabled", false);
+    }
+
+    public boolean isTimelineMeasurementsEnabled() {
+        return storage.getBoolean("feature.timeline.measurements.enabled", false);
     }
 
     public boolean isPatientBannerEnabled() {
@@ -688,6 +708,11 @@ public class ConfigV2 implements Configuration {
     }
 
     @Override
+    public boolean isFhirEncounterResourceEnabled() {
+        return storage.getBoolean("fhir.api.Encounter.enabled", false);
+    }
+
+    @Override
     public boolean isFhirPatientResourceEnabled() {
         return storage.getBoolean("fhir.api.Patient.enabled", true);
     }
@@ -729,12 +754,12 @@ public class ConfigV2 implements Configuration {
 
     @Override
     public boolean isFhirObservationResourceEnabled() {
-        return storage.getBoolean("fhir.api.Observation.enabled", false);
+        return storage.getBoolean("fhir.api.Observation.enabled", true);
     }
 
     @Override
     public boolean isFhirDiagnosticReportResourceEnabled() {
-        return storage.getBoolean("fhir.api.DiagnosticReport.enabled", false);
+        return storage.getBoolean("fhir.api.DiagnosticReport.enabled", true);
     }
 
     public Optional<String> clamAvHost() {
@@ -757,6 +782,7 @@ public class ConfigV2 implements Configuration {
         return maybeHostName;
     }
 
+    @Override
     public boolean isFakeDateTimeServiceEnabled() {
         return storage.getBoolean("fakedatetimeservice.enabled", false);
     }
@@ -790,7 +816,7 @@ public class ConfigV2 implements Configuration {
 
     @Override
     public int getFhirObservationMaxNumberOfResources() {
-        return storage.getInt("fhir.api.Observation.maxNumberOfResources", 1000);
+        return storage.getInt("fhir.api.Observation.maxNumberOfResources", 60000);
     }
 
     @Override
@@ -803,6 +829,20 @@ public class ConfigV2 implements Configuration {
         return storage.getInt("fhir.api.DiagnosticReport.maxNumberOfResources", 1000);
     }
 
+    @Override
+    public int getFhirEncounterMaxNumberOfResources() {
+        return storage.getInt("fhir.api.Encounter.maxNumberOfResources", 1000);
+    }
+
+    @Override
+    public int getFhirDocumentReferenceMaxNumberOfResources() {
+        return storage.getInt("fhir.api.DocumentReference.maxNumberOfResources", 10000);
+    }
+
+    @Override
+    public boolean isExceptionForNullUniqueIdEnabled() {
+        return storage.getBoolean("consistency.check.data.point.unique.id.null.exception", true);
+    }
     public String getHospitalMapIframeSrc() {
         return storage.getString("webapp.hospitalMapIframeSrc", "https://viewer.blipstar.com/show?uid=1832224&search=geoip&gui=true&rc=&width=auto&tag=false");
     }

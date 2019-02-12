@@ -3,6 +3,7 @@ package com.pkb.common.datetime;
 import java.lang.invoke.MethodHandles;
 import java.time.Clock;
 import java.time.ZonedDateTime;
+import java.time.temporal.TemporalUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ public class FakeDateTimeService implements DateTimeService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
+    private volatile ZonedDateTime currentFixedTime;
     private volatile Clock currentFixedClock;
 
     private final DateTimeService fallbackService;
@@ -27,15 +29,25 @@ public class FakeDateTimeService implements DateTimeService {
         return currentFixedClock;
     }
 
-    public void setCurrentTime(String input) {
-        ZonedDateTime zdt = ZonedDateTime.parse(input);
-        currentFixedClock = Clock.fixed(zdt.toInstant(), zdt.getZone());
-        LOGGER.info("Set fake date time to: {}", currentFixedClock);
+    @Override
+    public void setFixedCurrentTimeForTesting(String isoZonedDateTime) {
+        fixTime(ZonedDateTime.parse(isoZonedDateTime));
     }
 
-    public void forgetCurrentTime() {
+    @Override
+    public void moveTime(long amountToAdd, TemporalUnit unit) {
+        fixTime(currentFixedTime.plus(amountToAdd,unit));
+    }
+
+    @Override
+    public void forgetFixedCurrentTimeForTesting() {
         this.currentFixedClock = null;
-        LOGGER.info("Cleared fake date time.");
+        LOGGER.info("Cleared fixed fake date time.");
     }
 
+    private void fixTime(ZonedDateTime zdt){
+        currentFixedTime = zdt;
+        currentFixedClock = Clock.fixed(zdt.toInstant(), zdt.getZone());
+        LOGGER.info("Set fixed fake date time to: {}", currentFixedClock);
+    }
 }
