@@ -72,6 +72,7 @@ public class ConfigV2 implements Configuration {
         return protocol + "://" + host + colonPort;
     }
 
+    @Override
     public String getBaseURL() {
 
         // parse it so that we can clean it (don't show port if default, etc.)
