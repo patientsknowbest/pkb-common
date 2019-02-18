@@ -128,17 +128,6 @@ public interface DateTimeService {
         return input.toInstant().atZone(ZoneId.systemDefault()).format(formatter);
     }
 
-    /**
-     * Create new {@link Date}.
-     * 
-     * @deprecated Use {@link java.time} instead of {@link Date}, then there is no need for this method.
-     * @return
-     */
-    @Deprecated
-    default Date newDateDeprecated() {
-        return Date.from(now());
-    }
-
     default LocalDateTime convertNowToLocalDateAtTimezone(ZoneId zoneId) {
         return LocalDateTime.ofInstant(now(), zoneId);
     }
