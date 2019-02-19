@@ -74,6 +74,8 @@ public enum Message {
     REVOKE_ACCESS_NOTIFICATION_TO_CARER,
     /**/
     REVOKE_ACCESS_NOTIFICATION_TO_CLINICIAN,
+    NOTIFY_PERSON_THEIR_ACCESS_HAS_BEEN_REVOKED,
+    NOTIFY_CARER_ACCESS_REVOKED_FOR_PERSON,
     /*send notification about non-private message to patient's carer*/
     NOTIFICATION_TO_CARER_OF_SENT_MESSAGE,
     /*notify team coord to activate user*/
