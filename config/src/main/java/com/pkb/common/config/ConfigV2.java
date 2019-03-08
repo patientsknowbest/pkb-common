@@ -597,6 +597,10 @@ public class ConfigV2 implements Configuration {
         return storage.getBoolean("feature.timeline.measurements.enabled", false);
     }
 
+    public int getTimelineRequestTimeout() {
+        return storage.getInt("feature.timeline.request.timeout", 10000);
+    }
+
     public boolean isPatientBannerEnabled() {
         return storage.getBoolean("feature.patientbanner.enabled", true);
     }
