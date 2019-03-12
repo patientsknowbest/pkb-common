@@ -844,6 +844,12 @@ public class ConfigV2 implements Configuration {
     public boolean isExceptionForNullUniqueIdEnabled() {
         return storage.getBoolean("consistency.check.data.point.unique.id.null.exception", true);
     }
+
+    @Override
+    public boolean isExceptionForMissingSourceEnabled() {
+        return storage.getBoolean("consistency.check.data.point.source.null.exception", true);
+    }
+
     public String getHospitalMapIframeSrc() {
         return storage.getString("webapp.hospitalMapIframeSrc", "https://viewer.blipstar.com/show?uid=1832224&search=geoip&gui=true&rc=&width=auto&tag=false");
     }
