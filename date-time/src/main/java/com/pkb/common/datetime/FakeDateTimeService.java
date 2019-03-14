@@ -17,6 +17,10 @@ public class FakeDateTimeService implements DateTimeService {
 
     private final DateTimeService fallbackService;
 
+    public FakeDateTimeService() {
+        this(new DefaultDateTimeService());
+    }
+
     public FakeDateTimeService(DateTimeService fallbackService) {
         this.fallbackService = fallbackService;
     }
