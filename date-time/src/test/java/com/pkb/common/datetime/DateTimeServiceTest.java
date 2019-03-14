@@ -90,50 +90,9 @@ public class DateTimeServiceTest {
     public void parseToDateBackwardCompatibleWay(String toParse, DateTimeFormatter formatter, ZonedDateTime expected) {
         FakeDateTimeService underTest = new FakeDateTimeService();
 
-        Tuple2<Date, ParsePosition> actual = underTest.parseToDateBackwardCompatibleWay(toParse, formatter);
+        Tuple2<Instant, ParsePosition> actual = underTest.parseToInstantBackwardCompatibleWay(toParse, formatter);
 
-        assertThat(actual._1, is(Date.from(expected.toInstant())));
-    }
-
-    @DataProvider
-    public static Object[][] strictDateParseTestCases() {
-        return new Object[][] {
-                {
-                        "30/10/2018 09:00",
-                        DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withLocale(Locale.UK).withZone(UTC),
-                        ZonedDateTime.of(2018, 10, 30, 9, 0, 0, 0, UTC)
-                },
-                {
-                        "30/10/2018 09:00",
-                        DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withLocale(new Locale("nl", "NL")).withZone(DUTCH),
-                        ZonedDateTime.of(2018, 10, 30, 8, 0, 0, 0, UTC)
-                },
-                {
-                        "30/10/2018 09:00",
-                        DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withLocale(Locale.UK).withZone(DUTCH),
-                        ZonedDateTime.of(2018, 10, 30, 8, 0, 0, 0, UTC)
-                },
-                {
-                        "30/10/2018 09:00",
-                        DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withLocale(new Locale("nl", "NL")).withZone(UTC),
-                        ZonedDateTime.of(2018, 10, 30, 9, 0, 0, 0, UTC)
-                },
-                {
-                        "30/10/2018 09:00:13",
-                        DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").withLocale(Locale.UK).withZone(UTC),
-                        ZonedDateTime.of(2018, 10, 30, 9, 0, 13, 0, UTC)
-                }
-        };
-    }
-
-    @UseDataProvider("strictDateParseTestCases")
-    @Test
-    public void parseToDateStrict(String toParse, DateTimeFormatter formatter, ZonedDateTime expected) {
-        FakeDateTimeService underTest = new FakeDateTimeService();
-
-        Date actual = underTest.parseToDateStrict(toParse, formatter);
-
-        assertThat(actual, is(Date.from(expected.toInstant())));
+        assertThat(actual._1, is(expected.toInstant()));
     }
 
     @DataProvider
