@@ -29,7 +29,7 @@ public class DateTimeServiceTest {
 
     @Test
     public void firstDayOfMonth() {
-        FakeDateTimeService underTest = new FakeDateTimeService(null);
+        FakeDateTimeService underTest = new FakeDateTimeService();
         underTest.setFixedCurrentTimeForTesting("2010-10-10T22:22:22Z");
 
         Instant actual = underTest.firstDayOfMonth().toInstant();
@@ -88,7 +88,7 @@ public class DateTimeServiceTest {
     @UseDataProvider("lenientDateParseTestCases")
     @Test
     public void parseToDateBackwardCompatibleWay(String toParse, DateTimeFormatter formatter, ZonedDateTime expected) {
-        FakeDateTimeService underTest = new FakeDateTimeService(null);
+        FakeDateTimeService underTest = new FakeDateTimeService();
 
         Tuple2<Date, ParsePosition> actual = underTest.parseToDateBackwardCompatibleWay(toParse, formatter);
 
@@ -129,7 +129,7 @@ public class DateTimeServiceTest {
     @UseDataProvider("strictDateParseTestCases")
     @Test
     public void parseToDateStrict(String toParse, DateTimeFormatter formatter, ZonedDateTime expected) {
-        FakeDateTimeService underTest = new FakeDateTimeService(null);
+        FakeDateTimeService underTest = new FakeDateTimeService();
 
         Date actual = underTest.parseToDateStrict(toParse, formatter);
 
