@@ -54,4 +54,6 @@ public interface Configuration {
     boolean isExceptionForNullUniqueIdEnabled();
 
     boolean isExceptionForMissingSourceEnabled();
+
+    boolean isExceptionForNoUniqueIdInMessageEnabled();
 }
