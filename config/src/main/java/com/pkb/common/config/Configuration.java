@@ -52,4 +52,6 @@ public interface Configuration {
     int getFhirDocumentReferenceMaxNumberOfResources();
 
     boolean isExceptionForNullUniqueIdEnabled();
+
+    boolean isExceptionForNoUniqueIdInMessageEnabled();
 }
