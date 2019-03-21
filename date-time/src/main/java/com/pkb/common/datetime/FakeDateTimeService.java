@@ -1,6 +1,5 @@
 package com.pkb.common.datetime;
 
-import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
 import java.time.Clock;
 import java.time.ZonedDateTime;
@@ -9,10 +8,7 @@ import java.time.temporal.TemporalUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FakeDateTimeService implements DateTimeService, Serializable {
-
-    private static final long serialVersionUID = 1L;
-
+public class FakeDateTimeService implements DateTimeService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private volatile ZonedDateTime currentFixedTime;
