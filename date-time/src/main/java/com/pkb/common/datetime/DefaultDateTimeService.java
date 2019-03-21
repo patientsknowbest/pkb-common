@@ -1,12 +1,9 @@
 package com.pkb.common.datetime;
 
-import java.io.Serializable;
 import java.time.Clock;
 import java.time.temporal.TemporalUnit;
 
-public class DefaultDateTimeService implements DateTimeService, Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class DefaultDateTimeService implements DateTimeService {
 
     @Override
     public Clock clock() {
