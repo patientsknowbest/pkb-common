@@ -22,16 +22,19 @@ public interface DateTimeService {
     Clock clock();
 
     /**
-     * @param isoZonedDateTime formatted ISO format date for a fixed "now"
+     * @param isoZonedDateTime
+     *            formatted ISO format date for a fixed "now"
      * @see java.time.ZonedDateTime#parse(CharSequence) for format
-     * @throws IllegalStateException outside of testing environments
+     * @throws IllegalStateException
+     *             outside of testing environments
      */
     void setFixedCurrentTimeForTesting(String isoZonedDateTime);
 
     void moveTime(long amountToAdd, TemporalUnit unit);
 
     /**
-     * @throws IllegalStateException outside of testing environments
+     * @throws IllegalStateException
+     *             outside of testing environments
      */
     void forgetFixedCurrentTimeForTesting();
 
