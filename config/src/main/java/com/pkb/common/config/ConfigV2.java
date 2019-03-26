@@ -674,6 +674,14 @@ public class ConfigV2 implements Configuration {
         return storage.getBoolean("security.test.users.enabled", false);
     }
 
+    public boolean isHl7QryA19StaEnabled() {
+        return storage.getBoolean("feature.hl7.a19.sta.enabled", true);
+    }
+
+    public int getHl7QryA19PageSize() {
+        return storage.getInt("feature.hl7.a19.sta.pagesize", 50);
+    }
+
     public int getNumberOfRecentLoginAttemptsAllowed() {
         return storage.getInt("numberOfRecentLoginAttemptsAllowed");
     }
