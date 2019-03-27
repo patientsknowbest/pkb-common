@@ -74,9 +74,19 @@ public interface DateTimeService {
                 .with(ChronoField.HOUR_OF_DAY, 0);
     }
 
-    default Tuple2<Instant, ParsePosition> parseToInstantBackwardCompatibleWay(String input, DateTimeFormatter formatter) {
+    /**
+     * DO NOT USE THIS! Only here temporarily to fix up some legacy (static) code.
+     * @param input
+     * @param formatter
+     * @return
+     */
+    static Tuple2<Instant, ParsePosition> parseToInstantBackwardCompatibleWayStatic(String input, DateTimeFormatter formatter){
         ParsePosition remainder = new ParsePosition(0);
         return new Tuple2<>(Instant.from(formatter.parse(input, remainder)), remainder);
+    }
+
+    default Tuple2<Instant, ParsePosition> parseToInstantBackwardCompatibleWay(String input, DateTimeFormatter formatter) {
+        return parseToInstantBackwardCompatibleWayStatic(input,formatter);
     }
 
     /**
