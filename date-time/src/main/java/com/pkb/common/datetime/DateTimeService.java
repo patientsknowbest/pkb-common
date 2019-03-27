@@ -1,7 +1,6 @@
 package com.pkb.common.datetime;
 
 import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -11,7 +10,6 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalUnit;
 import java.util.Date;
@@ -24,16 +22,19 @@ public interface DateTimeService {
     Clock clock();
 
     /**
-     * @param isoZonedDateTime formatted ISO format date for a fixed "now"
+     * @param isoZonedDateTime
+     *            formatted ISO format date for a fixed "now"
      * @see java.time.ZonedDateTime#parse(CharSequence) for format
-     * @throws IllegalStateException outside of testing environments
+     * @throws IllegalStateException
+     *             outside of testing environments
      */
     void setFixedCurrentTimeForTesting(String isoZonedDateTime);
 
     void moveTime(long amountToAdd, TemporalUnit unit);
 
     /**
-     * @throws IllegalStateException outside of testing environments
+     * @throws IllegalStateException
+     *             outside of testing environments
      */
     void forgetFixedCurrentTimeForTesting();
 
