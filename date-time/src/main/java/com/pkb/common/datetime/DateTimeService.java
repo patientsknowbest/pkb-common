@@ -11,6 +11,7 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
 import java.util.Date;
 
@@ -55,7 +56,16 @@ public interface DateTimeService {
     }
 
     default LocalDate todayAtZoneId(ZoneId zoneId) {
-        return ZonedDateTime.ofInstant(clock().instant(), zoneId).toLocalDate();
+        return nowZoned(zoneId).toLocalDate();
+    }
+
+    default ZonedDateTime nowZoned(ZoneId zoneId){
+        return ZonedDateTime.ofInstant(clock().instant(), zoneId);
+    }
+
+    default ZonedDateTime tomorrowAtStartOfDay(ZoneId id){
+        //See https://stackoverflow.com/questions/29143910/java-8-date-time-get-start-of-day-from-zoneddatetime
+        return nowZoned(id).plusDays(1L).truncatedTo(ChronoUnit.DAYS).withEarlierOffsetAtOverlap();
     }
 
     default LocalDateTime nowLocalDateTime() {
@@ -74,9 +84,19 @@ public interface DateTimeService {
                 .with(ChronoField.HOUR_OF_DAY, 0);
     }
 
-    default Tuple2<Instant, ParsePosition> parseToInstantBackwardCompatibleWay(String input, DateTimeFormatter formatter) {
+    /**
+     * DO NOT USE THIS! Only here temporarily to fix up some legacy (static) code.
+     * @param input
+     * @param formatter
+     * @return
+     */
+    static Tuple2<Instant, ParsePosition> parseToInstantBackwardCompatibleWayStatic(String input, DateTimeFormatter formatter){
         ParsePosition remainder = new ParsePosition(0);
         return new Tuple2<>(Instant.from(formatter.parse(input, remainder)), remainder);
+    }
+
+    default Tuple2<Instant, ParsePosition> parseToInstantBackwardCompatibleWay(String input, DateTimeFormatter formatter) {
+        return parseToInstantBackwardCompatibleWayStatic(input,formatter);
     }
 
     /**
