@@ -56,4 +56,8 @@ public interface Configuration {
     boolean isExceptionForMissingSourceEnabled();
 
     boolean isExceptionForNoUniqueIdInMessageEnabled();
+
+    enum FhirValidationMode { NONE, LOG, THROW }
+
+    ConfigV2.FhirValidationMode getFhirValidationMode();
 }

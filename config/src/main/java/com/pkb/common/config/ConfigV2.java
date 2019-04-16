@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ConfigV2 implements Configuration {
-
     private static final class ConfigV2InstanceHolder {
         private static final ConfigV2 INSTANCE = new ConfigV2();
     }
@@ -872,4 +871,8 @@ public class ConfigV2 implements Configuration {
         return storage.getString("webapp.hospitalMapIframeSrc", "https://viewer.blipstar.com/show?uid=1832224&search=geoip&gui=true&rc=&width=auto&tag=false");
     }
 
+    @Override
+    public FhirValidationMode getFhirValidationMode() {
+        return FhirValidationMode.valueOf(storage.getString("fhir.api.validationMode", FhirValidationMode.NONE.toString()));
+    }
 }
