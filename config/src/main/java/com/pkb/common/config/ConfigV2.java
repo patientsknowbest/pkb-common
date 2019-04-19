@@ -161,8 +161,8 @@ public class ConfigV2 implements Configuration {
         return storage.getString("pHPlanTemplateImageBaseDirectory", "");
     }
 
-    public String getImageUploadLogoBaseDirectory() {
-        return storage.getString("imageUploadLogoBaseDirectory", "");
+    public Path getImageUploadLogoBaseDirectory() {
+        return Paths.get(storage.getString("imageUploadLogoBaseDirectory", ""));
     }
 
     public String getImageUploadPHPlanTemplateImageBaseDirectory() {
