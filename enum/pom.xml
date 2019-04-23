@@ -41,6 +41,11 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.github.karsaig</groupId>
+            <artifactId>approvalcrest</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
     </dependencies>
 </project>
