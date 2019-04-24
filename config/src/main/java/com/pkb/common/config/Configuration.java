@@ -56,4 +56,6 @@ public interface Configuration {
     boolean isExceptionForMissingSourceEnabled();
 
     boolean isExceptionForNoUniqueIdInMessageEnabled();
+
+    boolean isFhirCommunicationResourceEnabled();
 }
