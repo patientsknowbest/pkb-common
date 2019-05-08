@@ -53,7 +53,8 @@ public class MenuDataXmlParserHelper {
     private static final String CDATA_ENCODING_ATTRIB = "cdataEncoding";
     private static final String CDATA_ENCODING_BASE64 = "Base64";
 
-    private MenuDataXmlParserHelper() {}
+    private MenuDataXmlParserHelper() {
+    }
 
     @NotNull
     public static Map<String, Object> unmarshalEncryptedFields(byte[] plaintext) {
@@ -102,15 +103,15 @@ public class MenuDataXmlParserHelper {
                 String nodeName = reader.getName().getLocalPart();
 
                 switch (nodeName) {
-                    case "fields":
-                        cdataIsBase64 = nodeAttributes(reader).anyMatch(MenuDataXmlParserHelper::isBase64EncodingAttribute);
-                        break;
-                    case "field":
-                        readXmlFieldValue(reader, cdataIsBase64, loadMap);
-                        break;
-                    default:
-                        LOGGER.warn("Unexpected xml01 start element: {}", nodeName);
-                        break;
+                case "fields":
+                    cdataIsBase64 = nodeAttributes(reader).anyMatch(MenuDataXmlParserHelper::isBase64EncodingAttribute);
+                    break;
+                case "field":
+                    readXmlFieldValue(reader, cdataIsBase64, loadMap);
+                    break;
+                default:
+                    LOGGER.warn("Unexpected xml01 start element: {}", nodeName);
+                    break;
                 }
 
             } else if (reader.getEventType() == XMLStreamConstants.END_ELEMENT) {
@@ -175,7 +176,6 @@ public class MenuDataXmlParserHelper {
         String name = attrs.getOrDefault("name", null);
         String type = attrs.getOrDefault("type", null);
 
-
         Object value;
 
         if ((type == null) || "null".equals(type)) {
@@ -183,7 +183,7 @@ public class MenuDataXmlParserHelper {
         } else if ("String".equals(type)) {
             value = readCData(reader, cdataIsBase64);
         } else if ("Date".equals(type)) {
-            value = new Date(Long.parseLong(readCData(reader, cdataIsBase64)));
+            value = Date.from(Instant.ofEpochMilli(Long.parseLong(readCData(reader, cdataIsBase64))));
         } else if ("ZonedDateTime".equals(type)) {
             value = ZonedDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(readCData(reader, cdataIsBase64))), ZoneId.systemDefault());
         } else if ("Long".equals(type)) {
