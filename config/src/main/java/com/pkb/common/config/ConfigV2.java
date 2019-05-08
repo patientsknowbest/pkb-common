@@ -104,14 +104,6 @@ public class ConfigV2 implements Configuration {
         return storage.getString("fromEmailName", "");
     }
 
-    public String getRecaptchaPrivateKey() {
-        return storage.getString("recaptchaPrivateKey", "");
-    }
-
-    public String getRecaptchaPublicKey() {
-        return storage.getString("recaptchaPublicKey", "");
-    }
-
     public int getInboxPageSize() {
         return storage.getInt("inboxPageSize");
     }
