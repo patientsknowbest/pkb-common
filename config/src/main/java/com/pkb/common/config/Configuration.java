@@ -45,6 +45,8 @@ public interface Configuration {
 
     int getFhirAppointmentMaxNumberOfResources();
 
+    int getFhirCommunicationMaxNumberOfResources();
+
     int getFhirDiagnosticReportMaxNumberOfResources();
 
     int getFhirEncounterMaxNumberOfResources();
