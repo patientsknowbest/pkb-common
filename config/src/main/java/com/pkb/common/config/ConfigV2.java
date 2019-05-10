@@ -849,6 +849,11 @@ public class ConfigV2 implements Configuration {
     }
 
     @Override
+    public int getMaxBulkInvitationOutcomeReport() {
+        return storage.getInt("com.pkb.patient.invitation.maxBulkInvitationOutcomeReport", 300);
+    }
+
+    @Override
     public boolean isExceptionForNullUniqueIdEnabled() {
         return storage.getBoolean("consistency.check.data.point.unique.id.null.exception", true);
     }
