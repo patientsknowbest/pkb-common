@@ -871,7 +871,7 @@ public class ConfigV2 implements Configuration {
 
     @Override
     public String getSynertecApiClientId() {
-        return storage.getString("synertecApiClientId");
+        return storage.getString("synertecApiClientId", "synertec-user-test");
     }
 
 }
