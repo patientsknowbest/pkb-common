@@ -878,4 +878,10 @@ public class ConfigV2 implements Configuration {
     public boolean isFhirCommunicationResourceEnabled() {
         return storage.getBoolean("fhir.api.Communication.enabled", false);
     }
+
+    @Override
+    public String getSynertecApiClientId() {
+        return storage.getString("synertecApiClientId", "synertec-user-test");
+    }
+
 }

@@ -62,4 +62,6 @@ public interface Configuration {
     boolean isExceptionForNoUniqueIdInMessageEnabled();
 
     boolean isFhirCommunicationResourceEnabled();
+
+    String getSynertecApiClientId();
 }
