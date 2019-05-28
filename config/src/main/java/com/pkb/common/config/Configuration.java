@@ -51,9 +51,13 @@ public interface Configuration {
 
     int getFhirDocumentReferenceMaxNumberOfResources();
 
+    int getMaxBulkInvitationOutcomeReport();
+
     boolean isExceptionForNullUniqueIdEnabled();
 
     boolean isExceptionForMissingSourceEnabled();
 
     boolean isExceptionForNoUniqueIdInMessageEnabled();
+
+    String getSynertecApiClientId();
 }

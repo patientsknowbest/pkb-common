@@ -103,14 +103,6 @@ public class ConfigV2 implements Configuration {
         return storage.getString("fromEmailName", "");
     }
 
-    public String getRecaptchaPrivateKey() {
-        return storage.getString("recaptchaPrivateKey", "");
-    }
-
-    public String getRecaptchaPublicKey() {
-        return storage.getString("recaptchaPublicKey", "");
-    }
-
     public int getInboxPageSize() {
         return storage.getInt("inboxPageSize");
     }
@@ -852,6 +844,11 @@ public class ConfigV2 implements Configuration {
     }
 
     @Override
+    public int getMaxBulkInvitationOutcomeReport() {
+        return storage.getInt("com.pkb.patient.invitation.maxBulkInvitationOutcomeReport", 300);
+    }
+
+    @Override
     public boolean isExceptionForNullUniqueIdEnabled() {
         return storage.getBoolean("consistency.check.data.point.unique.id.null.exception", true);
     }
@@ -870,4 +867,10 @@ public class ConfigV2 implements Configuration {
     public String getHospitalMapIframeSrc() {
         return storage.getString("webapp.hospitalMapIframeSrc", "https://viewer.blipstar.com/show?uid=1832224&search=geoip&gui=true&rc=&width=auto&tag=false");
     }
+
+    @Override
+    public String getSynertecApiClientId() {
+        return storage.getString("synertecApiClientId", "synertec-user-test");
+    }
+
 }
