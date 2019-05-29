@@ -673,6 +673,10 @@ public class ConfigV2 implements Configuration {
         return storage.getInt("feature.hl7.a19.sta.pagesize", 10000);
     }
 
+    public boolean isHL7MdmT11DocumentDeletionEnabled() {
+        return storage.getBoolean("feature.hl7.document.deletion.enabled", false);
+    }
+
     public int getNumberOfRecentLoginAttemptsAllowed() {
         return storage.getInt("numberOfRecentLoginAttemptsAllowed");
     }
