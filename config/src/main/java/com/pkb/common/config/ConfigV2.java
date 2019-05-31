@@ -880,6 +880,6 @@ public class ConfigV2 implements Configuration {
     }
 
     public int orgNetworkSyncTransactionTimeout() {
-        return storage.getInt("orgnetwork.sync.transaction.timeout", (int) MINUTES.toSeconds(20));
+        return storage.getInt("orgnetwork.sync.transaction.timeout.seconds", (int) MINUTES.toSeconds(20));
     }
 }
