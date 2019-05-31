@@ -2,6 +2,7 @@ package com.pkb.common.config;
 
 import static java.lang.String.format;
 import static java.util.Optional.empty;
+import static java.util.concurrent.TimeUnit.MINUTES;
 
 import java.lang.invoke.MethodHandles;
 import java.net.URL;
@@ -878,4 +879,7 @@ public class ConfigV2 implements Configuration {
         return storage.getString("synertecApiClientId", "synertec-user-test");
     }
 
+    public int orgNetworkSyncTransactionTimeout() {
+        return storage.getInt("orgnetwork.sync.transaction.timeout", (int) MINUTES.toSeconds(20));
+    }
 }
