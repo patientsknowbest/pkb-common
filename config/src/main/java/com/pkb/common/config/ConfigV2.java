@@ -2,6 +2,7 @@ package com.pkb.common.config;
 
 import static java.lang.String.format;
 import static java.util.Optional.empty;
+import static java.util.concurrent.TimeUnit.MINUTES;
 
 import java.lang.invoke.MethodHandles;
 import java.net.URL;
@@ -833,6 +834,11 @@ public class ConfigV2 implements Configuration {
     }
 
     @Override
+    public int getFhirCommunicationMaxNumberOfResources() {
+        return storage.getInt("fhir.api.Communication.maxNumberOfResources", 1000);
+    }
+
+    @Override
     public int getFhirDiagnosticReportMaxNumberOfResources() {
         return storage.getInt("fhir.api.DiagnosticReport.maxNumberOfResources", 1000);
     }
@@ -873,8 +879,16 @@ public class ConfigV2 implements Configuration {
     }
 
     @Override
+    public boolean isFhirCommunicationResourceEnabled() {
+        return storage.getBoolean("fhir.api.Communication.enabled", false);
+    }
+
+    @Override
     public String getSynertecApiClientId() {
         return storage.getString("synertecApiClientId", "synertec-user-test");
     }
 
+    public int orgNetworkSyncTransactionTimeout() {
+        return storage.getInt("orgnetwork.sync.transaction.timeout.seconds", (int) MINUTES.toSeconds(20));
+    }
 }
