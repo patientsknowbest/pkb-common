@@ -58,4 +58,6 @@ public interface Configuration {
     boolean isExceptionForMissingSourceEnabled();
 
     boolean isExceptionForNoUniqueIdInMessageEnabled();
+
+    String getSynertecApiClientId();
 }

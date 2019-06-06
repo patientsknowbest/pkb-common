@@ -873,4 +873,9 @@ public class ConfigV2 implements Configuration {
         return storage.getString("webapp.hospitalMapIframeSrc", "https://viewer.blipstar.com/show?uid=1832224&search=geoip&gui=true&rc=&width=auto&tag=false");
     }
 
+    @Override
+    public String getSynertecApiClientId() {
+        return storage.getString("synertecApiClientId", "synertec-user-test");
+    }
+
 }
