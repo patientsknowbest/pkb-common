@@ -565,12 +565,16 @@ public class ConfigV2 implements Configuration {
         return storage.getString("emis.sso.monitoring.prof.email");
     }
 
-    public boolean isTimelineEnabled() {
-        return storage.getBoolean("feature.timeline.enabled", true);
+    public boolean isRollBarEnabled(){
+        return storage.getBoolean("feature.rollbar.enabled", false);
     }
 
-    public boolean isRollBarEnabled(){
-        return storage.getBoolean("feature.rollbar.enabled", true);
+    public String getRollBarEnvironment(){
+        return storage.getString("feature.rollbar.environment", "production");
+    }
+
+    public boolean isTimelineEnabled() {
+        return storage.getBoolean("feature.timeline.enabled", true);
     }
 
     public boolean isTimelineCalendarEnabled() {
