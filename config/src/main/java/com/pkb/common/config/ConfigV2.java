@@ -569,6 +569,10 @@ public class ConfigV2 implements Configuration {
         return storage.getBoolean("feature.timeline.enabled", true);
     }
 
+    public boolean isRollBarEnabled(){
+        return storage.getBoolean("feature.rollbar.enabled", true);
+    }
+
     public boolean isTimelineCalendarEnabled() {
         return storage.getBoolean("feature.timeline.calendar.enabled", false);
     }
