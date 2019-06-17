@@ -17,6 +17,7 @@
         <module>config</module>
         <module>date-time</module>
         <module>testlogging</module>
+        <module>datamigrator</module>
     </modules>
 
 </project>
