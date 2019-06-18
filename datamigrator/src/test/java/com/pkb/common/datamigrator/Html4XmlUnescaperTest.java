@@ -27,7 +27,7 @@ public class Html4XmlUnescaperTest {
 
     @Test
     public void shouldUnescapeWhenEscapedString() {
-        //GIVEN - Input is null
+        //GIVEN
 
         //WHEN
         String actual = underTest.unescape(ESCAPED_SUBJECT);
@@ -38,7 +38,7 @@ public class Html4XmlUnescaperTest {
 
     @Test
     public void shouldNotChangeUnescapedStringWhenUnescapedString() {
-        //GIVEN - Input is null
+        //GIVEN
 
         //WHEN
         String actual = underTest.unescape(UNESCAPED_SUBJECT);
