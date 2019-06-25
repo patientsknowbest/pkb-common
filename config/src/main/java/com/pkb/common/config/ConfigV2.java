@@ -897,7 +897,7 @@ public class ConfigV2 implements Configuration {
     }
 
     public Boolean isGpAppointmentBookingEnabled() {
-        return storage.getBoolean("gpAppointmentBookingEnabled", false);
+        return storage.getBoolean("feature.gpAppointmentBooking.enabled", false);
     }
 
 }
