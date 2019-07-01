@@ -3,6 +3,7 @@ package com.pkb.common.config;
 import static java.lang.String.format;
 import static java.util.Optional.empty;
 import static java.util.concurrent.TimeUnit.MINUTES;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 import java.lang.invoke.MethodHandles;
 import java.net.URL;
@@ -904,4 +905,15 @@ public class ConfigV2 implements Configuration {
         return storage.getBoolean("feature.gpAppointmentBooking.enabled", false);
     }
 
+    public long uploadedDataSyncConnectionTimeoutMilliseconds() {
+        return storage.getLong("fhir.api.uploadeddata.sync.connectiontimeout.milliseconds", SECONDS.toMillis(10));
+    }
+
+    public long uploadedDataSyncWriteTimeoutMilliseconds() {
+        return storage.getLong("fhir.api.uploadeddata.sync.write.milliseconds", SECONDS.toMillis(10));
+    }
+
+    public long uploadedDataSyncReadTimeoutMilliseconds() {
+        return storage.getLong("fhir.api.uploadeddata.sync.read.milliseconds", MINUTES.toMillis(2));
+    }
 }
