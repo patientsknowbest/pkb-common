@@ -905,14 +905,17 @@ public class ConfigV2 implements Configuration {
         return storage.getBoolean("feature.gpAppointmentBooking.enabled", false);
     }
 
+    @Override
     public long uploadedDataSyncConnectionTimeoutMilliseconds() {
         return storage.getLong("fhir.api.uploadeddata.sync.connectiontimeout.milliseconds", SECONDS.toMillis(10));
     }
 
+    @Override
     public long uploadedDataSyncWriteTimeoutMilliseconds() {
         return storage.getLong("fhir.api.uploadeddata.sync.write.milliseconds", SECONDS.toMillis(10));
     }
 
+    @Override
     public long uploadedDataSyncReadTimeoutMilliseconds() {
         return storage.getLong("fhir.api.uploadeddata.sync.read.milliseconds", MINUTES.toMillis(2));
     }
