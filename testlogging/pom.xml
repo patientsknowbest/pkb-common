@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>pkb-common</artifactId>
-        <groupId>com.pkb.common</groupId>
+        <groupId>com.pkb.pkbcommon</groupId>
         <version>${revision}${changelist}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
