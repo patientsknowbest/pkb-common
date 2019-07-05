@@ -12,7 +12,6 @@ public enum Route {
     // data pulled from external sources
     CORE_DEVICES,
     EMIS_ES,
-    EMIS_PFS,
     SCISTORE,
     PACR,
     S1,         // rename for specific integration before using in production
