@@ -646,6 +646,10 @@ public class ConfigV2 implements Configuration {
         return storage.getBoolean("trackingEnabled", false);
     }
 
+    public int getMatomoSiteId() {
+        return storage.getInt("matomo.siteId");
+    }
+
     public boolean isScistoreEnabled() {
         return storage.getBoolean("feature.scistore.enabled", false);
     }
