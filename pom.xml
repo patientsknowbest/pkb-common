@@ -35,6 +35,7 @@
         <module>date-time</module>
         <module>testlogging</module>
         <module>datamigrator</module>
+        <module>infrastructure</module>
     </modules>
 
     <dependencyManagement>
