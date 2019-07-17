@@ -1,6 +1,7 @@
 package com.pkb.infrastructure.hibernate.id.enhanced;
 
 import static com.github.karsaig.approvalcrest.MatcherAssert.assertThat;
+import static com.pkb.infrastructure.hibernate.id.enhanced.ResettablePooledLoOptimizer.OPTIMIZER_CANONICAL_NAME;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
 import static org.junit.Assert.assertEquals;
 
@@ -15,7 +16,7 @@ public class ResettablePooledLoOptimizerTest {
 
     @Test
     public void optimizerFoundByHibernate() {
-        Optimizer optimizer = OptimizerFactory.buildOptimizer(ResettablePooledLoOptimizer.class.getCanonicalName(), Long.class, 50, -1);
+        Optimizer optimizer = OptimizerFactory.buildOptimizer(OPTIMIZER_CANONICAL_NAME, Long.class, 50, -1);
 
         assertThat(optimizer, instanceOf(ResettablePooledLoOptimizer.class));
     }

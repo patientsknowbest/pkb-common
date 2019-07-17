@@ -16,6 +16,8 @@ import com.pkb.common.ClearableInternalState;
  */
 public class ResettablePooledLoOptimizer implements ClearableInternalState, Optimizer {
 
+    public static final String OPTIMIZER_CANONICAL_NAME ="com.pkb.infrastructure.hibernate.id.enhanced.ResettablePooledLoOptimizer";
+
     private PooledLoOptimizer optimizer;
 
     // only used for resetting state (in e2e tests)
