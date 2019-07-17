@@ -45,12 +45,6 @@
             <artifactId>junit</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.jboss.logging</groupId>
-            <artifactId>jboss-logging</artifactId>
-            <version>3.3.0.Final</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>
             <scope>test</scope>
