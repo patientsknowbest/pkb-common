@@ -5,6 +5,7 @@ package com.pkb.entities.enums;
  */
 public enum DocStorageBackend {
     DOC,
+    DOC_NEARLINE,
     IN_MEMORY,
     GCS,
     FIRESTORE
