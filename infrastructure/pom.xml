@@ -7,8 +7,23 @@
         <artifactId>pkb-common</artifactId>
         <version>${revision}${changelist}</version>
     </parent>
-
     <artifactId>infrastructure</artifactId>
 
     <name>pkb-common/infrastructure</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.pkb.pkbcommon</groupId>
+            <artifactId>date-time</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>
