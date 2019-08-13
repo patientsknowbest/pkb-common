@@ -77,4 +77,14 @@ public class DateTimeTestSupportServletTest {
         // THEN
         verify(resp, times(1)).setStatus(HttpServletResponse.SC_NOT_FOUND);
     }
+
+    @Test
+    public void doDeleteForgetsFixedTime() {
+
+        // GIVEN / WHEN
+        underTest.doDelete(req, resp);
+
+        // THEN
+        verify(dateTimeService, times(1)).forgetFixedCurrentTimeForTesting();
+    }
 }
