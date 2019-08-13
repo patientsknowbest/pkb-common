@@ -32,4 +32,9 @@ public class DateTimeTestSupportServlet extends HttpServlet {
             resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
+        dateTimeService.forgetFixedCurrentTimeForTesting();
+    }
 }
