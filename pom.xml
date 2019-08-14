@@ -28,6 +28,8 @@
 
         <revision>0.0.0</revision>
         <changelist>-SNAPSHOT</changelist>
+        <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
+        <javax.inject.version>1</javax.inject.version>
     </properties>
 
     <modules>
@@ -83,6 +85,22 @@
                 <artifactId>annotations</artifactId>
                 <version>${version.jetbrain.annotations}</version>
             </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${javax.servlet-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.inject</groupId>
+                <artifactId>javax.inject</artifactId>
+                <version>${javax.inject.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.pkb.pkbcommon</groupId>
+                <artifactId>date-time</artifactId>
+                <version>${revision}${changelist}</version>
+            </dependency>
+
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
