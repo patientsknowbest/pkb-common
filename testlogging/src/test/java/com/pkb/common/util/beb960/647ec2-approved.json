@@ -1,0 +1,14 @@
+/*com.pkb.common.util.FrameFilterTest.testFrameFilterAlwaysIncludesRootFrame*/
+{
+  "0x1": {
+    "stackTrace": [
+      {
+        "declaringClass": "com.pkb.common.util.FrameFilterTest",
+        "methodName": "bar",
+        "fileName": "FrameFilterTest.java",
+        "lineNumber": 49
+      }
+    ],
+    "suppressedExceptions": []
+  }
+}
