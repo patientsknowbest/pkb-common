@@ -1,0 +1,26 @@
+/*com.pkb.common.util.FrameFilterTest.testFrameFilterExcludesNonPkbAndInterceptorCode*/
+{
+  "0x1": {
+    "stackTrace": [
+      {
+        "declaringClass": "com.pkb.common.util.FrameFilterTest",
+        "methodName": "bar",
+        "fileName": "FrameFilterTest.java",
+        "lineNumber": 49
+      },
+      {
+        "declaringClass": "com.pkb.common.util.FrameFilterTest",
+        "methodName": "foo",
+        "fileName": "FrameFilterTest.java",
+        "lineNumber": 45
+      },
+      {
+        "declaringClass": "com.pkb.common.util.FrameFilterTest",
+        "methodName": "testFrameFilterExcludesNonPkbAndInterceptorCode",
+        "fileName": "FrameFilterTest.java",
+        "lineNumber": 20
+      }
+    ],
+    "suppressedExceptions": []
+  }
+}
