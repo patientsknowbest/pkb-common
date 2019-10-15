@@ -13,6 +13,13 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.pkb</groupId>
+            <artifactId>commons-testing-base</artifactId>
+            <version>${commons-testing-base.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
         </dependency>
@@ -28,7 +35,6 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
         </dependency>
-        
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>

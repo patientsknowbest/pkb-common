@@ -6,6 +6,8 @@ import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
+import com.pkb.testing.util.EnumTestHelper;
+
 public class NationalIdTypeTest {
 
     @Test
@@ -23,5 +25,20 @@ public class NationalIdTypeTest {
         assertEquals("FOOBAR", KVN_DE.cleanInput("foo   BAR  "));
     }
 
+    /**
+     * Duplicated enum attributes are currently unexpected
+     */
+    @Test
+    public void checkNoDuplicateNames() {
+        EnumTestHelper.ensureEnumValueIsUnique("Found duplicate Names ", NationalIdType.class, NationalIdType::getName);
+    }
+    @Test
+    public void checkNoDuplicateCountries() {
+        EnumTestHelper.ensureEnumValueIsUnique("Found duplicate Countries ", NationalIdType.class, NationalIdType::getCountryCodes);
+    }
+    @Test
+    public void checkNoDuplicateAuthority() {
+        EnumTestHelper.ensureEnumValueIsUnique("Found duplicate Authorities ", NationalIdType.class, NationalIdType::getHl7IdAuthority);
+    }
 
 }
