@@ -13,14 +13,14 @@ import org.junit.Test;
 
 import org.springframework.cache.annotation.Cacheable;
 
-class Naughty {
+class NaughtyTestClass {
     @Cacheable("naughtyCache")
     public String getStuff() {
         return "No";
     }
 }
 
-class Nice implements ClearableInternalState {
+class NiceTestClass implements ClearableInternalState {
     public void clearState() {
     }
 
@@ -30,7 +30,7 @@ class Nice implements ClearableInternalState {
     }
 }
 
-class Indifferent  {
+class IndifferentTestClass  {
     public String getStuff() {
         return "Maybe";
     }
@@ -41,7 +41,7 @@ public class CacheUtilsTest {
     @Test
     public void testGetUnclearableCaches() throws Exception {
         List<Class> actual = getUnclearableCaches();
-        List<Class> wanted = singletonList(Naughty.class);
+        List<Class> wanted = singletonList(NaughtyTestClass.class);
         assertThat(actual,sameBeanAs(wanted).withGsonConfiguration(pkbConfigWithVavr()));
     }
 }
