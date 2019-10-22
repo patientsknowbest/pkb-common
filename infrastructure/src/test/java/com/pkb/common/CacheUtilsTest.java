@@ -21,6 +21,7 @@ class NaughtyTestClass {
 }
 
 class NiceTestClass implements ClearableInternalState {
+    @Override
     public void clearState() {
     }
 

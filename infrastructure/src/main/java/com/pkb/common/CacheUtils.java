@@ -17,12 +17,6 @@ public class CacheUtils {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         return  ClassPath.from(cl).getTopLevelClassesRecursive("com.pkb").stream()
                 .map(ClassPath.ClassInfo::load)
-                .peek(c -> {
-                    if (hasCacheableMethods(c)) {
-                        System.err.println(c.getName()+"***");
-                    } else {
-                    System.err.println(c.getName());}
-                })
                 .filter(c -> hasCacheableMethods(c) && !ClearableInternalState.class.isAssignableFrom(c))
                 .collect(toList());
     }
