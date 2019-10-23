@@ -38,6 +38,7 @@
         <module>testlogging</module>
         <module>datamigrator</module>
         <module>infrastructure</module>
+        <module>spring-infrastructure</module>
     </modules>
 
     <dependencyManagement>
