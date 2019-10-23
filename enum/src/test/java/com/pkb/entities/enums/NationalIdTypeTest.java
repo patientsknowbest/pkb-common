@@ -40,5 +40,12 @@ public class NationalIdTypeTest {
     public void checkNoDuplicateAuthority() {
         EnumTestHelper.ensureEnumValueIsUnique("Found duplicate Authorities ", NationalIdType.class, NationalIdType::getHl7IdAuthority);
     }
+    @Test
+    public void checkNoDuplicateFhirIdentifier() {
+        EnumTestHelper.ensureEnumValueIsUniqueWithFilters("Found duplicate FhirIdentifier ", NationalIdType.class, NationalIdType::getFhirIdentifierSystem, it -> {
+            //null fhir identifiers are expected currently
+            return it.getFhirIdentifierSystem() != null;
+        });
+    }
 
 }
