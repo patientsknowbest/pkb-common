@@ -11,13 +11,6 @@
 
     <name>pkb-common/infrastructure</name>
 
-    <properties>
-        <!-- SPRING DEPENDENCIES START -->
-        <spring.security.version>3.2.10.RELEASE</spring.security.version>
-        <spring.version>3.2.18.RELEASE</spring.version>
-        <!-- SPRING DEPENDENCIES END -->
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -60,20 +53,15 @@
             <artifactId>approvalcrest</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>27.0-jre</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
             <groupId>com.pkb</groupId>
             <artifactId>commons-testing-base</artifactId>
             <version>8</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>5.0.3.RELEASE</version>
         </dependency>
     </dependencies>
 

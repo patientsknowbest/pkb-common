@@ -1,9 +1,6 @@
 package com.pkb.common;
 
-import static com.github.karsaig.approvalcrest.MatcherAssert.assertThat;
-import static com.github.karsaig.approvalcrest.matcher.Matchers.sameBeanAs;
 import static com.pkb.common.CacheUtils.getUnclearableCaches;
-import static com.pkb.testing.gson.DefaultPKBGsonConfigurationFactory.pkbConfigWithVavr;
 
 import static java.util.Collections.singletonList;
 
@@ -12,6 +9,10 @@ import java.util.List;
 import org.junit.Test;
 
 import org.springframework.cache.annotation.Cacheable;
+
+import com.github.karsaig.approvalcrest.MatcherAssert;
+import com.github.karsaig.approvalcrest.matcher.Matchers;
+import com.pkb.testing.gson.DefaultPKBGsonConfigurationFactory;
 
 class NaughtyTestClass {
     @Cacheable("naughtyCache")
@@ -43,6 +44,7 @@ public class CacheUtilsTest {
     public void testGetUnclearableCaches() throws Exception {
         List<Class> actual = getUnclearableCaches();
         List<Class> wanted = singletonList(NaughtyTestClass.class);
-        assertThat(actual,sameBeanAs(wanted).withGsonConfiguration(pkbConfigWithVavr()));
+        MatcherAssert
+                .assertThat(actual, Matchers.sameBeanAs(wanted).withGsonConfiguration(DefaultPKBGsonConfigurationFactory.pkbConfigWithVavr()));
     }
 }
