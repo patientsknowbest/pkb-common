@@ -12,17 +12,21 @@
     <artifactId>spring-infrastructure</artifactId>
     <name>pkb-common/spring-infrastructure</name>
 
+    <properties>
+       <spring.version>3.2.18.RELEASE</spring.version> <!-- copied from PHR -->
+    </properties>
+
     <dependencies>
     <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
         <version>27.0-jre</version>
     </dependency>
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-context</artifactId>
-        <version>5.1.8.RELEASE</version>
-    </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.pkb.pkbcommon</groupId>
             <artifactId>infrastructure</artifactId>
