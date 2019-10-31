@@ -23,7 +23,7 @@
         <version.mockito>2.20.1</version.mockito>
 
         <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
-        <owasp-dependency-check.version>5.0.0</owasp-dependency-check.version>
+        <owasp-dependency-check.version>5.2.1</owasp-dependency-check.version>
         <pitest.version>1.4.0</pitest.version>
 
         <revision>0.0.0</revision>
