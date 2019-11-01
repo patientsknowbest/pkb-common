@@ -146,6 +146,9 @@
                 <version>${owasp-dependency-check.version}</version>
                 <configuration>
                     <failBuildOnAnyVulnerability>true</failBuildOnAnyVulnerability>
+                    <excludes>
+                        <exclude>org.springframework</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
             <plugin>
