@@ -3,6 +3,7 @@ package com.pkb.common;
 import static com.pkb.common.CacheUtils.getUnclearableCaches;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import org.junit.Test;
@@ -52,6 +53,7 @@ public class CacheUtilsTest {
     @Test
     public void testGetUnclearableCaches() throws Exception {
         List<Class> actual = getUnclearableCaches();
+        actual.sort(Comparator.comparing(Class::getName));
         List<Class> wanted = Arrays.asList(NaughtyTestClass1.class,NaughtyTestClass2.class,NaughtyTestClass3.class);
         MatcherAssert
                 .assertThat(actual, Matchers.sameBeanAs(wanted).withGsonConfiguration(DefaultPKBGsonConfigurationFactory.pkbConfigWithVavr()));
