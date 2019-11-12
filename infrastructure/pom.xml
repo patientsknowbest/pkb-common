@@ -11,10 +11,6 @@
     <artifactId>infrastructure</artifactId>
     <name>pkb-common/infrastructure</name>
 
-    <properties>
-        <spring.version>3.2.18.RELEASE</spring.version> <!-- copied from PHR -->
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -55,12 +51,6 @@
         <dependency>
             <groupId>com.github.karsaig</groupId>
             <artifactId>approvalcrest</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.pkb</groupId>
-            <artifactId>commons-testing-base</artifactId>
-            <version>8</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
