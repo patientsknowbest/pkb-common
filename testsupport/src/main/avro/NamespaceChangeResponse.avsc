@@ -1,0 +1,8 @@
+{"namespace": "com.pkb.pulsar.payload",
+  "type": "record",
+  "name": "NamespaceChangeResponse",
+  "fields": [
+    {"name": "service", "type": "string"},
+    {"name": "namespace", "type": "string"}
+  ]
+}
