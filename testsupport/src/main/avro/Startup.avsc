@@ -1,0 +1,7 @@
+{"namespace": "com.pkb.pulsar.payload",
+  "type": "record",
+  "name": "Startup",
+  "fields": [
+    {"name": "service", "type": "string"}
+  ]
+}
