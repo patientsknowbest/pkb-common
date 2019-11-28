@@ -26,7 +26,7 @@ public class MenuDataXmlSerializerHelperTest {
     private final byte[] expectedBytes;
 
     public MenuDataXmlSerializerHelperTest(String resourceFilename) {
-        this.expectedBytes = unchecked(() -> loadResourceXml("diagnosis.xml")).get().getBytes();
+        this.expectedBytes = unchecked(() -> loadResourceXml()).get().getBytes();
     }
 
     @Parameters
@@ -55,8 +55,8 @@ public class MenuDataXmlSerializerHelperTest {
         assertThat(actual, sameBeanAs(expected));
     }
 
-    private static String loadResourceXml(String filename) throws IOException {
-        try (InputStream inputStream = MenuDataXmlParserHelperTest.class.getResourceAsStream(filename)) {
+    private static String loadResourceXml() throws IOException {
+        try (InputStream inputStream = MenuDataXmlParserHelperTest.class.getResourceAsStream("diagnosis.xml")) {
             return IOUtils.toString(inputStream, Charsets.UTF_8);
         }
     }
