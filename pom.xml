@@ -21,6 +21,9 @@
         <version.jetbrain.annotations>16.0.3</version.jetbrain.annotations>
         <version.junit>4.12</version.junit>
         <version.mockito>2.20.1</version.mockito>
+        <version.guava>28.0-jre</version.guava>
+        <prometheus.client.version>0.5.0</prometheus.client.version>
+        <version.apache-commons-io>2.6</version.apache-commons-io>
 
         <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
         <owasp-dependency-check.version>5.2.1</owasp-dependency-check.version>
@@ -39,6 +42,7 @@
         <module>datamigrator</module>
         <module>infrastructure</module>
         <module>spring-infrastructure</module>
+        <module>ehrdata-serialization</module>
     </modules>
 
     <dependencyManagement>
@@ -53,6 +57,21 @@
                 <artifactId>approvalcrest</artifactId>
                 <version>${approvalcrest.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${version.guava}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${version.apache-commons-io}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.prometheus</groupId>
+                <artifactId>simpleclient_common</artifactId>
+                <version>${prometheus.client.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.hamcrest</groupId>
