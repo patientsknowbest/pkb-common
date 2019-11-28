@@ -1,4 +1,4 @@
-package com.pkb.ehrdata.serialization;
+package com.pkb.common.ehrdata.serialization;
 
 import static java.util.function.Function.identity;
 
@@ -7,7 +7,7 @@ import java.util.function.Function;
 
 import org.jetbrains.annotations.NotNull;
 
-import com.pkb.ehrdata.deserializer.xml01.MenuDataXmlParserHelper;
+import com.pkb.common.ehrdata.deserializer.xml01.MenuDataXmlParserHelper;
 
 public interface EHRDataDeserializer {
 

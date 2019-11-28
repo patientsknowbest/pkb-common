@@ -1,4 +1,4 @@
-package com.pkb.ehrdata.deserializer.xml01;
+package com.pkb.common.ehrdata.deserializer.xml01;
 
 import static com.github.karsaig.approvalcrest.MatcherAssert.assertThat;
 import static com.github.karsaig.approvalcrest.matcher.Matchers.sameBeanAs;

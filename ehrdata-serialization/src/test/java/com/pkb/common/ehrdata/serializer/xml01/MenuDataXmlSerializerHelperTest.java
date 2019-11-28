@@ -1,4 +1,4 @@
-package com.pkb.ehrdata.serializer.xml01;
+package com.pkb.common.ehrdata.serializer.xml01;
 
 import static com.github.karsaig.approvalcrest.MatcherAssert.assertThat;
 import static com.github.karsaig.approvalcrest.matcher.Matchers.sameBeanAs;
@@ -17,8 +17,8 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 import com.google.common.base.Charsets;
-import com.pkb.ehrdata.deserializer.xml01.MenuDataXmlParserHelper;
-import com.pkb.ehrdata.deserializer.xml01.MenuDataXmlParserHelperTest;
+import com.pkb.common.ehrdata.deserializer.xml01.MenuDataXmlParserHelper;
+import com.pkb.common.ehrdata.deserializer.xml01.MenuDataXmlParserHelperTest;
 
 @RunWith(Parameterized.class)
 public class MenuDataXmlSerializerHelperTest {
