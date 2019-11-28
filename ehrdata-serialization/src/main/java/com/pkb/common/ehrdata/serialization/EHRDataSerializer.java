@@ -1,10 +1,10 @@
-package com.pkb.ehrdata.serialization;
+package com.pkb.common.ehrdata.serialization;
 
 import java.util.Map;
 
 import org.jetbrains.annotations.NotNull;
 
-import com.pkb.ehrdata.serializer.xml01.MenuDataXmlSerializerHelper;
+import com.pkb.common.ehrdata.serializer.xml01.MenuDataXmlSerializerHelper;
 
 public interface EHRDataSerializer {
 

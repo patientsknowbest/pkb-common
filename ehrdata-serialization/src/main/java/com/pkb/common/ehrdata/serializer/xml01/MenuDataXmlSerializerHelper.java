@@ -1,4 +1,4 @@
-package com.pkb.ehrdata.serializer.xml01;
+package com.pkb.common.ehrdata.serializer.xml01;
 
 import static io.vavr.API.unchecked;
 

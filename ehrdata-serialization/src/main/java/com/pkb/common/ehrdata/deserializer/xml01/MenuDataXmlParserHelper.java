@@ -1,4 +1,4 @@
-package com.pkb.ehrdata.deserializer.xml01;
+package com.pkb.common.ehrdata.deserializer.xml01;
 
 import static com.google.common.base.Preconditions.checkState;
 import static io.vavr.API.unchecked;
