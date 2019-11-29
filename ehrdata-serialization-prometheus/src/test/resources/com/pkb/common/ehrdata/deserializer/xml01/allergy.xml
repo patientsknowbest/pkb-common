@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fields cdataEncoding="Base64">
+    <field name="severity" type="Map&lt;String,Object>">
+        <fields cdataEncoding="Base64">
+            <field name="displayText" type="String"><![CDATA[TWlsZA==]]></field>
+            <field name="codings" type="List&lt;Map&lt;String,Object>>">
+                <item>
+                    <fields cdataEncoding="Base64">
+                        <field name="displayText" type="String"><![CDATA[TWlsZA==]]></field>
+                        <field name="code" type="String"><![CDATA[MjU1NjA0MDAy]]></field>
+                        <field name="codeSystem" type="String"><![CDATA[U05PTUVELUNU]]></field>
+                    </fields>
+                </item>
+            </field>
+        </fields>
+    </field>
+    <field name="allergen" type="Map&lt;String,Object>">
+        <fields cdataEncoding="Base64">
+            <field name="displayText" type="String"><![CDATA[RGFpcnk=]]></field>
+            <field name="codings" type="null"/>
+        </fields>
+    </field>
+    <field name="disorder" type="null"/>
+    <field name="endOfSymptoms" type="null"/>
+    <field name="authorLdapUID" type="String"><![CDATA[MTc3Mg==]]></field>
+    <field name="hospitalServiceCode" type="null"/>
+    <field name="sourceText" type="null"/>
+    <field name="reactions" type="List&lt;Map&lt;String,Object>>">
+        <item>
+            <fields cdataEncoding="Base64">
+                <field name="displayText" type="String"><![CDATA[TmF1c2Vh]]></field>
+                <field name="codings" type="List&lt;Map&lt;String,Object>>">
+                    <item>
+                        <fields cdataEncoding="Base64">
+                            <field name="displayText" type="String"><![CDATA[TmF1c2Vh]]></field>
+                            <field name="code" type="String"><![CDATA[NDIyNTg3MDA3]]></field>
+                            <field name="codeSystem" type="String"><![CDATA[U05PTUVELUNU]]></field>
+                        </fields>
+                    </item>
+                </field>
+            </fields>
+        </item>
+    </field>
+    <field name="status" type="null"/>
+</fields>

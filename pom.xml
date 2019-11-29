@@ -42,7 +42,8 @@
         <module>datamigrator</module>
         <module>infrastructure</module>
         <module>spring-infrastructure</module>
-        <module>ehrdata-serialization</module>
+        <module>ehrdata-serialization-core</module>
+        <module>ehrdata-serialization-prometheus</module>
     </modules>
 
     <dependencyManagement>
@@ -67,11 +68,6 @@
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${version.apache-commons-io}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.prometheus</groupId>
-                <artifactId>simpleclient_common</artifactId>
-                <version>${prometheus.client.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.hamcrest</groupId>
@@ -116,10 +112,17 @@
                 <version>${javax.inject.version}</version>
             </dependency>
             <dependency>
+                <groupId>io.prometheus</groupId>
+                <artifactId>simpleclient_common</artifactId>
+                <scope>provided</scope>
+                <version>${prometheus.client.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.pkb.pkbcommon</groupId>
                 <artifactId>date-time</artifactId>
                 <version>${revision}${changelist}</version>
             </dependency>
+
 
             <dependency>
                 <groupId>junit</groupId>
