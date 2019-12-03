@@ -1,9 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<fields cdataEncoding="Base64">
-    <field name="patientId" type="String"><![CDATA[MTc3Mg==]]></field>
-    <field name="subject" type="String"><![CDATA[VGVzdCBhcHBvaW50bWVudA==]]></field>
-    <field name="hospitalServiceCode" type="null"/>
-    <field name="sourceText" type="null"/>
-    <field name="description" type="String"><![CDATA[VGVzdCBhcHBvaW50bWVudA==]]></field>
-    <field name="location" type="String"><![CDATA[U3VyZ2VyeQ==]]></field>
-</fields>

@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import org.mockito.Mockito;
 
 import com.google.common.base.Charsets;
 import com.pkb.common.ehrdata.NoOpAutocloseableTimer;
@@ -54,6 +55,20 @@ public class MenuDataXmlSerializerHelperTest {
 
         // THEN
         assertThat(actual, sameBeanAs(expected));
+    }
+
+    @Test
+    public void timerUsed() {
+        // GIVEN
+        Map<String, Object> toSerialize = MenuDataXmlParserHelper.unmarshalEncryptedFields(expectedBytes, new NoOpAutocloseableTimer());
+        NoOpAutocloseableTimer parseTimer = Mockito.spy(new NoOpAutocloseableTimer());
+
+        // WHEN
+        byte[] marshalled = MenuDataXmlSerializerHelper.marshalEncryptedFields(toSerialize, parseTimer);
+
+        // THEN
+        Mockito.verify(parseTimer, Mockito.times(1)).startTimer();
+        Mockito.verify(parseTimer, Mockito.times(1)).close();
     }
 
     private static String loadResourceXml() throws IOException {
