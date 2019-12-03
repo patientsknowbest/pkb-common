@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import com.google.common.base.Charsets;
 import com.google.common.collect.ImmutableMap;
@@ -212,6 +213,19 @@ public class MenuDataXmlParserHelperTest {
 
         // THEN
         assertThat(actual, sameBeanAs(expected));
+    }
+
+    @Test
+    public void timerUsed() {
+        // GIVEN
+        NoOpAutocloseableTimer parseTimer = Mockito.spy(new NoOpAutocloseableTimer());
+
+        // WHEN
+        Map<String, Object> actual = MenuDataXmlParserHelper.unmarshalEncryptedFields(APPOINTMENT.getBytes(), parseTimer);
+
+        // THEN
+        Mockito.verify(parseTimer, Mockito.times(1)).startTimer();
+        Mockito.verify(parseTimer, Mockito.times(1)).close();
     }
 
     private static String loadResourceXml(String filename) throws IOException {
