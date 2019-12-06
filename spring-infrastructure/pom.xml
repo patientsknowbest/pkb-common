@@ -41,7 +41,7 @@
         <dependency>
             <groupId>com.pkb</groupId>
             <artifactId>commons-testing-base</artifactId>
-            <version>8</version>
+            <version>10</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
