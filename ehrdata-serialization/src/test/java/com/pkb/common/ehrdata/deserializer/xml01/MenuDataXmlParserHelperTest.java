@@ -224,7 +224,7 @@ public class MenuDataXmlParserHelperTest {
         Metrics.globalRegistry.add(smr);
 
         // WHEN
-        Map<String, Object> actual = MenuDataXmlParserHelper.unmarshalEncryptedFields(APPOINTMENT.getBytes());
+        MenuDataXmlParserHelper.unmarshalEncryptedFields(APPOINTMENT.getBytes());
 
         // THEN
         long xmlCreateTimerCount = smr.timer("pkb_phr_menudata_xmlparseseconds").count();

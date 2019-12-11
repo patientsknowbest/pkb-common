@@ -68,7 +68,7 @@ public class MenuDataXmlSerializerHelperTest {
 
         // WHEN
         byte[] marshalled = MenuDataXmlSerializerHelper.marshalEncryptedFields(expected);
-        Map<String, Object> actual = MenuDataXmlParserHelper.unmarshalEncryptedFields(marshalled);
+        MenuDataXmlParserHelper.unmarshalEncryptedFields(marshalled);
 
         // THEN
         long xmlCreateTimerCount = smr.timer("pkb_phr_menudata_xmlcreateseconds").count();

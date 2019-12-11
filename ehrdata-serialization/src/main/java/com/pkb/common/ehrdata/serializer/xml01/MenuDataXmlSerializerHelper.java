@@ -41,9 +41,7 @@ public class MenuDataXmlSerializerHelper {
 
         return XML_CREATE_TIMER.record(() -> unchecked(() -> {
             XMLStreamWriter writer = null;
-            try (
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ) {
+            try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
 
                 writer = factory.createXMLStreamWriter(baos, "UTF-8");
                 writer.writeStartDocument("UTF-8", "1.0");
