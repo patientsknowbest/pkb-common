@@ -72,6 +72,7 @@ public class MenuDataXmlSerializerHelper {
         writer.writeEndElement();
     }
 
+    @SuppressWarnings("UseOfObsoleteDateTimeApi")
     private static void writeXmlFieldValue(@NotNull XMLStreamWriter writer, @Nullable Object value) throws XMLStreamException {
         if ((value == null)
                 || ((value instanceof String) && ((String) value).isEmpty())
