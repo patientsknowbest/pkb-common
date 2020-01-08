@@ -4,8 +4,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 import static com.pkb.common.util.FrameFilter.filter;
+import static java.util.stream.Collectors.joining;
 
 public class ConsistencyChecker {
     @FunctionalInterface
@@ -13,15 +15,26 @@ public class ConsistencyChecker {
         boolean holds();
     }
 
+    public static LoggerStage forJiraKeys(@NotNull String key, @NotNull String... otherKeys) {
+        return new LoggerStage(Stream.concat(Stream.of(key), Stream.of(otherKeys)).collect(joining()));
+    }
+
     public static LoggerStage forJiraKey(@NotNull String key) {
         return new LoggerStage(key);
     }
 
     public static final class LoggerStage {
+        private static final BiConsumer<String, Throwable> NOOP = ($1, $2) -> {
+        };
+
         private final String key;
 
         private LoggerStage(String key) {
             this.key = key;
+        }
+
+        public ConditionToThrowExceptionStage withoutLogging() {
+            return new ConditionToThrowExceptionStage(key, NOOP);
         }
 
         public ConditionToThrowExceptionStage logUsing(@NotNull BiConsumer<String, Throwable> logger) {
@@ -78,6 +91,10 @@ public class ConsistencyChecker {
         public FinalStage when(@NotNull Condition condition) {
             return new FinalStage(key, logger, conditionToThrowException, taskExecutor, exceptionFactory, condition);
         }
+
+        public FinalStage whenNot(@NotNull Condition condition) {
+            return new FinalStage(key, logger, conditionToThrowException, taskExecutor, exceptionFactory, () -> !condition.holds());
+        }
     }
 
     public static final class FinalStage {
@@ -101,6 +118,8 @@ public class ConsistencyChecker {
         private final Function<String, ? extends RuntimeException> exceptionFactory;
         private final Condition condition;
 
+        private Runnable postConditionCheckTask;
+
         private FinalStage(
                 String jiraKey,
                 BiConsumer<String, Throwable> logger,
@@ -114,10 +133,17 @@ public class ConsistencyChecker {
             this.taskExecutor = taskExecutor;
             this.exceptionFactory = exceptionFactory;
             this.condition = condition;
+            this.postConditionCheckTask = () -> {};
+        }
+
+        public FinalStage postCheck(Runnable postCheckTask) {
+            this.postConditionCheckTask = postCheckTask;
+            return this;
         }
 
         public void withMessage(@NotNull String message) {
             if (condition.holds()) {
+                postConditionCheckTask.run();
                 String messageWithKey = String.format("%s - %s", jiraKey, message);
                 RuntimeException exception = exceptionFactory.apply(message);
 

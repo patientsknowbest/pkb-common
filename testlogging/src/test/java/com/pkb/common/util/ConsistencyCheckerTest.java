@@ -20,7 +20,6 @@ public class ConsistencyCheckerTest {
     public static final ConsistencyChecker.Condition TAUTOLOGY = () -> true;
     public static final ConsistencyChecker.Condition CONTRADICTION = () -> false;
 
-
     private static final ConsistencyChecker.Condition EXCEPTION_THROWING_ENABLED = TAUTOLOGY;
     private static final ConsistencyChecker.Condition EXCEPTION_THROWING_DISABLED = CONTRADICTION;
 
