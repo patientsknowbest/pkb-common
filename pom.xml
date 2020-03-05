@@ -42,7 +42,6 @@
         <module>datamigrator</module>
         <module>infrastructure</module>
         <module>spring-infrastructure</module>
-        <module>ehrdata-serialization</module>
     </modules>
 
     <dependencyManagement>
