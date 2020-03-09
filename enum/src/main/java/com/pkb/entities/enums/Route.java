@@ -1,10 +1,12 @@
 package com.pkb.entities.enums;
 
+@SuppressWarnings("unused")
 public enum Route {
     // direct access into PKB (pushing data or reading)
     WEBAPP,
     WEBAPP_EMIS_PORTAL, // subcategory of webapp access
     WEBAPP_OTP,
+    WEBAPP_NHS_APP,     // webapp access via NHS app
     REST_API,
     HL7_API,
     CSV_API,    // PoC phase; not yet in use in production
