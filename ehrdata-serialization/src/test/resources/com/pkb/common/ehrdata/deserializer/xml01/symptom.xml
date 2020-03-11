@@ -1,9 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<fields cdataEncoding="Base64">
-    <field name="comments" type="null"/>
-    <field name="hospitalServiceCode" type="null"/>
-    <field name="sourceText" type="null"/>
-    <field name="dataEntererUid" type="null"/>
-    <field name="severityPrivateId" type="String"><![CDATA[MQ==]]></field>
-    <field name="symptomPrivateId" type="String"><![CDATA[MjA3MA==]]></field>
-</fields>

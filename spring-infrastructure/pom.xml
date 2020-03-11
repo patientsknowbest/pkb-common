@@ -14,15 +14,13 @@
 
     <properties>
        <spring.version>3.2.18.RELEASE</spring.version> <!-- copied from PHR -->
-        <guava.version>27.0-jre</guava.version>
     </properties>
 
     <dependencies>
-    <dependency>
-        <groupId>com.google.guava</groupId>
-        <artifactId>guava</artifactId>
-        <version>${guava.version}</version>
-    </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
