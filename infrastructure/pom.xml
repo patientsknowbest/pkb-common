@@ -21,6 +21,11 @@
             <artifactId>date-time</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.pkb.pkbcommon</groupId>
+            <artifactId>config</artifactId>
+            <version>${revision}${changelist}</version>
+        </dependency>
+        <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
         </dependency>
