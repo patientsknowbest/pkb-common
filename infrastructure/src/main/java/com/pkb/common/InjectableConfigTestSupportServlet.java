@@ -9,20 +9,20 @@ import javax.servlet.http.HttpServletResponse;
 
 public class InjectableConfigTestSupportServlet extends HttpServlet {
 
-    private ConfigV2 config;
+    private ConfigV2 configV2;
 
     @Inject
-    public InjectableConfigTestSupportServlet(ConfigV2 config) {
-        this.config = config;
+    public InjectableConfigTestSupportServlet(ConfigV2 configV2) {
+        this.configV2 = configV2;
     }
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            if (config.isMutableConfigEnabled()) {
+            if (configV2.isMutableConfigEnabled()) {
                 String key = req.getParameter("key");
                 String value = req.getParameter("value");
-                config.setValue(key, value);
+                configV2.setValue(key, value);
             }
         } catch (IllegalStateException e) {
             resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -31,8 +31,8 @@ public class InjectableConfigTestSupportServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
-        if (config.isMutableConfigEnabled()) {
-            config.reset();
+        if (configV2.isMutableConfigEnabled()) {
+            configV2.reset();
         }
     }
 }

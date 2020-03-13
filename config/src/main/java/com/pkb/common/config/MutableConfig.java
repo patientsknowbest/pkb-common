@@ -30,10 +30,12 @@ public class MutableConfig implements ConfigV2 {
         this.configMap = new HashMap<>();
     }
 
+    @Override
     public void setValue(String key, String value) {
         configMap.put(key, value);
     }
 
+    @Override
     public void reset() {
         configMap.clear();
     }
