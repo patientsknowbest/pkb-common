@@ -1,0 +1,11 @@
+{
+    "namespace": "com.pkb.pulsar.payload",
+    "type": "record",
+    "name": "ControlPlaneResponse",
+    "fields": [
+        {"name": "messageType", "type": "MessageType"},
+        {"name": "service", "type": "string"},
+        {"name": "namespaceChangeResponse", "type": ["null", "NamespaceChangeResponse"], "default": null},
+        {"name": "setFixedTimestampResponse", "type": ["null", "SetFixedTimestampResponse"], "default": null}
+    ]
+}

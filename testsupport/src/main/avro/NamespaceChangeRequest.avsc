@@ -2,6 +2,6 @@
   "type": "record",
   "name": "NamespaceChangeRequest",
   "fields": [
-    {"name": "namespace", "type": "string"}
+    {"name": "newNamespace", "type": "string"}
   ]
 }
