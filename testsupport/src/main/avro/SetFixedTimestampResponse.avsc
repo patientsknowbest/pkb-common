@@ -2,7 +2,6 @@
   "type": "record",
   "name": "SetFixedTimestampResponse",
   "fields": [
-    {"name": "service", "type": "string"},
     {"name": "timestamp", "type": "string"}
   ]
 }

@@ -1,0 +1,6 @@
+{
+    "namespace": "com.pkb.pulsar.payload",
+    "type": "enum",
+    "name": "MessageType",
+    "symbols": ["setNamespace", "setFixedTimestamp"]
+}
