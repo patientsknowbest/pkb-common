@@ -1,3 +1,4 @@
+// note other types used here need to be imported in the avro plugin in pom.xml
 {
     "namespace": "com.pkb.pulsar.payload",
     "type": "record",
