@@ -1,20 +1,14 @@
 package com.pkb.common;
 
-import com.pkb.common.config.ConfigV2;
+import com.pkb.common.config.BaseConfig;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class InjectableConfigTestSupportServlet extends HttpServlet {
 
-    private ConfigV2 configV2;
-
-    @Inject
-    public InjectableConfigTestSupportServlet(ConfigV2 configV2) {
-        this.configV2 = configV2;
-    }
+    protected BaseConfig configV2;
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
