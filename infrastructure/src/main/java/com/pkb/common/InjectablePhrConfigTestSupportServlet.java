@@ -7,7 +7,7 @@ import javax.inject.Inject;
 public class InjectablePhrConfigTestSupportServlet extends InjectableConfigTestSupportServlet {
 
     @Inject
-    public InjectablePhrConfigTestSupportServlet(PkbPluginConfig configV2) {
-        this.configV2 = configV2;
+    public InjectablePhrConfigTestSupportServlet(PkbPluginConfig pkbPluginConfig) {
+        this.baseConfig = pkbPluginConfig;
     }
 }

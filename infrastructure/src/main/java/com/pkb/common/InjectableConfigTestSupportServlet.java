@@ -8,15 +8,15 @@ import javax.servlet.http.HttpServletResponse;
 
 public class InjectableConfigTestSupportServlet extends HttpServlet {
 
-    protected BaseConfig configV2;
+    protected BaseConfig baseConfig;
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            if (configV2.isMutableConfigEnabled()) {
+            if (baseConfig.isMutableConfigEnabled()) {
                 String key = req.getParameter("key");
                 String value = req.getParameter("value");
-                configV2.setValue(key, value);
+                baseConfig.setValue(key, value);
             }
         } catch (IllegalStateException e) {
             resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -25,8 +25,8 @@ public class InjectableConfigTestSupportServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
-        if (configV2.isMutableConfigEnabled()) {
-            configV2.reset();
+        if (baseConfig.isMutableConfigEnabled()) {
+            baseConfig.reset();
         }
     }
 }
