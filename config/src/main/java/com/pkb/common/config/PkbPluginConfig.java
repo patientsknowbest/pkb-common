@@ -1,6 +1,6 @@
 package com.pkb.common.config;
 
-public interface PkbPluginConfig extends BasePhrConfig {
+public interface PkbPluginConfig extends BaseConfig {
 
     String getKMSBaseURL();
     int getMenudataQueryBatchSize();
