@@ -24,14 +24,7 @@ public class BaseImmutableConfigTest {
     }
 
     @Test
-    public void testCannotBeMadeMutable() {
-        underTest.setValue("mutableConfig.enabled", "true");
-        assertThat(underTest.isMutableConfigEnabled(), equalTo(false));
-    }
-
-    @Test
     public void testGetBaseUrlValid() {
-        underTest.setValue("mutableConfig.enabled", "true");
         assertThat(underTest.getBaseURL(), equalTo("http://localhost"));
     }
 
