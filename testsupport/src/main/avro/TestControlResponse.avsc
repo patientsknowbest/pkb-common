@@ -2,7 +2,7 @@
 {
     "namespace": "com.pkb.pulsar.payload",
     "type": "record",
-    "name": "ControlPlaneResponse",
+    "name": "TestControlResponse",
     "fields": [
         {"name": "messageType", "type": "MessageType"},
         {"name": "service", "type": "string"},

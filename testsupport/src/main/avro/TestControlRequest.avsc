@@ -2,7 +2,7 @@
 {
     "namespace": "com.pkb.pulsar.payload",
     "type": "record",
-    "name": "ControlPlaneRequest",
+    "name": "TestControlRequest",
     "fields": [
         {"name": "messageType", "type": "MessageType"},
         {"name": "namespaceChangeRequest", "type": ["null", "NamespaceChangeRequest"], "default": null},
