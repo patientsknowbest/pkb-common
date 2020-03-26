@@ -63,11 +63,12 @@ public class BaseImmutableConfig implements BaseConfig {
             colonPort = "";
         } else if (port.equals("80") || port.equals("443")) {
             colonPort = "";
-        } else if ((port.equals("80") && protocol.equals("https")) ||
+        }
+
+        if ((port.equals("80") && protocol.equals("https")) ||
                 (port.equals("443") && protocol.equals("http"))) {
             throw new IllegalArgumentException("incompatible: protocol " + protocol + " and port " + port);
         }
-
         return protocol + "://" + host + colonPort;
     }
 

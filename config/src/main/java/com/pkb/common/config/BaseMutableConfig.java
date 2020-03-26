@@ -65,7 +65,7 @@ public abstract class BaseMutableConfig implements BaseConfig {
 
     @Override
     public String getBaseURL() {
-        String baseUrl = configMap.get("baseUrl");
+        String baseUrl = configMap.get("baseURL");
         if (baseUrl != null) {
             return baseUrl;
         }
@@ -74,7 +74,7 @@ public abstract class BaseMutableConfig implements BaseConfig {
 
     @Override
     public boolean isFakeDateTimeServiceEnabled() {
-        return getBooleanValue(configMap.get("fakeDataTimeServiceEnabled"))
+        return getBooleanValue(configMap.get("fakeDateTimeServiceEnabled"))
                 .orElseGet(() -> getDefaultConfig().isFakeDateTimeServiceEnabled());
     }
 }
