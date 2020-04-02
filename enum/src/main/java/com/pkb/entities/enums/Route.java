@@ -4,6 +4,7 @@ package com.pkb.entities.enums;
 public enum Route {
     // direct access into PKB (pushing data or reading)
     WEBAPP,
+    WEBAPP_SYSTMONE_PORTAL,
     WEBAPP_EMIS_PORTAL, // subcategory of webapp access
     WEBAPP_OTP,
     WEBAPP_NHS_APP,     // webapp access via NHS app
