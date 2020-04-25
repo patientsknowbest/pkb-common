@@ -6,6 +6,7 @@ import com.pkb.pulsar.IPulsarFactory;
 import com.pkb.pulsar.payload.Startup;
 import com.pkb.pulsar.payload.TestControlRequest;
 import com.pkb.pulsar.payload.TestControlResponse;
+import org.apache.pulsar.client.api.Consumer;
 import org.apache.pulsar.client.api.Producer;
 import org.apache.pulsar.client.api.PulsarClientException;
 import org.slf4j.Logger;
@@ -25,20 +26,20 @@ public class TestSupportAgent implements ITestSupportAgent {
     private final boolean registerStartup;
     private final boolean startListener;
     private final PulsarFactoryWrapper pulsarFactoryWrapper;
-    private final PulsarNamespaceChangeService pulsarNamespaceChangeService;
-    private final SetFixedTimestampService setFixedTimestampService;
+    private final DateTimeService dateTimeService;
+    private Consumer<TestControlRequest> consumer;
 
     public TestSupportAgent(String serviceName,
-            boolean registerStartup,
-            boolean startListener,
-            IPulsarFactory pulsarFactory,
-            DateTimeService dateTimeService) {
+                            boolean registerStartup,
+                            boolean startListener,
+                            IPulsarFactory pulsarFactory,
+                            DateTimeService dateTimeService) {
         this.serviceName = serviceName;
         this.registerStartup = registerStartup;
         this.startListener = startListener;
         this.pulsarFactoryWrapper = new PulsarFactoryWrapper(pulsarFactory);
-        this.pulsarNamespaceChangeService = new PulsarNamespaceChangeService(this.pulsarFactoryWrapper);
-        this.setFixedTimestampService = new SetFixedTimestampService(dateTimeService);
+        this.dateTimeService = dateTimeService;
+
     }
 
     @Override
@@ -47,6 +48,7 @@ public class TestSupportAgent implements ITestSupportAgent {
         registerStartup();
         startLstener();
     }
+
     private void registerStartup() {
         LOGGER.info("TestSupportAgent.registerStartup");
         try {
@@ -55,6 +57,7 @@ public class TestSupportAgent implements ITestSupportAgent {
                 Producer<Startup> startupProducer = pulsarFactoryWrapper.createTestControlProducer(STARTUP, Startup.class);
                 Startup message = Startup.newBuilder().setService(serviceName).build();
                 startupProducer.newMessage().value(message).send();
+                startupProducer.close();
                 LOGGER.info(String.format("TestSupportAgent.registerStartup %s startup message sent %s", serviceName, Instant.now()));
             }
         } catch (Exception e) {
@@ -67,17 +70,34 @@ public class TestSupportAgent implements ITestSupportAgent {
         LOGGER.info("TestSupportAgent.startListener");
         if (startListener) {
             try {
-                LOGGER.info("TestSupportAgent.startListener  is enabled and starting");
+                LOGGER.info("TestSupportAgent.startListener is enabled and starting");
                 TestControlRequestService service = new TestControlRequestService(
                         pulsarFactoryWrapper.createTestControlProducer(TEST_CONTROL_RESPONSE, TestControlResponse.class),
                         serviceName,
-                        pulsarNamespaceChangeService,
-                        setFixedTimestampService);
-                pulsarFactoryWrapper.createTestControlConsumer(TEST_CONTROL_REQUEST, serviceName, TestControlRequest.class, service);
+                        new PulsarNamespaceChangeService(this.pulsarFactoryWrapper),
+                        new SetFixedTimestampService(dateTimeService)
+                );
+                consumer = pulsarFactoryWrapper.createTestControlConsumer(TEST_CONTROL_REQUEST, serviceName, TestControlRequest.class, service);
+                LOGGER.info("TestSupportAgent.startListener started");
             } catch (PulsarClientException e) {
                 LOGGER.error(String.format("Unable to startup %s", serviceName), FrameFilter.filter(e));
             }
         }
     }
 
+    @Override
+    public void close() {
+        LOGGER.error("TestSupportAgent.close");
+        if (consumer != null) {
+            try {
+                LOGGER.error("TestSupportAgent.close trying consumer.close()");
+                consumer.close();
+                LOGGER.error("TestSupportAgent.close complete");
+            } catch (PulsarClientException e) {
+                LOGGER.error("Unable to close consumer", e);
+            }
+        }
+    }
+
 }
+
