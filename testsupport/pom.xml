@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>pkb-common</artifactId>
+        <groupId>com.pkb.pkbcommon</groupId>
+        <version>${revision}${changelist}</version>
+    </parent>
+
+    <artifactId>testsupport</artifactId>
+    <name>pkb-common/testsupport</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.pkb.pkbcommon</groupId>
+            <artifactId>date-time</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.pkb.pkbcommon</groupId>
+            <artifactId>testlogging</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.pkb</groupId>
+            <artifactId>pulsar</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>
