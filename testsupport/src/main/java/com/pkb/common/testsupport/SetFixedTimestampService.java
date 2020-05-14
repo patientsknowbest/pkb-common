@@ -1,5 +1,6 @@
 package com.pkb.common.testsupport;
 
+import com.google.common.base.Strings;
 import com.pkb.common.datetime.DateTimeService;
 import com.pkb.pulsar.payload.SetFixedTimestampRequest;
 import com.pkb.pulsar.payload.SetFixedTimestampResponse;
@@ -20,7 +21,12 @@ public class SetFixedTimestampService {
         LOGGER.info("SetFixedTimestampService.process received message");
         String timestamp = message.getTimestamp();
         LOGGER.info(String.format("SetFixedTimestampService.process timestamp=%s", timestamp));
-        dateTimeService.setFixedCurrentTimeForTesting(timestamp);
+        if (Strings.isNullOrEmpty(timestamp)) {
+            dateTimeService.forgetFixedCurrentTimeForTesting();
+        }
+        else {
+            dateTimeService.setFixedCurrentTimeForTesting(timestamp);
+        }
         LOGGER.info("SetFixedTimestampService.process done.");
         return SetFixedTimestampResponse.newBuilder().setTimestamp(timestamp).build();
     }
