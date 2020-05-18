@@ -8,6 +8,19 @@
     <version>${revision}${changelist}</version>
     <packaging>pom</packaging>
 
+    <distributionManagement>
+        <repository>
+            <id>github-central</id>
+            <name>pkb-common Packages</name>
+            <url>https://maven.pkg.github.com/patientsknowbest/pkb-common</url>
+        </repository>
+        <snapshotRepository>
+            <id>github-snapshots</id>
+            <name>pkb-common Packages</name>
+            <url>https://maven.pkg.github.com/patientsknowbest/pkb-common</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
