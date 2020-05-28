@@ -46,7 +46,7 @@
         <changelist>-SNAPSHOT</changelist>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <javax.inject.version>1</javax.inject.version>
-        <phr-pulsar.version>8-head-7e018c6-65275-SNAPSHOT</phr-pulsar.version>
+        <phr-pulsar.version>7-5b1736a-64173</phr-pulsar.version>
     </properties>
 
     <modules>
