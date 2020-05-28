@@ -3,6 +3,7 @@ package com.pkb.util;
 import java.util.StringTokenizer;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.Nullable;
 
 public class XmlSanitiser {
 
@@ -27,6 +28,7 @@ public class XmlSanitiser {
      * @param xml The XML to be sanitised
      * @return A sanitised version of the provided value
      */
+    @Nullable
     public static String sanitiseXml(String xml) {
         if(xml == null) {
             return null;
@@ -56,6 +58,7 @@ public class XmlSanitiser {
 
     }
 
+    @Nullable
     private static String sanitiseValue(String valueText) {
         if(valueText == null) {
             return null;
