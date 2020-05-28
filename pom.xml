@@ -194,6 +194,7 @@
                     <excludes>
                         <exclude>org.springframework</exclude>
                     </excludes>
+                    <suppressionFile>suppression.xml</suppressionFile>
                 </configuration>
             </plugin>
             <plugin>
