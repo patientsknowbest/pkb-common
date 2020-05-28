@@ -33,7 +33,7 @@
         <vavr.version>0.10.2</vavr.version>
         <version.apache.commons.lang3>3.9</version.apache.commons.lang3>
         <version.jetbrain.annotations>19.0.0</version.jetbrain.annotations>
-        <version.junit>4.12</version.junit>
+        <junit5.version>5.5.2</junit5.version>
         <version.mockito>3.3.3</version.mockito>
         <version.guava>28.2-jre</version.guava>
         <version.apache-commons-io>2.6</version.apache-commons-io>
@@ -71,6 +71,12 @@
             <dependency>
                 <groupId>com.github.karsaig</groupId>
                 <artifactId>approvalcrest</artifactId>
+                <version>${approvalcrest.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.github.karsaig</groupId>
+                <artifactId>approvalcrest-junit-jupiter</artifactId>
                 <version>${approvalcrest.version}</version>
                 <scope>test</scope>
             </dependency>
@@ -132,16 +138,22 @@
                 <version>${revision}${changelist}</version>
             </dependency>
             <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${version.junit}</version>
+                <groupId>org.junit.vintage</groupId>
+                <artifactId>junit-vintage-engine</artifactId>
+                <version>${junit5.version}</version>
                 <scope>test</scope>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.hamcrest</groupId>
-                        <artifactId>hamcrest-core</artifactId>
-                    </exclusion>
-                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${junit5.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-params</artifactId>
+                <version>${junit5.version}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.mockito</groupId>
