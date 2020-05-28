@@ -6,14 +6,14 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 
 import com.github.karsaig.approvalcrest.MatcherAssert;
 import com.github.karsaig.approvalcrest.matcher.Matchers;
+
 import com.pkb.testing.gson.DefaultPKBGsonConfigurationFactory;
 
 class NaughtyTestClass1 {
@@ -25,17 +25,20 @@ class NaughtyTestClass1 {
 
 class NaughtyTestClass2 {
     @CachePut("naughtyCache")
-    public void putStuff(String stuff) { }
+    public void putStuff(String stuff) {
+    }
 }
 
 class NaughtyTestClass3 {
     @CacheEvict("naughtyCache")
-    public void evictStuff(String stuff) { }
+    public void evictStuff(String stuff) {
+    }
 }
 
 class NiceTestClass implements ClearableInternalState {
     @Override
-    public void clearState() { }
+    public void clearState() {
+    }
 
     @Cacheable("niceCache")
     public String getStuff() {
@@ -43,7 +46,7 @@ class NiceTestClass implements ClearableInternalState {
     }
 }
 
-class IndifferentTestClass  {
+class IndifferentTestClass {
     public String getStuff() {
         return "Maybe";
     }
@@ -55,7 +58,7 @@ public class CacheUtilsTest {
     public void testGetUnclearableCaches() throws Exception {
         List<Class> actual = getUnclearableCaches();
         actual.sort(Comparator.comparing(Class::getName));
-        List<Class> wanted = Arrays.asList(NaughtyTestClass1.class,NaughtyTestClass2.class,NaughtyTestClass3.class);
+        List<Class> wanted = Arrays.asList(NaughtyTestClass1.class, NaughtyTestClass2.class, NaughtyTestClass3.class);
         MatcherAssert
                 .assertThat(actual, Matchers.sameBeanAs(wanted).withGsonConfiguration(DefaultPKBGsonConfigurationFactory.pkbConfigWithVavr()));
     }
