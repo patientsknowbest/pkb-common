@@ -8,6 +8,6 @@ import com.pkb.common.util.FrameFilterTest;
 public class FrameFilterTestHelper {
 
     public static void baz() throws Exception {
-//        FrameFilterTest.bar();
+        FrameFilterTest.bar();
     }
 }
