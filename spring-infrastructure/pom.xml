@@ -13,8 +13,8 @@
     <name>pkb-common/spring-infrastructure</name>
 
     <properties>
-       <spring.version>3.2.18.RELEASE</spring.version> <!-- copied from PHR -->
-       <commons.testing.version>20-789c720-63866</commons.testing.version>
+        <spring.version>3.2.18.RELEASE</spring.version> <!-- copied from PHR -->
+        <commons.testing.version>20-789c720-63866</commons.testing.version>
     </properties>
 
     <dependencies>
@@ -43,5 +43,38 @@
             <version>${commons.testing.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${version.junit}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hamcrest</groupId>
+                    <artifactId>hamcrest-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
+                <configuration>
+                    <release>8</release>
+                    <showWarnings>true</showWarnings>
+                    <compilerArgs>
+                        <arg>-Xlint:all</arg>
+                        <arg>-Xlint:-processing</arg>
+                        <arg>-Xlint:-rawtypes</arg>
+                        <arg>-Werror</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

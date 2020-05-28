@@ -131,6 +131,7 @@ public class DateTimeServiceTest {
         };
     }
 
+    @SuppressWarnings("deprecation")
     @UseDataProvider("dateToStringTestCases")
     @Test
     public void parseToDateStrict(ZonedDateTime toSerialize, DateTimeFormatter formatter, String expected) {
