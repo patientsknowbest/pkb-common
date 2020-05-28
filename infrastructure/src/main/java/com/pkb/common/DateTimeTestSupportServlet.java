@@ -11,6 +11,7 @@ import com.pkb.common.datetime.DateTimeService;
 
 public class DateTimeTestSupportServlet extends HttpServlet {
 
+    private static final long serialVersionUID = -8888887639985106107L;
     private DateTimeService dateTimeService;
 
     @Inject

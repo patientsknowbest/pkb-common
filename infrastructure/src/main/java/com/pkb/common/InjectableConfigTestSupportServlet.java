@@ -1,13 +1,14 @@
 package com.pkb.common;
 
-import com.pkb.common.config.BaseConfig;
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.pkb.common.config.BaseConfig;
+
 public class InjectableConfigTestSupportServlet extends HttpServlet {
 
+    private static final long serialVersionUID = 2511069551123167217L;
     protected BaseConfig baseConfig;
 
     @Override
