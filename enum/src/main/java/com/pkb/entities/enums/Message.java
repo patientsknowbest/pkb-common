@@ -314,7 +314,10 @@ public enum Message {
     NOTIFY_PATIENT_OF_INVITATION_WITH_PRIVACY_LABELS,
 
     /* notification to carer about patient invitation with requested privacy labels */
-    NOTIFY_CARER_OF_PATIENT_INVITATION_WITH_PRIVACY_LABELS;
+    NOTIFY_CARER_OF_PATIENT_INVITATION_WITH_PRIVACY_LABELS,
+
+    /* welcome message to person who has just registered */
+    WELCOME_MESSAGE;
 
     private final Set<MessageCategory> categories;
 
