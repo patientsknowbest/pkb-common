@@ -24,23 +24,25 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <apache.commons.text.version>1.6</apache.commons.text.version>
-        <approvalcrest.version>0.21</approvalcrest.version>
-        <hamcrest.version>2.1</hamcrest.version>
+        <apache.commons.text.version>1.8</apache.commons.text.version>
+        <approvalcrest.version>0.56.1</approvalcrest.version>
+        <hamcrest.version>2.2</hamcrest.version>
         <junit-dataprovider.verison>1.11.0</junit-dataprovider.verison>
         <micrometer.version>1.2.1</micrometer.version>
-        <slf4j.version>1.7.21</slf4j.version>
-        <vavr.version>0.9.2</vavr.version>
-        <version.apache.commons.lang3>3.8.1</version.apache.commons.lang3>
-        <version.jetbrain.annotations>16.0.3</version.jetbrain.annotations>
-        <version.junit>4.12</version.junit>
-        <version.mockito>2.20.1</version.mockito>
-        <version.guava>28.0-jre</version.guava>
+        <slf4j.version>1.7.30</slf4j.version>
+        <vavr.version>0.10.2</vavr.version>
+        <version.apache.commons.lang3>3.9</version.apache.commons.lang3>
+        <version.jetbrain.annotations>19.0.0</version.jetbrain.annotations>
+        <junit5.version>5.5.2</junit5.version>
+        <version.mockito>3.3.3</version.mockito>
+        <version.guava>28.2-jre</version.guava>
         <version.apache-commons-io>2.6</version.apache-commons-io>
 
-        <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
-        <owasp-dependency-check.version>5.2.1</owasp-dependency-check.version>
-        <pitest.version>1.4.0</pitest.version>
+        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+        <maven.source.plugin.version>3.2.1</maven.source.plugin.version>
+        <maven.flatten.plugin.version>1.2.1</maven.flatten.plugin.version>
+        <owasp-dependency-check.version>5.3.2</owasp-dependency-check.version>
+        <pitest.version>1.5.0</pitest.version>
 
         <revision>0.0.0</revision>
         <changelist>-SNAPSHOT</changelist>
@@ -69,6 +71,12 @@
             <dependency>
                 <groupId>com.github.karsaig</groupId>
                 <artifactId>approvalcrest</artifactId>
+                <version>${approvalcrest.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.github.karsaig</groupId>
+                <artifactId>approvalcrest-junit-jupiter</artifactId>
                 <version>${approvalcrest.version}</version>
                 <scope>test</scope>
             </dependency>
@@ -130,16 +138,22 @@
                 <version>${revision}${changelist}</version>
             </dependency>
             <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${version.junit}</version>
+                <groupId>org.junit.vintage</groupId>
+                <artifactId>junit-vintage-engine</artifactId>
+                <version>${junit5.version}</version>
                 <scope>test</scope>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.hamcrest</groupId>
-                        <artifactId>hamcrest-core</artifactId>
-                    </exclusion>
-                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${junit5.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-params</artifactId>
+                <version>${junit5.version}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.mockito</groupId>
@@ -168,14 +182,19 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.plugin.version}</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <release>8</release>
+                    <showWarnings>true</showWarnings>
+                    <compilerArgs>
+                        <arg>-Xlint:all</arg>
+                        <arg>-Xlint:-processing</arg>
+                        <arg>-Werror</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>${maven.source.plugin.version}</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -200,7 +219,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>flatten-maven-plugin</artifactId>
-                <version>1.0.0</version>
+                <version>${maven.flatten.plugin.version}</version>
                 <configuration>
                     <updatePomFile>true</updatePomFile>
                 </configuration>

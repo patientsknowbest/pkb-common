@@ -53,7 +53,7 @@ public class FrameFilter {
     @Contract("_,_ -> param1")
     public static Throwable filter(Throwable e, Pattern classNamePattern) {
         List<StackTraceElement> elements = List.of(e.getStackTrace());
-        StackTraceElement[] filteredFrames = elements.take(1).appendAll(elements.tail().filter(f -> classNamePattern.matcher(f.getClassName()).matches()).map(StackTraceElement.class::cast)).toJavaArray(StackTraceElement.class);
+        StackTraceElement[] filteredFrames = elements.take(1).appendAll(elements.tail().filter(f -> classNamePattern.matcher(f.getClassName()).matches()).map(StackTraceElement.class::cast)).toJavaArray(size -> new StackTraceElement[size]);
         e.setStackTrace(filteredFrames);
         return e;
     }

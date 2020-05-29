@@ -3,10 +3,12 @@
   "0x1": {
     "stackTrace": [
       {
+        "classLoaderName": "app",
         "declaringClass": "com.pkb.common.util.FrameFilterTest",
         "methodName": "bar",
         "fileName": "FrameFilterTest.java",
-        "lineNumber": 49
+        "lineNumber": 47,
+        "format": 1
       }
     ],
     "suppressedExceptions": []
