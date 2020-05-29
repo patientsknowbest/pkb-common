@@ -1,6 +1,6 @@
 package com.pkb.common.datetime;
 
-import static com.github.karsaig.approvalcrest.MatcherAssert.assertThat;
+import static com.github.karsaig.approvalcrest.jupiter.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 
@@ -12,16 +12,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import io.vavr.Tuple2;
 
-@RunWith(DataProviderRunner.class)
 public class DateTimeServiceTest {
 
     private static final ZoneId DUTCH = ZoneId.of("Europe/Amsterdam");
@@ -39,9 +35,8 @@ public class DateTimeServiceTest {
         assertEquals(expected, actual);
     }
 
-    @DataProvider
     public static Object[][] lenientDateParseTestCases() {
-        return new Object[][] {
+        return new Object[][]{
                 {
                         "30/10/2018 09:00",
                         DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withLocale(Locale.UK).withZone(UTC),
@@ -85,8 +80,8 @@ public class DateTimeServiceTest {
         };
     }
 
-    @UseDataProvider("lenientDateParseTestCases")
-    @Test
+    @ParameterizedTest
+    @MethodSource("lenientDateParseTestCases")
     public void parseToDateBackwardCompatibleWay(String toParse, DateTimeFormatter formatter, ZonedDateTime expected) {
         FakeDateTimeService underTest = new FakeDateTimeService();
 
@@ -95,9 +90,8 @@ public class DateTimeServiceTest {
         assertThat(actual._1, is(expected.toInstant()));
     }
 
-    @DataProvider
     public static Object[][] dateToStringTestCases() {
-        return new Object[][] {
+        return new Object[][]{
                 {
                         ZonedDateTime.of(2018, 10, 30, 9, 0, 0, 0, UTC),
                         DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").withLocale(Locale.UK).withZone(UTC),
@@ -131,8 +125,9 @@ public class DateTimeServiceTest {
         };
     }
 
-    @UseDataProvider("dateToStringTestCases")
-    @Test
+    @SuppressWarnings("deprecation")
+    @ParameterizedTest
+    @MethodSource("dateToStringTestCases")
     public void parseToDateStrict(ZonedDateTime toSerialize, DateTimeFormatter formatter, String expected) {
         FakeDateTimeService underTest = new FakeDateTimeService(null);
 

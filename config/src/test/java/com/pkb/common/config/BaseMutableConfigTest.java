@@ -1,18 +1,19 @@
 package com.pkb.common.config;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 public class BaseMutableConfigTest {
     BaseMutableConfig underTest;
 
-    @Before
+    @BeforeEach
     public void before() {
         underTest = new BaseMutableConfig() {
             @Override
