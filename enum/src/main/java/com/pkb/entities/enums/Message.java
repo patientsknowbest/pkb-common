@@ -8,11 +8,11 @@
 
 package com.pkb.entities.enums;
 
-import com.google.common.collect.Sets;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Set;
+
+import com.google.common.collect.Sets;
 
 enum MessageCategory {
     THROTTLEABLE,
@@ -25,9 +25,13 @@ enum MessageCategory {
 @SuppressWarnings("unused")
 public enum Message {
 
-    /** Initial or resent email confirmation on user activation . */
+    /**
+     * Initial or resent email confirmation on user activation .
+     */
     ACTIVATION(MessageCategory.REGISTRATION),
     EMAIL_VERIFICATION(MessageCategory.REGISTRATION),
+    OUT_OF_AREA_DEFERRED_ACTIVATION(MessageCategory.REGISTRATION),
+
     /**/
     INVITE_CLINICIAN(MessageCategory.REGISTRATION),
     /* conversation copying, adding new message to conversation, Instant Medical History Data (IMHM) message, call message, notification to receiver about a patient ? */
