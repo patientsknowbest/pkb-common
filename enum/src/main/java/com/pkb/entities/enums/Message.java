@@ -320,8 +320,8 @@ public enum Message {
     /* notification to carer about patient invitation with requested privacy labels */
     NOTIFY_CARER_OF_PATIENT_INVITATION_WITH_PRIVACY_LABELS,
 
-    /* welcome message to patient who has just registered */
-    WELCOME_MESSAGE_PATIENT;
+    /* welcome message to patient who has just registered through NHS */
+    NOTIFY_NHS_LOGIN_PATIENT_OF_CLAIMED_RECORD;
 
     private final Set<MessageCategory> categories;
 
