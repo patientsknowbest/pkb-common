@@ -1,0 +1,8 @@
+/*com.pkb.common.config.ImmutableRawConfigStorageTest.getBoolean_withDefault_malformedValue*/
+{
+  "0x1": {
+    "detailMessage": "malformed value\u003d[2] for configuration key\u003d[intKey] (expected type\u003d[Boolean])",
+    "stackTrace": [],
+    "suppressedExceptions": []
+  }
+}

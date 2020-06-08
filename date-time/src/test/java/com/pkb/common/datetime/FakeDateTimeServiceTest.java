@@ -9,7 +9,8 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 
 public class FakeDateTimeServiceTest {
 

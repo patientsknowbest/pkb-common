@@ -27,14 +27,14 @@ public class PropertyFileBasedLoader implements ConfigLoader {
     }
 
     @Override
-    public RawConfigStorage load() {
+    public ImmutableRawConfigStorage load() {
         Properties props = new Properties();
         URL resource = Thread.currentThread().getContextClassLoader().getResource(propFilePath);
         try (InputStream stream = inputStreamOfPropertyFile(propFilePath)){
             props.load(stream);
             Map<String, String> storage = new HashMap<>(props.size());
             props.forEach((k, v) -> storage.put((String) k, (String) v));
-            return new RawConfigStorage(storage);
+            return new ImmutableRawConfigStorage(storage);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }

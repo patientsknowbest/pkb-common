@@ -11,8 +11,8 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 
-import com.github.karsaig.approvalcrest.MatcherAssert;
-import com.github.karsaig.approvalcrest.matcher.Matchers;
+import com.github.karsaig.approvalcrest.jupiter.MatcherAssert;
+import com.github.karsaig.approvalcrest.jupiter.matcher.Matchers;
 
 import com.pkb.testing.gson.DefaultPKBGsonConfigurationFactory;
 
