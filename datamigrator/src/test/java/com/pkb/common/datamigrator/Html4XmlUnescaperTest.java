@@ -1,11 +1,12 @@
 package com.pkb.common.datamigrator;
 
-import static com.github.karsaig.approvalcrest.MatcherAssert.assertThat;
-import static com.github.karsaig.approvalcrest.matcher.Matchers.sameBeanAs;
-import static org.junit.Assert.assertNull;
+import static com.github.karsaig.approvalcrest.jupiter.MatcherAssert.assertThat;
+import static com.github.karsaig.approvalcrest.jupiter.matcher.Matchers.sameBeanAs;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.apache.commons.text.StringEscapeUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 
 public class Html4XmlUnescaperTest {
 

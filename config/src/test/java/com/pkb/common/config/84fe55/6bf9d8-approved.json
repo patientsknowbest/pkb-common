@@ -1,0 +1,8 @@
+/*com.pkb.common.config.MutableRawConfigStorageTest.getInt8*/
+{
+  "0x1": {
+    "detailMessage": "malformed value\u003d[string value] for configuration key\u003d[stringKey] (expected type\u003d[Integer])",
+    "stackTrace": [],
+    "suppressedExceptions": []
+  }
+}

@@ -3,12 +3,12 @@ package com.pkb.common.config;
 import java.util.function.Supplier;
 
 @FunctionalInterface
-interface ConfigLoader extends Supplier<RawConfigStorage> {
+interface ConfigLoader extends Supplier<ImmutableRawConfigStorage> {
 
-    RawConfigStorage load();
+    ImmutableRawConfigStorage load();
 
     @Override
-    default RawConfigStorage get() {
+    default ImmutableRawConfigStorage get() {
         return load();
     }
 }

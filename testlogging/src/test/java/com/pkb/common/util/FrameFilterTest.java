@@ -1,11 +1,11 @@
 package com.pkb.common.util;
 
-import static com.github.karsaig.approvalcrest.MatcherAssert.assertThat;
-import static com.github.karsaig.approvalcrest.matcher.Matchers.sameJsonAsApproved;
+import static com.github.karsaig.approvalcrest.jupiter.MatcherAssert.assertThat;
+import static com.github.karsaig.approvalcrest.jupiter.matcher.Matchers.sameJsonAsApproved;
 
 import java.util.regex.Pattern;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.pkb.interceptor.FrameFilterTestHelper;
 

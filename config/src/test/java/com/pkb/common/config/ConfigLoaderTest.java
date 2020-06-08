@@ -1,33 +1,25 @@
 package com.pkb.common.config;
 
-import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
+import static com.github.karsaig.approvalcrest.jupiter.MatcherAssert.assertThat;
+import static com.github.karsaig.approvalcrest.jupiter.matcher.Matchers.sameJsonAsApproved;
 
+import org.junit.jupiter.api.Test;
+
+//a5b836
 public class ConfigLoaderTest {
 
+    //aaa4a6
     @Test
-    public void testReadConfiguration() throws Exception {
-        RawConfigStorage baseConfiguration = new PropertyFileBasedLoader("base_config.properties").load();
-        assertEquals("str1", baseConfiguration.getString("strProp1"));
-        assertEquals("str2", baseConfiguration.getString("strProp2"));
-        assertEquals(1, baseConfiguration.getInt("numProp1"));
+    public void testReadConfiguration() {
+        ImmutableRawConfigStorage baseConfiguration = new PropertyFileBasedLoader("base_config.properties").load();
+        assertThat(baseConfiguration, sameJsonAsApproved());
     }
 
+    //fb1287
     @Test
-    public void testMergeConfiguration() throws Exception {
-        RawConfigStorage merged = LayeredLoader.createLoaderForEnvVar("base_config:layer1_config").load();
-        assertEquals("str1", merged.getString("strProp1"));
-        assertEquals("str22", merged.getString("strProp2"));
-        assertEquals("str32", merged.getString("strProp3"));
-        assertEquals(1, merged.getInt("numProp1"));
-        assertEquals(1, merged.getInt("numProp1"));
+    public void testMergeConfiguration() {
+        ImmutableRawConfigStorage merged = LayeredLoader.createLoaderForEnvVar("base_config:layer1_config").load();
+        assertThat(merged, sameJsonAsApproved());
     }
-
-    @Test
-    public void testEmptyProperty() throws Exception {
-        assertEquals("", new PropertyFileBasedLoader("base_config.properties").load().getString("prop3"));
-    }
-
-
 }

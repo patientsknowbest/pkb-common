@@ -1,0 +1,35 @@
+/*com.pkb.common.config.ConfigLoaderTest.testMergeConfiguration*/
+{
+  "storage": [
+    {
+      "helpName": "Patients Know Best Help Team"
+    },
+    {
+      "helpPhoneNumber": "1223 790708 ext: 2"
+    },
+    {
+      "helpWebSite": "www.patientsknowbest.com/contact-us.html"
+    },
+    {
+      "numProp1": "1"
+    },
+    {
+      "numProp2": "2.2"
+    },
+    {
+      "numProp3": "3.2"
+    },
+    {
+      "prop3": ""
+    },
+    {
+      "strProp1": "str1"
+    },
+    {
+      "strProp2": "str22"
+    },
+    {
+      "strProp3": "str32"
+    }
+  ]
+}
