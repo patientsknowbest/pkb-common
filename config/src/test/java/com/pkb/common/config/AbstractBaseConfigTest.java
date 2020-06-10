@@ -1,26 +1,23 @@
 package com.pkb.common.config;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 
-public class BaseImmutableConfigTest {
+import org.junit.Test;
 
-    private BaseImmutableConfig underTest;
+public class AbstractBaseConfigTest {
 
-    @Before
-    public void before() {
-        underTest = new BaseImmutableConfig(createStorage());
-    }
+    private DummyConfig underTest = new DummyConfig(createStorage());
 
-    @Test
-    public void testImmutableByDefault() {
-        assertThat(underTest.isMutableConfigEnabled(), equalTo(false));
+    private class DummyConfig extends AbstractBaseConfig{
+
+        DummyConfig(ConfigStorage storage) {
+            super(storage);
+        }
     }
 
     @Test
@@ -32,7 +29,7 @@ public class BaseImmutableConfigTest {
     public void testGetBaseUrlInvalid() {
         Map<String, String> map = new HashMap<>();
         map.put("baseURL", "fubar");
-        underTest = new BaseImmutableConfig( new RawConfigStorage(map));
+        underTest = new DummyConfig(new ImmutableRawConfigStorage(map));
         // throws expected exception
         underTest.getBaseURL();
     }
@@ -41,7 +38,7 @@ public class BaseImmutableConfigTest {
     public void testGetBaseUrlNull() {
         Map<String, String> map = new HashMap<>();
         map.put("baseURL", null);
-        underTest = new BaseImmutableConfig( new RawConfigStorage(map));
+        underTest = new DummyConfig(new ImmutableRawConfigStorage(map));
         // throws expected exception
         underTest.getBaseURL();
     }
@@ -50,49 +47,49 @@ public class BaseImmutableConfigTest {
     public void testGetBaseUrlSucceedsWithoutPort() {
         Map<String, String> map = new HashMap<>();
         map.put("baseURL", "http://localhost");
-        underTest = new BaseImmutableConfig( new RawConfigStorage(map));
+        underTest = new DummyConfig(new ImmutableRawConfigStorage(map));
         assertThat(underTest.getBaseURL(), equalTo("http://localhost"));
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testGetBaseUrlFailsWithPath() {
         Map<String, String> map = new HashMap<>();
         map.put("baseURL", "http://localhost/fubar");
-        underTest = new BaseImmutableConfig( new RawConfigStorage(map));
+        underTest = new DummyConfig(new ImmutableRawConfigStorage(map));
         // Expect exception
         underTest.getBaseURL();
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testGetBaseUrlFailsWithMismatchedProtocolHttp() {
         Map<String, String> map = new HashMap<>();
         map.put("baseURL", "http://localhost:443");
-        underTest = new BaseImmutableConfig( new RawConfigStorage(map));
+        underTest = new DummyConfig(new ImmutableRawConfigStorage(map));
         // Expect exception
         underTest.getBaseURL();
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testGetBaseUrlFailsWithMismatchedProtocolHttps() {
         Map<String, String> map = new HashMap<>();
         map.put("baseURL", "https://localhost:80");
-        underTest = new BaseImmutableConfig( new RawConfigStorage(map));
+        underTest = new DummyConfig(new ImmutableRawConfigStorage(map));
         // Expect exception
         underTest.getBaseURL();
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testGetBaseUrlFailsWhenHostIsMissing() {
         Map<String, String> map = new HashMap<>();
         map.put("baseURL", "http://:80");
-        underTest = new BaseImmutableConfig( new RawConfigStorage(map));
+        underTest = new DummyConfig(new ImmutableRawConfigStorage(map));
         // Expect exception
         underTest.getBaseURL();
     }
 
     @Test
     public void testFakeDateTimeServiceDisabledByDefault() {
-        underTest = new BaseImmutableConfig( new RawConfigStorage(new HashMap<>()));
+        underTest = new DummyConfig(new ImmutableRawConfigStorage(new HashMap<>()));
         assertThat(underTest.isFakeDateTimeServiceEnabled(), equalTo(false));
     }
 
@@ -100,21 +97,14 @@ public class BaseImmutableConfigTest {
     public void testFakeDateTimeServiceUsesConfigValue() {
         Map<String, String> map = new HashMap<>();
         map.put("fakedatetimeservice.enabled", "true");
-        underTest = new BaseImmutableConfig(new RawConfigStorage(map));
+        underTest = new DummyConfig(new ImmutableRawConfigStorage(map));
         assertThat(underTest.isFakeDateTimeServiceEnabled(), equalTo(true));
     }
 
-    @Test
-    public void testFakeDateTimeServiceDisabledCannotBeMutated() {
-        underTest = new BaseImmutableConfig( new RawConfigStorage(new HashMap<>()));
-        underTest.setValue("fakeDateTimeServiceEnabled", "true");
-        assertThat(underTest.isFakeDateTimeServiceEnabled(), equalTo(false));
-    }
-
-    private RawConfigStorage createStorage() {
+    private ImmutableRawConfigStorage createStorage() {
         Map<String, String> map = new HashMap<>();
         map.put("baseURL", "http://localhost:80");
         map.put("fakedatetimeservice.enabled", "false");
-        return new RawConfigStorage(map);
+        return new ImmutableRawConfigStorage(map);
     }
 }

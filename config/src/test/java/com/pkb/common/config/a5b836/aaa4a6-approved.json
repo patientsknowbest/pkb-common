@@ -1,0 +1,20 @@
+/*com.pkb.common.config.ConfigLoaderTest.testReadConfiguration*/
+{
+  "storage": [
+    {
+      "numProp1": "1"
+    },
+    {
+      "numProp2": "2.0"
+    },
+    {
+      "prop3": ""
+    },
+    {
+      "strProp1": "str1"
+    },
+    {
+      "strProp2": "str2"
+    }
+  ]
+}

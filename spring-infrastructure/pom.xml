@@ -13,7 +13,7 @@
     <name>pkb-common/spring-infrastructure</name>
 
     <properties>
-        <spring.version>3.2.18.RELEASE</spring.version> <!-- copied from PHR -->
+        <spring.version>5.2.3.RELEASE</spring.version> <!-- copied from PHR -->
         <commons.testing.version>20-789c720-63866</commons.testing.version>
     </properties>
 
@@ -34,10 +34,6 @@
         </dependency>
         <dependency>
             <groupId>com.github.karsaig</groupId>
-            <artifactId>approvalcrest</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.karsaig</groupId>
             <artifactId>approvalcrest-junit-jupiter</artifactId>
         </dependency>
         <dependency>
@@ -45,10 +41,6 @@
             <artifactId>commons-testing-base</artifactId>
             <version>${commons.testing.version}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.vintage</groupId>
-            <artifactId>junit-vintage-engine</artifactId>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

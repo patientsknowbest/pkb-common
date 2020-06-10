@@ -18,7 +18,7 @@ public class PropertyFileBasedLoaderTest {
     @Test
     public void load_validPath_succesfullyLoads() {
         PropertyFileBasedLoader loader = new PropertyFileBasedLoader("config/default.properties");
-        RawConfigStorage storage = loader.load();
+        ImmutableRawConfigStorage storage = loader.load();
         assertEquals("Patients Know Best Help Team", storage.getString("helpName"));
     }
 
@@ -28,6 +28,6 @@ public class PropertyFileBasedLoaderTest {
         exceptionRule.expectMessage("could not find property file [config/non-existant.properties]");
 
         PropertyFileBasedLoader loader = new PropertyFileBasedLoader("config/non-existant.properties");
-        RawConfigStorage storage = loader.load();
+        ImmutableRawConfigStorage storage = loader.load();
     }
 }

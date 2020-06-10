@@ -25,9 +25,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <apache.commons.text.version>1.8</apache.commons.text.version>
-        <approvalcrest.version>0.56.1</approvalcrest.version>
+        <approvalcrest.version>0.56.2</approvalcrest.version>
         <hamcrest.version>2.2</hamcrest.version>
-        <junit-dataprovider.verison>1.11.0</junit-dataprovider.verison>
         <micrometer.version>1.2.1</micrometer.version>
         <slf4j.version>1.7.30</slf4j.version>
         <vavr.version>0.10.2</vavr.version>
@@ -41,6 +40,7 @@
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.source.plugin.version>3.2.1</maven.source.plugin.version>
         <maven.flatten.plugin.version>1.2.1</maven.flatten.plugin.version>
+        <maven.surefire.plugin.version>3.0.0-M4</maven.surefire.plugin.version>
         <owasp-dependency-check.version>5.3.2</owasp-dependency-check.version>
         <pitest.version>1.5.0</pitest.version>
 
@@ -89,12 +89,6 @@
                 <groupId>org.hamcrest</groupId>
                 <artifactId>hamcrest</artifactId>
                 <version>${hamcrest.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.tngtech.java</groupId>
-                <artifactId>junit-dataprovider</artifactId>
-                <version>${junit-dataprovider.verison}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
@@ -267,6 +261,10 @@
                         <mutator>EXPERIMENTAL_MEMBER_VARIABLE</mutator>
                     </mutators>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.plugin.version}</version>
             </plugin>
         </plugins>
     </build>
