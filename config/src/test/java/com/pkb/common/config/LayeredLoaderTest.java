@@ -8,11 +8,11 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class LayeredLoaderTest {
 
-    private static final String DEFAULT_CONFIG_FILE_NAME =DEFAULT_CONFIG_FILE_PATH + ".properties";
+    private static final String DEFAULT_CONFIG_FILE_NAME = DEFAULT_CONFIG_FILE_PATH + ".properties";
 
     @Test
     public void mapEnvVarValueToPropertyFileList_nullValue() {

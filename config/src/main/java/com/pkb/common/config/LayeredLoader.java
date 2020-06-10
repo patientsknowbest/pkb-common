@@ -57,10 +57,10 @@ public class LayeredLoader implements ConfigLoader {
     }
 
     @Override
-    public RawConfigStorage load() {
+    public ImmutableRawConfigStorage load() {
         return layerLoaders.stream()
                 .map(ConfigLoader::load)
-                .reduce(RawConfigStorage.EMPTY, RawConfigStorage::merge);
+                .reduce(ImmutableRawConfigStorage.EMPTY, ImmutableRawConfigStorage::merge);
     }
 
 }

@@ -2,17 +2,12 @@ package com.pkb.common.config;
 
 import java.net.URL;
 
-public class BaseImmutableConfig implements BaseConfig {
+public abstract class AbstractBaseConfig implements BaseConfig {
 
-    final RawConfigStorage storage;
+    final protected ConfigStorage storage;
 
-    BaseImmutableConfig(RawConfigStorage storage) {
+    AbstractBaseConfig(ConfigStorage storage) {
         this.storage = storage;
-    }
-
-    @Override
-    public boolean isMutableConfigEnabled() {
-        return storage.getBoolean("mutableConfig.enabled", false);
     }
 
     @Override
@@ -40,12 +35,9 @@ public class BaseImmutableConfig implements BaseConfig {
     }
 
     /**
-     * @param protocol
-     *            defaults to http
-     * @param host
-     *            valid value required
-     * @param port
-     *            defaults to none specified (defaults ports 80/443 if specified will be removed)
+     * @param protocol defaults to http
+     * @param host     valid value required
+     * @param port     defaults to none specified (defaults ports 80/443 if specified will be removed)
      * @return example: protocol://host:port/application, or protocol://host no trailing slash unless included in application parameter
      */
     private String buildCleanUrl(String protocol, String host, String port) {
@@ -76,10 +68,4 @@ public class BaseImmutableConfig implements BaseConfig {
     public boolean isFakeDateTimeServiceEnabled() {
         return storage.getBoolean("fakedatetimeservice.enabled", false);
     }
-
-    @Override
-    public void setValue(String key, String value) { /* no-op */}
-
-    @Override
-    public void reset() { /* no-op */ }
 }
