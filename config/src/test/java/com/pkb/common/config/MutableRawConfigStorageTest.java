@@ -72,11 +72,11 @@ class MutableRawConfigStorageTest {
         assertEquals("overridden value", underTest.getString("notExistingKey", "default value"));
     }
 
-    @DisplayName("get string returns original value with override set to null")
+    @DisplayName("get string returns null value with override set to null")
     @Test
     public void getString7() {
         underTest.setValue("stringKey", null);
-        assertEquals("string value", underTest.getString("stringKey"));
+        assertEquals(null, underTest.getString("stringKey"));
     }
 
     @DisplayName("get string returns original value after override is reset")
