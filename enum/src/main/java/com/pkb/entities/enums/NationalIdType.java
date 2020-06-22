@@ -209,77 +209,22 @@ public enum NationalIdType implements Serializable {
         }
     },
 
-    // TODO: find URI for identifier system
-    PPS_NUMBER("PPS number", "IE", "DSP", "NI") {
+    IHI_NUMBER("IHI number", "IE", "DSP", "NI") {
         @Override
         public String cleanInput(String id) {
-            // force to upper-case; strip out dashes and spaces
             return StringUtils.trimToNull(StringUtils.replaceChars(StringUtils.upperCase(id), "- ", ""));
         }
 
         @Override
         public boolean isValid(String cleanId) {
-            // http://en.wikipedia.org/wiki/Personal_Public_Service_Number
-            // http://www.welfare.ie/en/Pages/Extension-of-the-Personal-Public-Service-Number-Range.aspx
-            // ^ extensions as of Jan 2013 ^
-            // http://pmhsilva.com/2013/02/12/validate-irish-ppsn-with-javascript-jquery/
-
-            // length must be 8 or 9; 1st 7 chars are numeric; last 1-2 are (caps) A-Z
-            if (!StringUtils.isBlank(cleanId)
-                    && ((cleanId.length() == 8) || (cleanId.length() == 9))
-                    && StringUtils.isNumeric(cleanId.substring(0, 7))) {
-
-                // check-digit translation numeric to alpha:
-                // 1234567890123456789212 3456
-                // ABCDEFGHIJKLMNOPQRSTUV WZYZ
-                // where the remainder is zero, the check letter is W
-                // (so valid range is A-W)
-
-                char checkAlpha = cleanId.charAt(7);
-                if ((checkAlpha < 'A') || (checkAlpha > 'W')) {
-                    return false;
-                }
-
-                // extra alpha at end: if "W" (or missing), ignore in modulus calc
-                // otherwise, INCLUDE in calc multiplied by 9
-                char extraAlpha = 0;
-                if ((cleanId.length() == 9) && (cleanId.charAt(8) != 'W')) {
-                    extraAlpha = cleanId.charAt(8);
-                    if ((extraAlpha < 'A') || (extraAlpha > 'Z')) {
-                        return false;
-                    }
-                }
-
-                // make int array
-                int[] ints = new int[8];
-                for (int i = 0; i < 7; i++) {
-                    ints[i] = Character.digit(cleanId.charAt(i), 10);
-                }
-                if (extraAlpha > 0) {
-                    ints[7] = (extraAlpha - 'A') + 1; // we want A=1, etc.
-                }
-
-                // modulus 23 check
-                int sum = (ints[0] * 8) + (ints[1] * 7) + (ints[2] * 6) + (ints[3] * 5) + (ints[4] * 4) + (ints[5] * 3)
-                        + (ints[6] * 2) + (ints[7] * 9);
-                int mod23 = sum % 23;
-                int checkInt = (checkAlpha - 'A') + 1;
-                if ((mod23 == checkInt)
-                        || ((mod23 == 0) && (checkAlpha == 'W'))) {
-                    return true;
-                }
-            }
-            return false;
+            return (cleanId.length() == 10)
+                    && cleanId.codePoints().allMatch(Character::isDigit)
+                    && cleanId.codePoints().map(cp -> Integer.parseInt(Character.toString((char)cp))).sum() % 11 == 0;
         }
 
         @Override
         public String getCanonicalFormat(String id) {
-            // 1234567T or 1234567FA
-            String clean = cleanInput(id);
-            if (StringUtils.isEmpty(clean) || (clean.length() != 10)) {
-                return id;
-            }
-            return clean;
+            return cleanInput(id);
         }
     },
 
