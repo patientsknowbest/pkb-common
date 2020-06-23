@@ -217,9 +217,10 @@ public enum NationalIdType implements Serializable {
 
         @Override
         public boolean isValid(String cleanId) {
-            return (cleanId.length() == 10)
-                    && cleanId.codePoints().allMatch(Character::isDigit)
-                    && cleanId.codePoints().map(cp -> Integer.parseInt(Character.toString((char)cp))).sum() % 11 == 0;
+            return cleanId != null
+                    && cleanId.length() == 10
+                    && cleanId.codePoints().allMatch(Character::isDigit);
+                    // Check digit, TBC: && cleanId.codePoints().map(cp -> Integer.parseInt(Character.toString((char) cp))).sum() % 11 == ?;
         }
 
         @Override
