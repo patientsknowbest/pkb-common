@@ -18,6 +18,15 @@ import org.junit.runner.RunWith;
 import java.util.Set;
 import java.util.stream.Stream;
 
+/**
+ * Information on validating NHS numbers:
+ *
+ * @author johnspencepkb
+ * @see <a href="http://www.datadictionary.nhs.uk/version2/data_dictionary/data_field_notes/n/nhs_number_de.asp?shownav=0">http://www.
+ *      datadictionary.nhs.uk/version2/data_dictionary/data_field_notes/n/nhs_number_de.asp?shownav=0</a>
+ */
+// FIXME (GDE-474)
+
 @RunWith(DataProviderRunner.class)
 public class NationalIdTypeTest {
 
