@@ -48,18 +48,16 @@ public final class MutableRawConfigStorage extends AbstractBaseConfigStorage {
     }
 
     private String getOverriddenOrOriginalValue(String key, Supplier<String> originalSupplier) {
-        String overriddenValue = overrideMap.get(key);
-        if (overriddenValue != null) {
-            return overriddenValue;
+        if (overrideMap.containsKey(key)) {
+            return overrideMap.get(key);
         }
         return originalSupplier.get();
     }
 
     @Override
     protected <P> Either<ConfigurationException, P> readValue(String key, Class<P> expectedType, Parser<P> parser) {
-        String overriddenValue = overrideMap.get(key);
-        if (overriddenValue != null) {
-            return parseValue(key, overriddenValue, expectedType, parser).orElse(() -> parseValue(key, configStorage.getString(key), expectedType, parser));
+        if (overrideMap.containsKey(key)) {
+            return parseValue(key, overrideMap.get(key), expectedType, parser).orElse(() -> parseValue(key, configStorage.getString(key), expectedType, parser));
         }
         return parseValue(key, configStorage.getString(key), expectedType, parser);
     }
