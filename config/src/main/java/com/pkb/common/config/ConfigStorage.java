@@ -10,17 +10,19 @@ public interface ConfigStorage {
 
     String getString(String key, String defaultValue);
 
-    int getInt(String key);
+    Integer getInt(String key);
 
-    int getInt(String key, int defaultValue);
+    Integer getInt(String key, int defaultValue);
 
-    long getLong(String key);
+    Long getLong(String key);
 
-    long getLong(String key, long defaultValue);
+    Long getLong(String key, long defaultValue);
 
     boolean isMutableConfigEnabled();
 
     void setValue(String key, String value);
+
+    OverrideRemovalResult removeOverrideAtKey(String key);
 
     void reset();
 

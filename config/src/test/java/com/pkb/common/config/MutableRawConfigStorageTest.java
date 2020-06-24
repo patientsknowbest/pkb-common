@@ -132,11 +132,11 @@ class MutableRawConfigStorageTest {
         assertEquals(false, underTest.getBoolean("notExistingKey", true));
     }
 
-    @DisplayName("getBoolean returns original value with override set to null")
+    @DisplayName("getBoolean returns null value with override set to null")
     @Test
     public void getBoolean7() {
         underTest.setValue("booleanKey", null);
-        assertEquals(true, underTest.getBoolean("booleanKey"));
+        assertEquals(null, underTest.getBoolean("booleanKey"));
     }
 
     @DisplayName("getBoolean throw exception when original value is not Boolean")
@@ -241,11 +241,11 @@ class MutableRawConfigStorageTest {
         assertEquals(6, underTest.getInt("notExistingKey", 7));
     }
 
-    @DisplayName("getInt returns original value with override set to null")
+    @DisplayName("getInt returns null value with override set to null")
     @Test
     public void getInt7() {
         underTest.setValue("intKey", null);
-        assertEquals(2, underTest.getInt("intKey"));
+        assertEquals(null, underTest.getInt("intKey"));
     }
 
     @DisplayName("getInt throw exception when original value is not Integer")
@@ -288,6 +288,14 @@ class MutableRawConfigStorageTest {
         //WHEN
         underTest.reset();
         //THEN
+        assertEquals(2, underTest.getInt("intKey"));
+    }
+
+    @DisplayName("getInt returns original value with override deleted")
+    @Test
+    public void getInt13() {
+        underTest.setValue("intKey", "14");
+        underTest.removeOverrideAtKey("intKey");
         assertEquals(2, underTest.getInt("intKey"));
     }
 
