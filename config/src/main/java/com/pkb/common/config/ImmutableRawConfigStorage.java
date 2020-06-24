@@ -54,6 +54,11 @@ public final class ImmutableRawConfigStorage extends AbstractBaseConfigStorage {
     }
 
     @Override
+    public OverrideRemovalResult removeOverrideAtKey(String key) {
+        return OverrideRemovalResult.NO_OP_AS_CONFIG_IS_IMMUTABLE;
+    }
+
+    @Override
     public void reset() {
         /* no-op */
     }
