@@ -295,8 +295,16 @@ class MutableRawConfigStorageTest {
     @Test
     public void getInt13() {
         underTest.setValue("intKey", "14");
-        underTest.removeOverrideAtKey("intKey");
+        OverrideRemovalResult removalResult = underTest.removeOverrideAtKey("intKey");
+        assertEquals(OverrideRemovalResult.REMOVED, removalResult);
         assertEquals(2, underTest.getInt("intKey"));
+    }
+
+    @DisplayName("removing non-existent key returns NOT_FOUND")
+    @Test
+    public void removingNonExistentKey() {
+        OverrideRemovalResult removalResult = underTest.removeOverrideAtKey("x");
+        assertEquals(OverrideRemovalResult.KEY_NOT_FOUND, removalResult);
     }
 
     @DisplayName("getLong returns original value without override")
