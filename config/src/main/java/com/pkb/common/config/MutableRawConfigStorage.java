@@ -39,15 +39,15 @@ public final class MutableRawConfigStorage extends AbstractBaseConfigStorage {
 
     @Override
     public OverrideRemovalResult removeOverrideAtKey(String key) {
-        if (!MUTABLE_CONFIG_KEY.equals(key)) {
+        if (MUTABLE_CONFIG_KEY.equals(key)) {
+            return OverrideRemovalResult.MUTABILITY_KEY_COULD_NOT_BE_REMOVED;
+        } else {
             if(overrideMap.containsKey(key)) {
                 overrideMap.remove(key);
                 return OverrideRemovalResult.REMOVED;
             } else {
                 return OverrideRemovalResult.KEY_NOT_FOUND;
             }
-        } else {
-            return OverrideRemovalResult.MUTABILITY_KEY_COULD_NOT_BE_REMOVED;
         }
     }
 
