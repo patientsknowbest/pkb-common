@@ -209,7 +209,7 @@ public enum NationalIdType implements Serializable {
         }
     },
 
-    IHI_NUMBER("IHI number", "IE", "DSP", "NI") {
+    IHI_NUMBER("IHI number", "IE", "HSE", "NI") {
         @Override
         public String cleanInput(String id) {
             return StringUtils.trimToNull(StringUtils.replaceChars(StringUtils.upperCase(id), "- ", ""));
