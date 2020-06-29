@@ -57,22 +57,22 @@ abstract class AbstractBaseConfigStorage implements ConfigStorage {
     }
 
     @Override
-    public int getInt(String key) {
+    public Integer getInt(String key) {
         return readValue(key, Integer.class, createNumberParser(Integer::parseInt)).getOrElseThrow(identity());
     }
 
     @Override
-    public int getInt(String key, int defaultValue) {
+    public Integer getInt(String key, int defaultValue) {
         return readValue(key, Integer.class, createNumberParser(Integer::parseInt)).getOrElse(defaultValue);
     }
 
     @Override
-    public long getLong(String key) {
+    public Long getLong(String key) {
         return readValue(key, Long.class, createNumberParser(Long::parseLong)).getOrElseThrow(identity());
     }
 
     @Override
-    public long getLong(String key, long defaultValue) {
+    public Long getLong(String key, long defaultValue) {
         return readValue(key, Long.class, createNumberParser(Long::parseLong)).getOrElse(defaultValue);
     }
 

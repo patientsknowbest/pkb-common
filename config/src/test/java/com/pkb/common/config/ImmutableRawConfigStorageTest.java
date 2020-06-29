@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 //986a14
@@ -187,6 +188,13 @@ public class ImmutableRawConfigStorageTest {
         sut.reset();
         //THEN
         assertThat(sut.getString(testedKey), is(originalValue));
+    }
+
+    @DisplayName("removing key informs about immutability")
+    @Test
+    public void removingNonExistentKey() {
+        OverrideRemovalResult removalResult = underTest.removeOverrideAtKey("x");
+        assertEquals(OverrideRemovalResult.NO_OP_AS_CONFIG_IS_IMMUTABLE, removalResult);
     }
 
     @Test
