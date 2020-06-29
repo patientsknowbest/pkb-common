@@ -38,6 +38,16 @@ public final class MutableRawConfigStorage extends AbstractBaseConfigStorage {
     }
 
     @Override
+    public OverrideRemovalResult removeOverrideAtKey(String key) {
+        if (overrideMap.containsKey(key)) {
+            overrideMap.remove(key);
+            return OverrideRemovalResult.REMOVED;
+        } else {
+            return OverrideRemovalResult.KEY_NOT_FOUND;
+        }
+    }
+
+    @Override
     public void reset() {
         overrideMap.clear();
     }
@@ -57,6 +67,10 @@ public final class MutableRawConfigStorage extends AbstractBaseConfigStorage {
     @Override
     protected <P> Either<ConfigurationException, P> readValue(String key, Class<P> expectedType, Parser<P> parser) {
         if (overrideMap.containsKey(key)) {
+            String value = overrideMap.get(key);
+            if(value == null) {
+                return Either.right(null);
+            }
             return parseValue(key, overrideMap.get(key), expectedType, parser).orElse(() -> parseValue(key, configStorage.getString(key), expectedType, parser));
         }
         return parseValue(key, configStorage.getString(key), expectedType, parser);
