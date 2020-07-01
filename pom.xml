@@ -10,12 +10,12 @@
 
     <distributionManagement>
         <repository>
-            <id>github-central</id>
+            <id>pkb-common</id>
             <name>pkb-common Packages</name>
             <url>https://maven.pkg.github.com/patientsknowbest/pkb-common</url>
         </repository>
         <snapshotRepository>
-            <id>github-snapshots</id>
+            <id>pkb-common</id>
             <name>pkb-common Packages</name>
             <url>https://maven.pkg.github.com/patientsknowbest/pkb-common</url>
         </snapshotRepository>
