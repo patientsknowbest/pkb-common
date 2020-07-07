@@ -2,8 +2,10 @@ package com.pkb.common.datetime;
 
 import java.lang.invoke.MethodHandles;
 import java.time.Clock;
+import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.temporal.TemporalUnit;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +42,12 @@ public class FakeDateTimeService implements DateTimeService {
     @Override
     public void moveTime(long amountToAdd, TemporalUnit unit) {
         fixTime(currentFixedTime.plus(amountToAdd, unit));
+    }
+
+    @Override
+    public long nowNanoTime() {
+        Instant now = now();
+        return TimeUnit.SECONDS.toNanos(now.getEpochSecond()) + now.getNano();
     }
 
     @Override

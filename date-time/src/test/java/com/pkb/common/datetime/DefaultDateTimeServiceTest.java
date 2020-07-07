@@ -179,4 +179,17 @@ public class DefaultDateTimeServiceTest {
         assertThat(actual, greaterThanOrEqualTo(before));
         assertThat(actual, lessThanOrEqualTo(after));
     }
+
+    @Test
+    public void nowNanoTime() {
+        //GIVEN
+        long before = System.nanoTime();
+        //WHEN
+        long actual = underTest.nowNanoTime();
+        //THEN
+        long after = System.nanoTime();
+
+        assertThat(actual, greaterThanOrEqualTo(before));
+        assertThat(actual, lessThanOrEqualTo(after));
+    }
 }

@@ -33,6 +33,8 @@ public interface DateTimeService {
 
     void moveTime(long amountToAdd, TemporalUnit unit);
 
+    long nowNanoTime();
+
     /**
      * @throws IllegalStateException
      *             outside of testing environments
