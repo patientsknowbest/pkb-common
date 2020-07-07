@@ -21,6 +21,11 @@ public class DefaultDateTimeService implements DateTimeService {
     }
 
     @Override
+    public long nowNanoTime() {
+        return System.nanoTime();
+    }
+
+    @Override
     public void forgetFixedCurrentTimeForTesting() {
         throw new IllegalStateException("Not currently in a test environment");
     }
