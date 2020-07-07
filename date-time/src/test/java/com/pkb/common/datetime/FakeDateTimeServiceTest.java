@@ -21,7 +21,6 @@ public class FakeDateTimeServiceTest {
     @Test
     public void setFixedCurrentTimeForTesting() {
         //GIVEN
-        FakeDateTimeService underTest = new FakeDateTimeService();
         Instant before = Instant.now();
         //WHEN
         Instant actualNotFixed = underTest.now();
