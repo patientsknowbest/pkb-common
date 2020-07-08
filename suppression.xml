@@ -203,4 +203,11 @@
         <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
         <vulnerabilityName>CVE-2020-14062</vulnerabilityName>
     </suppress>
+    <suppress until="2020-08-01Z">
+        <notes><![CDATA[
+   file name: jackson-databind-2.9.9.3.jar
+   ]]></notes>
+        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
+        <vulnerabilityName>CVE-2020-14195</vulnerabilityName>
+    </suppress>
 </suppressions>
