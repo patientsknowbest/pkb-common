@@ -23,12 +23,12 @@ class DateTimeServiceTickerTest {
     DateTimeServiceTicker underTest;
 
     @Test
-    public void nowNanoTimeWithoutFixedTime() {
+    void nowNanoTimeWithoutFixedTime() {
         //GIVEN
         BDDMockito.doReturn(13L).when(dateTimeService).nowNanoTime();
         //WHEN
         long actual = underTest.read();
         //THEN
-        assertThat(actual, is(13l));
+        assertThat(actual, is(13L));
     }
 }

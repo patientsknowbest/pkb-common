@@ -19,7 +19,7 @@ public class FakeDateTimeServiceTest {
     private FakeDateTimeService underTest = new FakeDateTimeService();
 
     @Test
-    public void setFixedCurrentTimeForTesting() {
+    void setFixedCurrentTimeForTesting() {
         //GIVEN
         Instant before = Instant.now();
         //WHEN
@@ -35,7 +35,7 @@ public class FakeDateTimeServiceTest {
     }
 
     @Test
-    public void nowNanoTimeWithFixedTime() {
+    void nowNanoTimeWithFixedTime() {
         //GIVEN
         //WHEN
         underTest.setFixedCurrentTimeForTesting("2020-07-06T16:41:13.431631445+00:00");
@@ -45,7 +45,7 @@ public class FakeDateTimeServiceTest {
     }
 
     @Test
-    public void nowNanoTimeWithoutFixedTime() {
+    void nowNanoTimeWithoutFixedTime() {
         //GIVEN
         long before = Instant.now().toEpochMilli();
         //WHEN
