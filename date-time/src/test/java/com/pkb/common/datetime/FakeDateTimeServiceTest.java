@@ -1,6 +1,7 @@
 package com.pkb.common.datetime;
 
 import static com.github.karsaig.approvalcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.number.OrderingComparison.comparesEqualTo;
 import static org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo;
 import static org.hamcrest.number.OrderingComparison.lessThanOrEqualTo;
@@ -8,6 +9,7 @@ import static org.hamcrest.number.OrderingComparison.lessThanOrEqualTo;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +19,7 @@ public class FakeDateTimeServiceTest {
     private FakeDateTimeService underTest = new FakeDateTimeService();
 
     @Test
-    public void setFixedCurrentTimeForTesting() {
+    void setFixedCurrentTimeForTesting() {
         //GIVEN
         Instant before = Instant.now();
         //WHEN
@@ -30,5 +32,28 @@ public class FakeDateTimeServiceTest {
         assertThat(actualNotFixed, greaterThanOrEqualTo(before));
         assertThat(actualNotFixed, lessThanOrEqualTo(after));
         assertThat(actualFixed, comparesEqualTo(expected));
+    }
+
+    @Test
+    void nowNanoTimeWithFixedTime() {
+        //GIVEN
+        //WHEN
+        underTest.setFixedCurrentTimeForTesting("2020-07-06T16:41:13.431631445+00:00");
+        long actual = underTest.nowNanoTime();
+        //THEN
+        assertThat(actual, is(1594053673431631445L));
+    }
+
+    @Test
+    void nowNanoTimeWithoutFixedTime() {
+        //GIVEN
+        long before = Instant.now().toEpochMilli();
+        //WHEN
+        long actual = underTest.nowNanoTime();
+        //THEN
+        long after = Instant.now().toEpochMilli();
+
+        assertThat(TimeUnit.NANOSECONDS.toMillis(actual), greaterThanOrEqualTo(before));
+        assertThat(TimeUnit.NANOSECONDS.toMillis(actual), lessThanOrEqualTo(after));
     }
 }
