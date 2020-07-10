@@ -36,6 +36,7 @@
         <version.mockito>3.3.3</version.mockito>
         <version.guava>28.2-jre</version.guava>
         <version.apache-commons-io>2.6</version.apache-commons-io>
+        <javax.javaee-api.version>8.0</javax.javaee-api.version>
 
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.source.plugin.version>3.2.1</maven.source.plugin.version>
@@ -53,11 +54,12 @@
 
     <modules>
         <module>config</module>
-        <module>date-time</module>
-        <module>testlogging</module>
         <module>datamigrator</module>
+        <module>date-time</module>
+        <module>error</module>
         <module>infrastructure</module>
         <module>spring-infrastructure</module>
+        <module>testlogging</module>
         <module>testsupport</module>
     </modules>
 
@@ -171,6 +173,11 @@
                 <groupId>com.pkb</groupId>
                 <artifactId>pulsar</artifactId>
                 <version>${phr-pulsar.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax</groupId>
+                <artifactId>javaee-api</artifactId>
+                <version>${javax.javaee-api.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
