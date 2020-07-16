@@ -106,10 +106,6 @@ public enum Message {
     /* notification to clinician about changes made to account by clinical team  */
     ACTIVITY_NOTIFICATION_TO_CLINICIAN,
     /**/
-    INVITE_CLINICIAN_ON_BEHALF_OF_PATIENT(MessageCategory.REGISTRATION),
-    /**/
-    INVITE_REG_CLINICIAN_ON_BEHALF_OF_PATIENT,
-    /**/
     RESET_PASSWORD_BY_SUPER_ADMIN,
     /* confirm new contact address (changed by user, hl7, ...) */
     CONFIRM_NEW_CONTACT,
