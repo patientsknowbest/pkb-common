@@ -156,7 +156,7 @@ public enum NationalIdType implements Serializable {
     /**
      * Source: http://oid-info.com/get/2.16.840.1.113883.3.1061 (http://www.hl7.org/oid/index.cfm?Comp_OID=2.16.840.1.113883.3.1061)
      */
-    H_AND_C_NUMBER("Health and Care number", "GB-NIR", "DHSSPS", "NH") {
+    H_AND_C_NUMBER("Health and Care number", "GB-NIR", "DHSSPS", "NH", "urn:uuid:1479257a-ce8f-482a-89fa-429ac066c158") {
         @Override
         public String cleanInput(String id) {
             // strip out dashes and spaces
