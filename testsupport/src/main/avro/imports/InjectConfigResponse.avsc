@@ -1,0 +1,8 @@
+{"namespace": "com.pkb.pulsar.payload",
+  "type": "record",
+  "name": "InjectConfigResponse",
+  "fields": [
+    {"name": "configKey", "type": "string"},
+    {"name": "configValue", "type": "string"}
+  ]
+}
