@@ -1,0 +1,7 @@
+{"namespace": "com.pkb.pulsar.payload",
+  "type": "record",
+  "name": "LogTestNameRequest",
+  "fields": [
+    {"name": "testName", "type": "string"}
+  ]
+}
