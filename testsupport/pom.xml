@@ -23,6 +23,10 @@
             <artifactId>testlogging</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.pkb.pkbcommon</groupId>
+            <artifactId>config</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.pkb</groupId>
             <artifactId>pulsar</artifactId>
         </dependency>

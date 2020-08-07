@@ -1,5 +1,6 @@
 package com.pkb.common.testsupport;
 
+import com.pkb.common.config.ConfigStorage;
 import com.pkb.common.datetime.DateTimeService;
 import com.pkb.common.util.FrameFilter;
 import com.pkb.pulsar.IPulsarFactory;
@@ -27,19 +28,21 @@ public class TestSupportAgent implements ITestSupportAgent {
     private final boolean startListener;
     private final PulsarFactoryWrapper pulsarFactoryWrapper;
     private final DateTimeService dateTimeService;
+    private final ConfigStorage configStorage;
     private Consumer<TestControlRequest> consumer;
 
     public TestSupportAgent(String serviceName,
                             boolean registerStartup,
                             boolean startListener,
                             IPulsarFactory pulsarFactory,
-                            DateTimeService dateTimeService) {
+                            DateTimeService dateTimeService,
+                            ConfigStorage configStorage) {
         this.serviceName = serviceName;
         this.registerStartup = registerStartup;
         this.startListener = startListener;
         this.pulsarFactoryWrapper = new PulsarFactoryWrapper(pulsarFactory);
         this.dateTimeService = dateTimeService;
-
+        this.configStorage = configStorage;
     }
 
     @Override
@@ -75,7 +78,11 @@ public class TestSupportAgent implements ITestSupportAgent {
                         pulsarFactoryWrapper.createTestControlProducer(TEST_CONTROL_RESPONSE, TestControlResponse.class),
                         serviceName,
                         new PulsarNamespaceChangeService(this.pulsarFactoryWrapper),
-                        new SetFixedTimestampService(dateTimeService)
+                        new SetFixedTimestampService(dateTimeService),
+                        new InjectConfigValueService(configStorage),
+                        new ClearTestStatesService(),
+                        new LogTestNameService(),
+                        new ToggleDetailedLoggingService()
                 );
                 consumer = pulsarFactoryWrapper.createTestControlConsumer(TEST_CONTROL_REQUEST, serviceName, TestControlRequest.class, service);
                 LOGGER.info("TestSupportAgent.startListener started");
@@ -98,6 +105,5 @@ public class TestSupportAgent implements ITestSupportAgent {
             }
         }
     }
-
 }
 

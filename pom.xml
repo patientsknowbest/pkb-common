@@ -49,7 +49,7 @@
         <changelist>-SNAPSHOT</changelist>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <javax.inject.version>1</javax.inject.version>
-        <phr-pulsar.version>8-5b37c53-65399</phr-pulsar.version>
+        <phr-pulsar.version>9-head-8ebc0df-81677-SNAPSHOT</phr-pulsar.version>
     </properties>
 
     <modules>
@@ -131,6 +131,11 @@
             <dependency>
                 <groupId>com.pkb.pkbcommon</groupId>
                 <artifactId>testlogging</artifactId>
+                <version>${revision}${changelist}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.pkb.pkbcommon</groupId>
+                <artifactId>config</artifactId>
                 <version>${revision}${changelist}</version>
             </dependency>
             <dependency>
