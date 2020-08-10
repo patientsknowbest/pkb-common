@@ -17,7 +17,7 @@ public class TestSupportAgent extends AbstractTestSupportAgent {
     }
 
     @Override
-    MessageListener<TestControlRequest> getTestControlRequestService() throws PulsarClientException  {
+    protected MessageListener<TestControlRequest> getTestControlRequestService() throws PulsarClientException  {
         return new TestControlRequestService(
                 pulsarFactoryWrapper.createTestControlProducer(TEST_CONTROL_RESPONSE, TestControlResponse.class),
                 serviceName,
