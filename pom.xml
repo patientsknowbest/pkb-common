@@ -50,6 +50,7 @@
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <javax.inject.version>1</javax.inject.version>
         <phr-pulsar.version>9-head-8ebc0df-81677-SNAPSHOT</phr-pulsar.version>
+        <restassured.version>3.0.7-PKB</restassured.version>
     </properties>
 
     <modules>
@@ -183,6 +184,29 @@
                 <groupId>javax</groupId>
                 <artifactId>javaee-api</artifactId>
                 <version>${javax.javaee-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.pkb</groupId>
+                <artifactId>rest-assured</artifactId>
+                <version>${restassured.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.hamcrest</groupId>
+                        <artifactId>hamcrest-core</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.hamcrest</groupId>
+                        <artifactId>hamcrest-library</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.testng</groupId>
+                        <artifactId>testng</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
         </dependencies>
     </dependencyManagement>
