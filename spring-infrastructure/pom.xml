@@ -50,6 +50,10 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.pkb</groupId>
+            <artifactId>rest-assured</artifactId>
+        </dependency>
     </dependencies>
 
 
