@@ -4,9 +4,9 @@ import java.net.URL;
 
 public abstract class AbstractBaseConfig implements BaseConfig {
 
-    final protected ConfigStorage storage;
+    public ConfigStorage storage;
 
-    AbstractBaseConfig(ConfigStorage storage) {
+    public AbstractBaseConfig(ConfigStorage storage) {
         this.storage = storage;
     }
 
