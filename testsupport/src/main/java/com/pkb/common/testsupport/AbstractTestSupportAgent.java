@@ -82,7 +82,7 @@ public abstract class AbstractTestSupportAgent implements ITestSupportAgent {
         }
     }
 
-    abstract MessageListener<TestControlRequest> getTestControlRequestService() throws PulsarClientException;
+    protected abstract MessageListener<TestControlRequest> getTestControlRequestService() throws PulsarClientException;
 
     @Override
     public void close() {
