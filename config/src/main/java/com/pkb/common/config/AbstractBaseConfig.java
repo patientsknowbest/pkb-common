@@ -2,11 +2,13 @@ package com.pkb.common.config;
 
 import java.net.URL;
 
+import org.jetbrains.annotations.NotNull;
+
 public abstract class AbstractBaseConfig implements BaseConfig {
 
-    public final ConfigStorage storage;
+    final protected ConfigStorage storage;
 
-    public AbstractBaseConfig(ConfigStorage storage) {
+    public AbstractBaseConfig(@NotNull ConfigStorage storage) {
         this.storage = storage;
     }
 
