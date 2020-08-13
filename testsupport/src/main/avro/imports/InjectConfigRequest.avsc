@@ -2,7 +2,7 @@
   "type": "record",
   "name": "InjectConfigRequest",
   "fields": [
-    {"name": "configKey", "type": "string"},
-    {"name": "configValue", "type": "string"}
+    {"name": "key", "type": "string"},
+    {"name": "value", "type": "string"}
   ]
 }
