@@ -67,4 +67,9 @@ public final class ImmutableRawConfigStorage extends AbstractBaseConfigStorage {
     public ConfigStorage getImmutableConfig() {
         return this;
     }
+
+    @Override
+    public boolean isFakeDateTimeServiceEnabled() {
+        return getBoolean("fakedatetimeservice.enabled", false);
+    }
 }

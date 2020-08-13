@@ -18,27 +18,21 @@ public class InjectConfigValueService {
 
     public InjectConfigResponse process(InjectConfigRequest message) {
         LOGGER.info("InjectConfigValueService.process message received");
-        String key = message.getConfigKey();
-        String value = message.getConfigValue();
-        LOGGER.info(String.format("InjectConfigValueService.process setting config key %s to value %s", key, value));
+        String key = message.getKey();
+        String value = message.getValue();
+        LOGGER.info(String.format("InjectConfigValueService.process setting key %s to value %s", key, value));
 
         boolean success = true;
 
         try {
             if (configStorage.isMutableConfigEnabled()) {
-                if (key == null && value == null) {
-                    configStorage.reset();
-                } else {
-                    configStorage.setValue(key, value);
-                }
+                configStorage.setValue(key, value);
             }
         } catch (IllegalStateException e) {
             success = false;
         }
 
         LOGGER.info("InjectConfigValueService.process done.");
-        //return InjectConfigResponse.newBuilder().setSuccess(success).build();
-        // TODO JAMES: set a return value
-        return InjectConfigResponse.newBuilder().build();
+        return InjectConfigResponse.newBuilder().setKey(key).setValue(value).setSuccess(success).build();
     }
 }

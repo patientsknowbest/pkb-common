@@ -32,24 +32,16 @@ public class ClearTestStatesService {
             dateTimeService.forgetFixedCurrentTimeForTesting();
         }
 
-        // TODO JAMES : move report runner (and KMS?) to ConfigStorage, so this will always be present
-        if (configStorage != null) {
+        // Move report runner (PHR-6985) and KMS (PHR-6984) to ConfigStorage
+        // ConfigStorage should then be enforced as NotNull and the null check removed
+        if (configStorage != null && configStorage.isMutableConfigEnabled()) {
             configStorage.reset();
         }
 
-        for (ClearableInternalState clearable : clearables) {
-            clearable.clearState();
-        }
-
-        // TODO: add a TestSupportAgent to the KMS so that we reset the state there
-        // RESTMessagingHelper.kmsDeleteCall(appGroup, "/kmstest/state", 204);
-
-        // TODO JAMES: add something to do the survey results in reportrunner
-        // given().delete(appGroup.reportRunnerUri() + "/survey_results").then().statusCode(204);
+        clearables.forEach(ClearableInternalState::clearState);
 
         LOGGER.info("ClearTestStatesService.process done.");
 
-        // TODO JAMES: set a response value
         return ClearTestStatesResponse.newBuilder().build();
     }
 }
