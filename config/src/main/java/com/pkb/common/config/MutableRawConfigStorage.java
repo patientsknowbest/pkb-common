@@ -75,4 +75,9 @@ public final class MutableRawConfigStorage extends AbstractBaseConfigStorage {
         }
         return parseValue(key, configStorage.getString(key), expectedType, parser);
     }
+
+    @Override
+    public boolean isFakeDateTimeServiceEnabled() {
+        return getBoolean("fakedatetimeservice.enabled", false);
+    }
 }

@@ -3,6 +3,7 @@ package com.pkb.common.testsupport;
 import com.pkb.common.ClearableInternalState;
 import com.pkb.common.config.ConfigStorage;
 import com.pkb.common.datetime.DateTimeService;
+import com.pkb.common.testlogging.DetailLoggingProvider;
 import com.pkb.common.util.FrameFilter;
 import com.pkb.pulsar.IPulsarFactory;
 import com.pkb.pulsar.payload.Startup;
@@ -33,7 +34,8 @@ public class TestSupportAgent implements ITestSupportAgent {
     protected final DateTimeService dateTimeService;
     protected final ConfigStorage configStorage;
     private Consumer<TestControlRequest> consumer;
-    private Set<ClearableInternalState> clearables;
+    private final Set<ClearableInternalState> clearables;
+    private final DetailLoggingProvider testLoggingService;
 
     public TestSupportAgent(String serviceName,
                             boolean registerStartup,
@@ -41,7 +43,8 @@ public class TestSupportAgent implements ITestSupportAgent {
                             IPulsarFactory pulsarFactory,
                             DateTimeService dateTimeService,
                             ConfigStorage configStorage,
-                            Set<ClearableInternalState> clearables) {
+                            Set<ClearableInternalState> clearables,
+                            DetailLoggingProvider testLoggingService) {
         this.serviceName = serviceName;
         this.registerStartup = registerStartup;
         this.startListener = startListener;
@@ -49,6 +52,7 @@ public class TestSupportAgent implements ITestSupportAgent {
         this.dateTimeService = dateTimeService;
         this.configStorage = configStorage;
         this.clearables = clearables;
+        this.testLoggingService = testLoggingService;
     }
 
     @Override
@@ -97,8 +101,8 @@ public class TestSupportAgent implements ITestSupportAgent {
                 new SetFixedTimestampService(dateTimeService),
                 new InjectConfigValueService(configStorage),
                 new ClearTestStatesService(dateTimeService, configStorage, clearables),
-                new LogTestNameService(),
-                new ToggleDetailedLoggingService()
+                new LogTestNameService(configStorage),
+                new ToggleDetailedLoggingService(configStorage, testLoggingService)
         );
     }
 
