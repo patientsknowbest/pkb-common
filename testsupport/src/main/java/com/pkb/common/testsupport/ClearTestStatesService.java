@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Set;
 
-public class ClearTestStatesService {
+class ClearTestStatesService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(java.lang.invoke.MethodHandles.lookup().lookupClass());
 
@@ -18,13 +18,13 @@ public class ClearTestStatesService {
     private final ConfigStorage configStorage;
     private final Set<ClearableInternalState> clearables;
 
-    public ClearTestStatesService(DateTimeService dateTimeService, ConfigStorage configStorage, Set<ClearableInternalState> clearables) {
+    ClearTestStatesService(DateTimeService dateTimeService, ConfigStorage configStorage, Set<ClearableInternalState> clearables) {
         this.dateTimeService = dateTimeService;
         this.configStorage = configStorage;
         this.clearables = clearables;
     }
 
-    public ClearTestStatesResponse process(ClearTestStatesRequest message) {
+    ClearTestStatesResponse process(ClearTestStatesRequest message) {
         LOGGER.info("ClearTestStatesService.process message received");
 
         boolean clearFixedTimestamp = message.getClearFixedTimestamp();
@@ -32,9 +32,7 @@ public class ClearTestStatesService {
             dateTimeService.forgetFixedCurrentTimeForTesting();
         }
 
-        // Move report runner (PHR-6985) and KMS (PHR-6984) to ConfigStorage
-        // ConfigStorage should then be enforced as NotNull and the null check removed
-        if (configStorage != null && configStorage.isMutableConfigEnabled()) {
+        if (configStorage.isMutableConfigEnabled()) {
             configStorage.reset();
         }
 
