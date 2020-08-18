@@ -23,12 +23,9 @@ public class InjectConfigValueService {
         LOGGER.info(String.format("InjectConfigValueService.process setting key %s to value %s", key, value));
 
         boolean success = true;
-
-        try {
-            if (configStorage.isMutableConfigEnabled()) {
-                configStorage.setValue(key, value);
-            }
-        } catch (IllegalStateException e) {
+        if (configStorage.isMutableConfigEnabled()) {
+            configStorage.setValue(key, value);
+        } else {
             success = false;
         }
 
