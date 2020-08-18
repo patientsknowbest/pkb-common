@@ -1,6 +1,7 @@
 package com.pkb.common.testsupport;
 
 import com.pkb.common.ClearableInternalState;
+import com.pkb.common.config.BaseConfig;
 import com.pkb.common.config.ConfigStorage;
 import com.pkb.common.datetime.DateTimeService;
 import com.pkb.common.testlogging.DetailLoggingProvider;
@@ -27,12 +28,13 @@ public class TestSupportAgent implements ITestSupportAgent {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(java.lang.invoke.MethodHandles.lookup().lookupClass());
 
-    protected final String serviceName;
+    private final String serviceName;
     private final boolean registerStartup;
     private final boolean startListener;
-    protected final PulsarFactoryWrapper pulsarFactoryWrapper;
-    protected final DateTimeService dateTimeService;
-    protected final ConfigStorage configStorage;
+    private final PulsarFactoryWrapper pulsarFactoryWrapper;
+    private final DateTimeService dateTimeService;
+    private final ConfigStorage configStorage;
+    private final BaseConfig baseConfig;
     private Consumer<TestControlRequest> consumer;
     private final Set<ClearableInternalState> clearables;
     private final DetailLoggingProvider testLoggingService;
@@ -44,7 +46,8 @@ public class TestSupportAgent implements ITestSupportAgent {
                             DateTimeService dateTimeService,
                             ConfigStorage configStorage,
                             Set<ClearableInternalState> clearables,
-                            DetailLoggingProvider testLoggingService) {
+                            DetailLoggingProvider testLoggingService,
+                            BaseConfig baseConfig) {
         this.serviceName = serviceName;
         this.registerStartup = registerStartup;
         this.startListener = startListener;
@@ -53,6 +56,7 @@ public class TestSupportAgent implements ITestSupportAgent {
         this.configStorage = configStorage;
         this.clearables = clearables;
         this.testLoggingService = testLoggingService;
+        this.baseConfig = baseConfig;
     }
 
     @Override
@@ -101,8 +105,8 @@ public class TestSupportAgent implements ITestSupportAgent {
                 new SetFixedTimestampService(dateTimeService),
                 new InjectConfigValueService(configStorage),
                 new ClearTestStatesService(dateTimeService, configStorage, clearables),
-                new LogTestNameService(configStorage),
-                new ToggleDetailedLoggingService(configStorage, testLoggingService)
+                new LogTestNameService(baseConfig),
+                new ToggleDetailedLoggingService(baseConfig, testLoggingService)
         );
     }
 

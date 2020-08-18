@@ -27,6 +27,4 @@ public interface ConfigStorage {
     void reset();
 
     ConfigStorage getImmutableConfig();
-
-    boolean isFakeDateTimeServiceEnabled();
 }

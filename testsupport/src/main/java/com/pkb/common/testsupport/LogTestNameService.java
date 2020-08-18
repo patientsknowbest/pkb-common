@@ -1,6 +1,6 @@
 package com.pkb.common.testsupport;
 
-import com.pkb.common.config.ConfigStorage;
+import com.pkb.common.config.BaseConfig;
 import com.pkb.pulsar.payload.LogTestNameRequest;
 import com.pkb.pulsar.payload.LogTestNameResponse;
 import org.slf4j.Logger;
@@ -10,9 +10,9 @@ public class LogTestNameService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(java.lang.invoke.MethodHandles.lookup().lookupClass());
 
-    private final ConfigStorage config;
+    private final BaseConfig config;
 
-    public LogTestNameService(ConfigStorage config) {
+    public LogTestNameService(BaseConfig config) {
         this.config = config;
     }
 
@@ -20,7 +20,7 @@ public class LogTestNameService {
         LOGGER.info("LogTestNameService.process message received");
         String testName = message.getTestName();
         boolean success = true;
-        if (config == null || config.isFakeDateTimeServiceEnabled()) {
+        if (config.isFakeDateTimeServiceEnabled()) {
             LOGGER.info("test name is now {}", testName);
         } else {
             success = false;

@@ -1,6 +1,6 @@
 package com.pkb.common.testsupport;
 
-import com.pkb.common.config.ConfigStorage;
+import com.pkb.common.config.BaseConfig;
 import com.pkb.common.testlogging.DetailLoggingProvider;
 import com.pkb.pulsar.payload.ToggleDetailedLoggingRequest;
 import com.pkb.pulsar.payload.ToggleDetailedLoggingResponse;
@@ -11,9 +11,9 @@ public class ToggleDetailedLoggingService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(java.lang.invoke.MethodHandles.lookup().lookupClass());
     private final DetailLoggingProvider testLoggingService;
-    private final ConfigStorage config;
+    private final BaseConfig config;
 
-    public ToggleDetailedLoggingService(ConfigStorage config, DetailLoggingProvider testLoggingService) {
+    public ToggleDetailedLoggingService(BaseConfig config, DetailLoggingProvider testLoggingService) {
         this.config = config;
         this.testLoggingService = testLoggingService;
     }

@@ -66,6 +66,6 @@ public abstract class AbstractBaseConfig implements BaseConfig {
 
     @Override
     public boolean isFakeDateTimeServiceEnabled() {
-        return storage.isFakeDateTimeServiceEnabled();
+        return storage.getBoolean("fakedatetimeservice.enabled", false);
     }
 }
