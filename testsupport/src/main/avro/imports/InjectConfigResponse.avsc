@@ -3,7 +3,7 @@
   "name": "InjectConfigResponse",
   "fields": [
     {"name": "key", "type": "string"},
-    {"name": "value", "type": "string"},
+    {"name": "value", "type": ["null", "string"]},
     {"name": "success", "type": "boolean"}
   ]
 }

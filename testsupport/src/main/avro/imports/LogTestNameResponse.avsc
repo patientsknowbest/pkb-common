@@ -2,6 +2,6 @@
   "type": "record",
   "name": "LogTestNameResponse",
   "fields": [
-    {"name": "success", "type": "boolean"}
+    {"name": "testName", "type": "string"}
   ]
 }
