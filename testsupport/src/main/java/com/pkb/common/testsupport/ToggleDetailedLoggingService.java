@@ -7,21 +7,21 @@ import com.pkb.pulsar.payload.ToggleDetailedLoggingResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ToggleDetailedLoggingService {
+class ToggleDetailedLoggingService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(java.lang.invoke.MethodHandles.lookup().lookupClass());
     private final DetailLoggingProvider testLoggingService;
     private final BaseConfig config;
 
-    public ToggleDetailedLoggingService(BaseConfig config, DetailLoggingProvider testLoggingService) {
+    ToggleDetailedLoggingService(BaseConfig config, DetailLoggingProvider testLoggingService) {
         this.config = config;
         this.testLoggingService = testLoggingService;
     }
 
-    public ToggleDetailedLoggingResponse process(ToggleDetailedLoggingRequest message) {
+    ToggleDetailedLoggingResponse process(ToggleDetailedLoggingRequest message) {
         LOGGER.info("ToggleDetailedLoggingService.process message received");
         boolean success = true;
-        if (config == null || config.isFakeDateTimeServiceEnabled()) {
+        if (config.isFakeDateTimeServiceEnabled()) {
             testLoggingService.setDetailedLoggingRequired(message.getEnableDetailedLogging());
         } else {
             success = false;

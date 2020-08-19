@@ -6,17 +6,17 @@ import com.pkb.pulsar.payload.LogTestNameResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LogTestNameService {
+class LogTestNameService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(java.lang.invoke.MethodHandles.lookup().lookupClass());
 
     private final BaseConfig config;
 
-    public LogTestNameService(BaseConfig config) {
+    LogTestNameService(BaseConfig config) {
         this.config = config;
     }
 
-    public LogTestNameResponse process(LogTestNameRequest message) {
+    LogTestNameResponse process(LogTestNameRequest message) {
         LOGGER.info("LogTestNameService.process message received");
         String testName = message.getTestName();
         boolean success = true;
@@ -28,6 +28,6 @@ public class LogTestNameService {
 
         LOGGER.info("LogTestNameService.process done.");
 
-        return LogTestNameResponse.newBuilder().setSuccess(success).build();
+        return LogTestNameResponse.newBuilder().setTestName(testName).setSuccess(success).build();
     }
 }
