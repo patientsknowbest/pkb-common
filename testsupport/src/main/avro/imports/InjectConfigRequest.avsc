@@ -3,6 +3,6 @@
   "name": "InjectConfigRequest",
   "fields": [
     {"name": "key", "type": "string"},
-    {"name": "value", "type": "string"}
+    {"name": "value", "type": ["null", "string"]}
   ]
 }
