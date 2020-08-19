@@ -1,5 +1,7 @@
 {"namespace": "com.pkb.pulsar.payload",
   "type": "record",
   "name": "ToggleDetailedLoggingResponse",
-  "fields": []
+  "fields": [
+    {"name": "success", "type": "boolean"}
+  ]
 }
