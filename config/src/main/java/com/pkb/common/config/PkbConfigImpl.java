@@ -15,14 +15,4 @@ public class PkbConfigImpl extends AbstractBaseConfig implements PkbConfig {
     public boolean isConversationArchiveEnabled() {
         return storage.getBoolean("feature.conversationArchiveEnabled", false);
     }
-
-    @Override
-    public String getSynertecApiClientId() {
-        return storage.getString("synertecApiClientId", "synertec-user-test");
-    }
-
-    @Override
-    public int getSlowDocRefQueryAlertThresholdSeconds() {
-        return storage.getInt("slowDocRefQueryAlertThresholdSeconds", 30);
-    }
 }
