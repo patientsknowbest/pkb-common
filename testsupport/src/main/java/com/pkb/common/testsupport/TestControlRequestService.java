@@ -22,23 +22,35 @@ public class TestControlRequestService implements MessageListener<TestControlReq
     private final String serviceName;
     private final SetFixedTimestampService setFixedTimestampService;
     private final PulsarNamespaceChangeService pulsarNamespaceChangeService;
+    private final InjectConfigValueService injectConfigValueService;
+    private final ClearTestStatesService clearTestStatesService;
+    private final LogTestNameService logTestNameService;
+    private final ToggleDetailedLoggingService toggleDetailedLoggingService;
 
     public TestControlRequestService(
             @NotNull Producer<TestControlResponse> testControlResponseProducer,
             @NotNull String serviceName,
             @NotNull PulsarNamespaceChangeService pulsarNamespaceChangeService,
-            @NotNull SetFixedTimestampService setFixedTimestampService) {
+            @NotNull SetFixedTimestampService setFixedTimestampService,
+            @NotNull InjectConfigValueService injectConfigValueService,
+            @NotNull ClearTestStatesService clearTestStatesService,
+            @NotNull LogTestNameService logTestNameService,
+            @NotNull ToggleDetailedLoggingService toggleDetailedLoggingService) {
         this.testControlResponseProducer = testControlResponseProducer;
         this.serviceName = serviceName;
         this.pulsarNamespaceChangeService = pulsarNamespaceChangeService;
         this.setFixedTimestampService = setFixedTimestampService;
+        this.injectConfigValueService = injectConfigValueService;
+        this.clearTestStatesService = clearTestStatesService;
+        this.logTestNameService = logTestNameService;
+        this.toggleDetailedLoggingService = toggleDetailedLoggingService;
     }
 
     @Override
     public void received(Consumer<TestControlRequest> consumer, Message<TestControlRequest> message) {
         try {
             consumer.acknowledge(message); // because the testSupprot framework is exercising closed loop control we can acknowledge here
-            LOGGER.info("TestControlRequestService message recieved");
+            LOGGER.info("TestControlRequestService message received");
             MessageType messageType = message.getValue().getMessageType();
             LOGGER.info(String.format("messageType %s", messageType));
             TestControlResponse.Builder response = TestControlResponse.newBuilder()
@@ -48,9 +60,20 @@ public class TestControlRequestService implements MessageListener<TestControlReq
                 case SET_NAMESPACE:
                     response.setNamespaceChangeResponse(pulsarNamespaceChangeService.process(message.getValue().getNamespaceChangeRequest()));
                     break;
-
                 case SET_FIXED_TIMESTAMP:
                     response.setSetFixedTimestampResponse(setFixedTimestampService.process(message.getValue().getSetFixedTimestampRequest()));
+                    break;
+                case INJECT_CONFIG_VALUE:
+                    response.setInjectConfigResponse(injectConfigValueService.process(message.getValue().getInjectConfigRequest()));
+                    break;
+                case CLEAR_TEST_STATES:
+                    response.setClearTestStatesResponse(clearTestStatesService.process(message.getValue().getClearTestStatesRequest()));
+                    break;
+                case LOG_TEST_NAME:
+                    response.setLogTestNameResponse(logTestNameService.process(message.getValue().getLogTestNameRequest()));
+                    break;
+                case TOGGLE_DETAILED_LOGGING:
+                    response.setToggleDetailedLoggingResponse(toggleDetailedLoggingService.process(message.getValue().getToggleDetailedLoggingRequest()));
                     break;
             }
             testControlResponseProducer.newMessage().value(response.build()).send();
