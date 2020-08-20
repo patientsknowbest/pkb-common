@@ -1,18 +1,24 @@
 package com.pkb.common.testsupport;
 
+import com.pkb.common.ClearableInternalState;
+import com.pkb.common.config.BaseConfig;
+import com.pkb.common.config.ConfigStorage;
 import com.pkb.common.datetime.DateTimeService;
+import com.pkb.common.testlogging.DetailLoggingProvider;
 import com.pkb.common.util.FrameFilter;
 import com.pkb.pulsar.IPulsarFactory;
 import com.pkb.pulsar.payload.Startup;
 import com.pkb.pulsar.payload.TestControlRequest;
 import com.pkb.pulsar.payload.TestControlResponse;
 import org.apache.pulsar.client.api.Consumer;
+import org.apache.pulsar.client.api.MessageListener;
 import org.apache.pulsar.client.api.Producer;
 import org.apache.pulsar.client.api.PulsarClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Instant;
+import java.util.Set;
 
 import static com.pkb.pulsar.PulsarConstants.STARTUP;
 import static com.pkb.pulsar.PulsarConstants.TEST_CONTROL_REQUEST;
@@ -27,26 +33,37 @@ public class TestSupportAgent implements ITestSupportAgent {
     private final boolean startListener;
     private final PulsarFactoryWrapper pulsarFactoryWrapper;
     private final DateTimeService dateTimeService;
+    private final ConfigStorage configStorage;
+    private final BaseConfig baseConfig;
     private Consumer<TestControlRequest> consumer;
+    private final Set<ClearableInternalState> clearables;
+    private final DetailLoggingProvider testLoggingService;
 
     public TestSupportAgent(String serviceName,
                             boolean registerStartup,
                             boolean startListener,
                             IPulsarFactory pulsarFactory,
-                            DateTimeService dateTimeService) {
+                            DateTimeService dateTimeService,
+                            ConfigStorage configStorage,
+                            Set<ClearableInternalState> clearables,
+                            DetailLoggingProvider testLoggingService,
+                            BaseConfig baseConfig) {
         this.serviceName = serviceName;
         this.registerStartup = registerStartup;
         this.startListener = startListener;
         this.pulsarFactoryWrapper = new PulsarFactoryWrapper(pulsarFactory);
         this.dateTimeService = dateTimeService;
-
+        this.configStorage = configStorage;
+        this.clearables = clearables;
+        this.testLoggingService = testLoggingService;
+        this.baseConfig = baseConfig;
     }
 
     @Override
     public void start() {
         LOGGER.info("TestSupportAgent.start");
         registerStartup();
-        startLstener();
+        startListener();
     }
 
     private void registerStartup() {
@@ -66,23 +83,31 @@ public class TestSupportAgent implements ITestSupportAgent {
         LOGGER.info(String.format("%s registerStartup done", serviceName));
     }
 
-    private void startLstener() {
+    private void startListener() {
         LOGGER.info("TestSupportAgent.startListener");
         if (startListener) {
             try {
                 LOGGER.info("TestSupportAgent.startListener is enabled and starting");
-                TestControlRequestService service = new TestControlRequestService(
-                        pulsarFactoryWrapper.createTestControlProducer(TEST_CONTROL_RESPONSE, TestControlResponse.class),
-                        serviceName,
-                        new PulsarNamespaceChangeService(this.pulsarFactoryWrapper),
-                        new SetFixedTimestampService(dateTimeService)
-                );
+                MessageListener<TestControlRequest> service = getTestControlRequestService();
                 consumer = pulsarFactoryWrapper.createTestControlConsumer(TEST_CONTROL_REQUEST, serviceName, TestControlRequest.class, service);
                 LOGGER.info("TestSupportAgent.startListener started");
             } catch (PulsarClientException e) {
                 LOGGER.error(String.format("Unable to startup %s", serviceName), FrameFilter.filter(e));
             }
         }
+    }
+
+    private MessageListener<TestControlRequest> getTestControlRequestService() throws PulsarClientException  {
+        return new TestControlRequestService(
+                pulsarFactoryWrapper.createTestControlProducer(TEST_CONTROL_RESPONSE, TestControlResponse.class),
+                serviceName,
+                new PulsarNamespaceChangeService(this.pulsarFactoryWrapper),
+                new SetFixedTimestampService(dateTimeService),
+                new InjectConfigValueService(configStorage),
+                new ClearTestStatesService(dateTimeService, configStorage, clearables),
+                new LogTestNameService(baseConfig),
+                new ToggleDetailedLoggingService(baseConfig, testLoggingService)
+        );
     }
 
     @Override
@@ -98,6 +123,5 @@ public class TestSupportAgent implements ITestSupportAgent {
             }
         }
     }
-
 }
 
