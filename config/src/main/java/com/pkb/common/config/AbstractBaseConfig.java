@@ -68,4 +68,24 @@ public abstract class AbstractBaseConfig implements BaseConfig {
     public boolean isFakeDateTimeServiceEnabled() {
         return storage.getBoolean("fakedatetimeservice.enabled", false);
     }
+
+    @Override
+    public String getPulsarServiceURL() {
+        return storage.getString("pulsarServiceURL", "pulsar://pulsar:6650");
+    }
+
+    @Override
+    public String getPulsarDefaultNamespce() {
+        return storage.getString("pulsarDefaultNamespce", "defaultNS");
+    }
+
+    @Override
+    public boolean isPulsarServiceRegistrationEnabled() {
+        return storage.getBoolean("pulsarServiceRegistrationEnabled", false);
+    }
+
+    @Override
+    public boolean isPulsarTestSupportServicesEnabled() {
+        return storage.getBoolean("pulsarTestSupportServicesEnabled", false);
+    }
 }
