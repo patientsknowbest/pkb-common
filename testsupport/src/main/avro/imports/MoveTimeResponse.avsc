@@ -1,6 +1,6 @@
 {"namespace": "com.pkb.pulsar.payload",
   "type": "record",
-  "name": "SetFixedTimestampResponse",
+  "name": "MoveTimeResponse",
   "fields": [
     {"name": "amount", "type": "long"},
     {"name": "unit", "type": "string"}
