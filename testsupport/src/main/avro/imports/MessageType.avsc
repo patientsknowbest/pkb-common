@@ -2,5 +2,5 @@
     "namespace": "com.pkb.pulsar.payload",
     "type": "enum",
     "name": "MessageType",
-    "symbols": ["SET_NAMESPACE", "SET_FIXED_TIMESTAMP", "INJECT_CONFIG_VALUE", "CLEAR_TEST_STATES", "LOG_TEST_NAME", "TOGGLE_DETAILED_LOGGING"]
+    "symbols": ["SET_NAMESPACE", "SET_FIXED_TIMESTAMP", "MOVE_TIME", "INJECT_CONFIG_VALUE", "CLEAR_TEST_STATES", "LOG_TEST_NAME", "TOGGLE_DETAILED_LOGGING"]
 }
