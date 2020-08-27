@@ -103,6 +103,7 @@ public class TestSupportAgent implements ITestSupportAgent {
                 serviceName,
                 new PulsarNamespaceChangeService(this.pulsarFactoryWrapper),
                 new SetFixedTimestampService(dateTimeService),
+                new MoveTimeService(dateTimeService),
                 new InjectConfigValueService(configStorage),
                 new ClearTestStatesService(dateTimeService, configStorage, clearables),
                 new LogTestNameService(baseConfig),

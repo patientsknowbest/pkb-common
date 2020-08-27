@@ -21,6 +21,7 @@ public class TestControlRequestService implements MessageListener<TestControlReq
     private final Producer<TestControlResponse> testControlResponseProducer;
     private final String serviceName;
     private final SetFixedTimestampService setFixedTimestampService;
+    private final MoveTimeService moveTimeService;
     private final PulsarNamespaceChangeService pulsarNamespaceChangeService;
     private final InjectConfigValueService injectConfigValueService;
     private final ClearTestStatesService clearTestStatesService;
@@ -32,6 +33,7 @@ public class TestControlRequestService implements MessageListener<TestControlReq
             @NotNull String serviceName,
             @NotNull PulsarNamespaceChangeService pulsarNamespaceChangeService,
             @NotNull SetFixedTimestampService setFixedTimestampService,
+            @NotNull MoveTimeService moveTimeService,
             @NotNull InjectConfigValueService injectConfigValueService,
             @NotNull ClearTestStatesService clearTestStatesService,
             @NotNull LogTestNameService logTestNameService,
@@ -40,6 +42,7 @@ public class TestControlRequestService implements MessageListener<TestControlReq
         this.serviceName = serviceName;
         this.pulsarNamespaceChangeService = pulsarNamespaceChangeService;
         this.setFixedTimestampService = setFixedTimestampService;
+        this.moveTimeService = moveTimeService;
         this.injectConfigValueService = injectConfigValueService;
         this.clearTestStatesService = clearTestStatesService;
         this.logTestNameService = logTestNameService;
@@ -62,6 +65,9 @@ public class TestControlRequestService implements MessageListener<TestControlReq
                     break;
                 case SET_FIXED_TIMESTAMP:
                     response.setSetFixedTimestampResponse(setFixedTimestampService.process(message.getValue().getSetFixedTimestampRequest()));
+                    break;
+                case MOVE_TIME:
+                    response.setMoveTimeResponse(moveTimeService.process(message.getValue().getMoveTimeRequest()));
                     break;
                 case INJECT_CONFIG_VALUE:
                     response.setInjectConfigResponse(injectConfigValueService.process(message.getValue().getInjectConfigRequest()));
