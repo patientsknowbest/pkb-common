@@ -7,6 +7,7 @@
         {"name": "messageType", "type": "MessageType"},
         {"name": "namespaceChangeRequest", "type": ["null", "NamespaceChangeRequest"], "default": null},
         {"name": "setFixedTimestampRequest", "type": ["null", "SetFixedTimestampRequest"], "default": null},
+        {"name": "moveTimeRequest", "type": ["null", "MoveTimeRequest"], "default": null},
         {"name": "injectConfigRequest", "type": ["null", "InjectConfigRequest"], "default": null},
         {"name": "clearTestStatesRequest", "type": ["null", "ClearTestStatesRequest"], "default": null},
         {"name": "logTestNameRequest", "type": ["null", "LogTestNameRequest"], "default": null},
