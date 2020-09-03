@@ -49,7 +49,7 @@
         <changelist>-SNAPSHOT</changelist>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <javax.inject.version>1</javax.inject.version>
-        <phr-pulsar.version>pulsar 12-a115018-86851</phr-pulsar.version>
+        <phr-pulsar.version>12-a115018-86851</phr-pulsar.version>
         <restassured.version>3.0.7-PKB</restassured.version>
     </properties>
 
