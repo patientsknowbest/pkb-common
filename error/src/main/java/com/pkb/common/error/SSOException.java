@@ -1,4 +1,4 @@
-package com.pkb.exception;
+package com.pkb.common.error;
 
 /**
  * These would be helpful to document the error codes in user guide so that
