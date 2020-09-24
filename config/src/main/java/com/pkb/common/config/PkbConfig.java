@@ -2,6 +2,11 @@ package com.pkb.common.config;
 
 public interface PkbConfig extends BaseConfig {
 
-    boolean isConversationAssignEnabled();
-    boolean isConversationArchiveEnabled();
+    default boolean isConversationAssignEnabled() {
+        return getConfigStorage().getBoolean("feature.conversationAssignEnabled", false);
+    }
+
+    default boolean isConversationArchiveEnabled() {
+        return getConfigStorage().getBoolean("feature.conversationArchiveEnabled", false);
+    }
 }
