@@ -1,5 +1,7 @@
 package com.pkb.common.config;
 
+import java.util.concurrent.TimeUnit;
+
 public interface PkbConfig extends BaseConfig {
 
     default boolean isConversationAssignEnabled() {
@@ -8,5 +10,17 @@ public interface PkbConfig extends BaseConfig {
 
     default boolean isConversationArchiveEnabled() {
         return getConfigStorage().getBoolean("feature.conversationArchiveEnabled", false);
+    }
+
+    default int getLetterInvitationTokenSize() {
+        return getConfigStorage().getInt("letter.invitation.token.size", 10);
+    }
+
+    default int getLetterInvitationAccessCodeSize() {
+        return getConfigStorage().getInt("letter.invitation.access.code.size", 10);
+    }
+
+    default int getLetterInvitationExpiry() {
+        return getConfigStorage().getInt("letter.invitation.token.expiry", (int) TimeUnit.DAYS.toSeconds(70L));
     }
 }
