@@ -4,4 +4,5 @@ public interface PkbConfig extends BaseConfig {
 
     boolean isConversationAssignEnabled();
     boolean isConversationArchiveEnabled();
+    boolean isDocumentDplEncryptionEnabled();
 }

@@ -15,4 +15,9 @@ public class PkbConfigImpl extends AbstractBaseConfig implements PkbConfig {
     public boolean isConversationArchiveEnabled() {
         return storage.getBoolean("feature.conversationArchiveEnabled", false);
     }
+
+    @Override
+    public boolean isDocumentDplEncryptionEnabled() {
+        return storage.getBoolean("feature.documentDplEncryptionEnabled", false);
+    }
 }
