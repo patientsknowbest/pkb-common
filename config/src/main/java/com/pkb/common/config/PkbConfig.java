@@ -2,7 +2,7 @@ package com.pkb.common.config;
 
 import java.util.concurrent.TimeUnit;
 
-public interface PkbConfigInterface extends BaseConfig {
+public interface PkbConfig extends BaseConfig {
 
     default boolean isConversationAssignEnabled() {
         return getConfigStorage().getBoolean("feature.conversationAssignEnabled", false);
