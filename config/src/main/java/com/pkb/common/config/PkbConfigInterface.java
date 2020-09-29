@@ -2,7 +2,7 @@ package com.pkb.common.config;
 
 import java.util.concurrent.TimeUnit;
 
-public interface PkbConfig extends BaseConfig {
+public interface PkbConfigInterface extends BaseConfig {
 
     default boolean isConversationAssignEnabled() {
         return getConfigStorage().getBoolean("feature.conversationAssignEnabled", false);
@@ -22,5 +22,9 @@ public interface PkbConfig extends BaseConfig {
 
     default int getLetterInvitationExpiry() {
         return getConfigStorage().getInt("letter.invitation.token.expiry", (int) TimeUnit.DAYS.toSeconds(70L));
+    }
+
+    default boolean isDocumentDplEncryptionEnabled() {
+        return getConfigStorage().getBoolean("feature.documentDplEncryptionEnabled", false);
     }
 }
