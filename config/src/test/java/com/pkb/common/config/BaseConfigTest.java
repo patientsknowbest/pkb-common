@@ -6,17 +6,23 @@ import static org.hamcrest.Matchers.equalTo;
 import java.util.HashMap;
 import java.util.Map;
 
-
 import org.junit.Test;
 
-public class AbstractBaseConfigTest {
+public class BaseConfigTest {
 
     private DummyConfig underTest = new DummyConfig(createStorage());
 
-    private class DummyConfig extends AbstractBaseConfig{
+    private class DummyConfig implements BaseConfig{
+
+        private final ConfigStorage storage;
 
         DummyConfig(ConfigStorage storage) {
-            super(storage);
+            this.storage = storage;
+        }
+
+        @Override
+        public ConfigStorage getConfigStorage() {
+            return storage;
         }
     }
 
