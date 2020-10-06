@@ -1,22 +1,30 @@
 package com.pkb.entities.enums;
 
-import static com.github.karsaig.approvalcrest.MatcherAssert.assertThat;
-import static com.github.karsaig.approvalcrest.matcher.Matchers.sameBeanAs;
-import static com.pkb.entities.enums.NationalIdType.*;
+import static com.pkb.entities.enums.NationalIdType.BSN_NL;
+import static com.pkb.entities.enums.NationalIdType.CHI_NUMBER;
+import static com.pkb.entities.enums.NationalIdType.CIVIL_ID_KW;
+import static com.pkb.entities.enums.NationalIdType.HKID_HK;
+import static com.pkb.entities.enums.NationalIdType.H_AND_C_NUMBER;
+import static com.pkb.entities.enums.NationalIdType.IHI_NUMBER;
+import static com.pkb.entities.enums.NationalIdType.KVN_DE;
+import static com.pkb.entities.enums.NationalIdType.NHS_NUMBER;
+import static com.pkb.entities.enums.NationalIdType.SIN_CA;
+import static com.pkb.entities.enums.NationalIdType.SSN_USA;
 import static java.util.stream.Collectors.toSet;
-import static org.junit.Assert.*;
-
-import com.google.common.collect.ImmutableSet;
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
-import org.junit.Test;
-
-import com.pkb.testing.util.EnumTestHelper;
-import org.junit.runner.RunWith;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Set;
 import java.util.stream.Stream;
+
+import org.junit.jupiter.api.Test;
+
+import com.google.common.collect.ImmutableSet;
+
+import com.pkb.testing.util.EnumTestHelper;
 
 /**
  * Information on validating NHS numbers:
@@ -27,7 +35,6 @@ import java.util.stream.Stream;
  */
 // FIXME (GDE-474)
 
-@RunWith(DataProviderRunner.class)
 public class NationalIdTypeTest {
 
     @Test
@@ -61,6 +68,7 @@ public class NationalIdTypeTest {
         EnumTestHelper.ensureEnumValueIsUnique("Found duplicate Authorities ", NationalIdType.class, NationalIdType::getHl7IdAuthority);
     }
     @Test
+    @SuppressWarnings({"unchecked", "deprecation"})
     public void checkNoDuplicateFhirIdentifier() {
         EnumTestHelper.ensureEnumValueIsUniqueWithFilters("Found duplicate FhirIdentifier ", NationalIdType.class, NationalIdType::getFhirIdentifierSystem, it -> {
             //null fhir identifiers are expected currently
@@ -593,9 +601,11 @@ public class NationalIdTypeTest {
         assertEquals(NHS_NUMBER, NationalIdType.getNationalIdTypeFromFhirIdentifierSystem("https://fhir.nhs.uk/Id/nhs-number"));
     }
 
-    @DataProvider
-    public static Object[][] nationalIdTypeToCountryCodeMappings() {
-        return new Object[][] {
+    @Test
+    @SuppressWarnings("unchecked")
+    public void oneCountryCodeShouldMapStrictlyToOneNationalId() {
+        // GIVEN - test input in arguments
+        Object[][] nationalIds = new Object[][] {
                 { "GB-ENG", ImmutableSet.of(NHS_NUMBER) },
                 { "GB-WLS", ImmutableSet.of(NHS_NUMBER) },
                 { "GB-SCT", ImmutableSet.of(CHI_NUMBER) },
@@ -606,22 +616,19 @@ public class NationalIdTypeTest {
                 { "HK", ImmutableSet.of(HKID_HK) },
                 { "NL", ImmutableSet.of(BSN_NL) },
                 { "DE", ImmutableSet.of(KVN_DE) },
-                { "KW", ImmutableSet.of(CIVIL_ID_KW) }
-        };
-    }
-
-    @Test
-    @UseDataProvider("nationalIdTypeToCountryCodeMappings")
-    public void oneCountryCodeShouldMapStrictlyToOneNationalId(String countryCode, Set<NationalIdType> nationalIdTypes) {
-        // GIVEN - test input in arguments
+                { "KW", ImmutableSet.of(CIVIL_ID_KW) }};
 
         // WHEN
-        Set<NationalIdType> actual = Stream.of(NationalIdType.values())
-                .filter(idType -> idType.getCountryCodes().contains(countryCode))
-                .collect(toSet());
+        for (Object[] nationalId : nationalIds) {
+            String countryCode = (String)nationalId[0];
+            Set<NationalIdType> nationalIdTypes = (Set<NationalIdType>)nationalId[1];
 
-        // THEN
-        assertThat(actual, sameBeanAs(nationalIdTypes));
+            Set<NationalIdType> actual = Stream.of(NationalIdType.values())
+                    .filter(idType -> idType.getCountryCodes().contains(countryCode))
+                    .collect(toSet());
+
+            // THEN
+            assertEquals(actual, nationalIdTypes);
+        }
     }
-
 }

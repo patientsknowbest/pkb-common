@@ -8,8 +8,8 @@
         <version>${revision}${changelist}</version>
     </parent>
 
-    <artifactId>infrastructure</artifactId>
-    <name>pkb-common/infrastructure</name>
+    <artifactId>infrastructure2</artifactId>
+    <name>pkb-common/infrastructure2</name>
 
     <dependencies>
         <dependency>

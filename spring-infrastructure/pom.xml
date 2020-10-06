@@ -14,7 +14,6 @@
 
     <properties>
         <spring.version>5.2.3.RELEASE</spring.version> <!-- copied from PHR -->
-        <commons.testing.version>20-789c720-63866</commons.testing.version>
     </properties>
 
     <dependencies>
@@ -39,8 +38,6 @@
         <dependency>
             <groupId>com.pkb</groupId>
             <artifactId>commons-testing-base</artifactId>
-            <version>${commons.testing.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
