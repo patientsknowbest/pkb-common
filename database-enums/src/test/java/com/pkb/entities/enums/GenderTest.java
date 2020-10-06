@@ -1,6 +1,6 @@
 package com.pkb.entities.enums;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.pkb.testing.util.EnumTestHelper;
 

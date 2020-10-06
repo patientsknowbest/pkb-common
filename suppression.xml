@@ -245,4 +245,11 @@
         <packageUrl regex="true">^pkg:maven/org\.yaml/snakeyaml@.*$</packageUrl>
         <cve>CVE-2017-18640</cve>
     </suppress>
+    <!-- This is a wildfly provided dependency, so cannot be changed unless we upgrade our wf version-->
+    <suppress until="2021-10-07">
+        <notes><![CDATA[
+      file name: hibernate-core-5.3.15.Final.jar
+      ]]></notes>
+        <cve>CVE-2019-14900</cve>
+    </suppress>
 </suppressions>

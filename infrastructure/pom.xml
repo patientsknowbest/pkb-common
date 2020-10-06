@@ -4,18 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.pkb</groupId>
-        <artifactId>commons-hibernate</artifactId>
-        <version>${pkbversion}</version>
+        <groupId>com.pkb.pkbcommon</groupId>
+        <artifactId>pkb-common</artifactId>
+        <version>${revision}${changelist}</version>
     </parent>
 
-    <artifactId>commons-hibernate-infrastructure</artifactId>
+    <artifactId>infrastructure</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>com.pkb.pkbcommon</groupId>
-            <artifactId>infrastructure</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
@@ -41,8 +37,12 @@
             <artifactId>mockito-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>

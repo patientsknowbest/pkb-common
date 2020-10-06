@@ -42,7 +42,9 @@ public enum Gender {
                 return candidate;
             }
         }
-        return null;
+        // This used to return null, which looks wrong. Not changing to throw exception.
+        LOGGER.error("Invalid gender code. Expected unknown, male, female or indeterminate. Received {}", code);
+        return UNKNOWN;
     }
 
     public static String toLetter(int id) {

@@ -51,8 +51,8 @@
         <phr-pulsar.version>12-a115018-86851</phr-pulsar.version>
         <restassured.version>3.0.7-PKB</restassured.version>
 
-        <commons.testing.version>20-789c720-63866</commons.testing.version>
-        <hibernate-core.version>5.3.11.Final</hibernate-core.version>
+        <commons.testing.version>31-feature_phr_7240_remove_pkb_common_dep-4b0ad9d-93780-SNAPSHOT</commons.testing.version>
+        <hibernate-core.version>5.3.15.Final</hibernate-core.version>
     </properties>
 
     <modules>
@@ -61,7 +61,7 @@
         <module>datamigrator</module>
         <module>date-time</module>
         <module>error</module>
-        <module>infrastructure2</module>
+        <module>infrastructure</module>
         <module>spring-infrastructure</module>
         <module>testlogging</module>
         <module>testsupport</module>
@@ -221,6 +221,10 @@
                     <exclusion>
                         <groupId>com.fasterxml</groupId>
                         <artifactId>classmate</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.dom4j</groupId>
+                        <artifactId>dom4j</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>

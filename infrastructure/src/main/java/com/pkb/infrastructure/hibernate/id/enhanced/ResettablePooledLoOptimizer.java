@@ -9,6 +9,7 @@ import org.hibernate.id.enhanced.PooledLoOptimizer;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+
 import com.pkb.common.ClearableInternalState;
 
 /**
@@ -32,10 +33,12 @@ public class ResettablePooledLoOptimizer implements ClearableInternalState, Opti
      * @param returnClass The Java type of the values to be generated
      * @param incrementSize The increment size.
      */
+    @SuppressWarnings("rawtypes")
     public ResettablePooledLoOptimizer(Class returnClass, int incrementSize) {
         this.optimizer = newOptimizer(returnClass, incrementSize);
     }
 
+    @SuppressWarnings("rawtypes")
     private PooledLoOptimizer newOptimizer(Class returnClass, int incrementSize) {
         return new PooledLoOptimizer(returnClass, incrementSize);
     }
@@ -82,7 +85,7 @@ public class ResettablePooledLoOptimizer implements ClearableInternalState, Opti
      *
      * @return Value for property 'returnClass'.
      */
-    @SuppressWarnings({"UnusedDeclaration"})
+    @SuppressWarnings({"UnusedDeclaration", "rawtypes"})
     public final Class getReturnClass() {
         return optimizer.getReturnClass();
     }

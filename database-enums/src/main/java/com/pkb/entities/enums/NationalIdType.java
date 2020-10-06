@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * This enum describes the National ID types that PKB supports; each enum element includes
@@ -596,7 +597,7 @@ public enum NationalIdType implements Serializable {
         }
     };
 
-    private String name;
+    private String nationalIdName;
 
     /**
      * This is a list of ISO country codes for which the corresponding
@@ -645,13 +646,14 @@ public enum NationalIdType implements Serializable {
     NationalIdType(String name, String[] countryCodeArray, String hl7IdAuthority, String hl7IdType, String fhirIdentifierSystem) {
         List<String> countryCodes = new ArrayList<>();
         countryCodes.addAll(Arrays.asList(countryCodeArray));
-        this.name = name;
+        this.nationalIdName = name;
         this.countryCodes = countryCodes;
         this.hl7IdAuthority = hl7IdAuthority;
         this.hl7IdType = hl7IdType;
         this.fhirIdentifierSystem = fhirIdentifierSystem;
     }
 
+    @Nullable
     public static NationalIdType getNationalIdTypeFromCountryCode(String countryCode) {
         for (NationalIdType nit : values()) {
             if (nit.getCountryCodes().contains(countryCode)) {
@@ -661,6 +663,7 @@ public enum NationalIdType implements Serializable {
         return null;
     }
 
+    @Nullable
     public static NationalIdType getNationalIdTypeFromName(String name) {
         for (NationalIdType nit : values()) {
             if (nit.getName().equals(name)) {
@@ -670,6 +673,7 @@ public enum NationalIdType implements Serializable {
         return null;
     }
 
+    @Nullable
     public static NationalIdType getNationalIdTypeFromAuthorityAndType(String authority, String type) {
         for (NationalIdType nit : values()) {
             if (nit.getHl7IdAuthority().equals(authority) &&
@@ -680,6 +684,7 @@ public enum NationalIdType implements Serializable {
         return null;
     }
 
+    @Nullable
     public static NationalIdType getNationalIdTypeFromFhirIdentifierSystem(@NotNull String fhirIdentifierSystem) {
         for (NationalIdType nit : values()) {
             if (fhirIdentifierSystem.equals(nit.fhirIdentifierSystem)) {
@@ -690,7 +695,7 @@ public enum NationalIdType implements Serializable {
     }
 
     public String getName() {
-        return name;
+        return nationalIdName;
     }
 
     public List<String> getCountryCodes() {

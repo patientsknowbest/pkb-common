@@ -3,14 +3,14 @@ package com.pkb.infrastructure.hibernate.id.enhanced;
 import static com.github.karsaig.approvalcrest.MatcherAssert.assertThat;
 import static com.pkb.infrastructure.hibernate.id.enhanced.ResettablePooledLoOptimizer.OPTIMIZER_CANONICAL_NAME;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.hibernate.id.IdentifierGeneratorHelper;
 import org.hibernate.id.IntegralDataTypeHolder;
 import org.hibernate.id.enhanced.AccessCallback;
 import org.hibernate.id.enhanced.Optimizer;
 import org.hibernate.id.enhanced.OptimizerFactory;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ResettablePooledLoOptimizerTest {
 
@@ -87,11 +87,7 @@ public class ResettablePooledLoOptimizerTest {
         private IdentifierGeneratorHelper.BasicHolder value = new IdentifierGeneratorHelper.BasicHolder(Long.class);
         private long initialValue;
         private int increment;
-        private int timesCalled = 0;
-
-        private SourceMock(long initialValue) {
-            this(initialValue, 1 );
-        }
+        private int timesCalled;
 
         private SourceMock(long initialValue, int increment) {
             this(initialValue, increment, 0 );
