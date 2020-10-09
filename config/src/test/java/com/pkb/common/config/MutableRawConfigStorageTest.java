@@ -132,11 +132,11 @@ class MutableRawConfigStorageTest {
         assertEquals(false, underTest.getBoolean("notExistingKey", true));
     }
 
-    @DisplayName("getBoolean returns null value with override set to null")
+    @DisplayName("getBoolean throws exception with override set to null")
     @Test
     public void getBoolean7() {
         underTest.setValue("booleanKey", null);
-        assertEquals(null, underTest.getBoolean("booleanKey"));
+        assertThrows(sameJsonAsApproved(), () -> underTest.getBoolean("booleanKey"));
     }
 
     @DisplayName("getBoolean throw exception when original value is not Boolean")
@@ -146,11 +146,11 @@ class MutableRawConfigStorageTest {
         assertThrows(sameJsonAsApproved(), () -> underTest.getBoolean("stringKey"));
     }
 
-    @DisplayName("getBoolean returns original value when overridden value is not Boolean")
+    @DisplayName("getBoolean throws exception when overridden value is not Boolean")
     @Test
     public void getBoolean9() {
         underTest.setValue("booleanKey", "not a boolean");
-        assertEquals(true, underTest.getBoolean("booleanKey"));
+        assertThrows(sameJsonAsApproved(), () -> underTest.getBoolean("booleanKey"));
     }
 
     @DisplayName("getBoolean throw exception when overridden value and original value are not Boolean values")
@@ -241,11 +241,11 @@ class MutableRawConfigStorageTest {
         assertEquals(6, underTest.getInt("notExistingKey", 7));
     }
 
-    @DisplayName("getInt returns null value with override set to null")
+    @DisplayName("getInt throws exception with override set to null")
     @Test
     public void getInt7() {
         underTest.setValue("intKey", null);
-        assertEquals(null, underTest.getInt("intKey"));
+        assertThrows(sameJsonAsApproved(), () -> underTest.getInt("intKey"));
     }
 
     @DisplayName("getInt throw exception when original value is not Integer")
@@ -255,11 +255,11 @@ class MutableRawConfigStorageTest {
         assertThrows(sameJsonAsApproved(), () -> underTest.getInt("stringKey"));
     }
 
-    @DisplayName("getInt returns original value when overridden value is not Integer")
+    @DisplayName("getInt throws exception when overridden value is not Integer")
     @Test
     public void getInt9() {
         underTest.setValue("intKey", "not an integer");
-        assertEquals(2, underTest.getInt("intKey"));
+        assertThrows(sameJsonAsApproved(), () -> underTest.getInt("intKey"));
     }
 
     @DisplayName("getInt throw exception when overridden value and original value are not Integers values")

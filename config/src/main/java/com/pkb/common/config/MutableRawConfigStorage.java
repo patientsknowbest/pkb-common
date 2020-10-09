@@ -4,14 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import io.vavr.control.Either;
-
-public final class MutableRawConfigStorage extends AbstractBaseConfigStorage {
+public final class MutableRawConfigStorage extends AbstractBaseConfigStorage implements MutableConfigStorage {
 
     private final Map<String, String> overrideMap = new HashMap<>();
-    private final ImmutableRawConfigStorage configStorage;
+    private final ImmutableConfigStorage configStorage;
 
-    MutableRawConfigStorage(ImmutableRawConfigStorage configStorage) {
+    MutableRawConfigStorage(ImmutableConfigStorage configStorage) {
         this.configStorage = configStorage;
     }
 
@@ -23,11 +21,6 @@ public final class MutableRawConfigStorage extends AbstractBaseConfigStorage {
     @Override
     public String getString(String key, String defaultValue) {
         return getOverriddenOrOriginalValue(key, () -> configStorage.getString(key, defaultValue));
-    }
-
-    @Override
-    public boolean isMutableConfigEnabled() {
-        return true;
     }
 
     @Override
@@ -53,7 +46,7 @@ public final class MutableRawConfigStorage extends AbstractBaseConfigStorage {
     }
 
     @Override
-    public ConfigStorage getImmutableConfig() {
+    public ImmutableConfigStorage getImmutableConfig() {
         return configStorage;
     }
 
@@ -62,17 +55,5 @@ public final class MutableRawConfigStorage extends AbstractBaseConfigStorage {
             return overrideMap.get(key);
         }
         return originalSupplier.get();
-    }
-
-    @Override
-    protected <P> Either<ConfigurationException, P> readValue(String key, Class<P> expectedType, Parser<P> parser) {
-        if (overrideMap.containsKey(key)) {
-            String value = overrideMap.get(key);
-            if(value == null) {
-                return Either.right(null);
-            }
-            return parseValue(key, overrideMap.get(key), expectedType, parser).orElse(() -> parseValue(key, configStorage.getString(key), expectedType, parser));
-        }
-        return parseValue(key, configStorage.getString(key), expectedType, parser);
     }
 }
