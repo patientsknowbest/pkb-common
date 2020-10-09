@@ -13,15 +13,15 @@ import io.vavr.control.Either;
 
 abstract class AbstractBaseConfigStorage implements ConfigStorage {
 
-    public static final String MUTABLE_CONFIG_KEY = "mutableConfig.enabled";
-
     protected interface Parser<P> {
         Optional<P> parse(String rawValue);
     }
 
-    protected abstract <P> Either<ConfigurationException, P> readValue(String key, Class<P> expectedType, ImmutableRawConfigStorage.Parser<P> parser);
+    private <P> Either<ConfigurationException, P> readValue(String key, Class<P> expectedType, Parser<P> parser) {
+        return parseValue(key, getString(key), expectedType, parser);
+    }
 
-    protected Optional<Boolean> parseBooleanLiteral(String str) {
+    private Optional<Boolean> parseBooleanLiteral(String str) {
         String normalizedRawString = str == null ? "" : str.trim().toLowerCase();
         if ("true".equals(normalizedRawString)) {
             return Optional.of(true);
@@ -31,7 +31,7 @@ abstract class AbstractBaseConfigStorage implements ConfigStorage {
         return Optional.empty();
     }
 
-    protected <N extends Number> AbstractBaseConfigStorage.Parser<N> createNumberParser(Function<String, N> wrappedParser) {
+    private <N extends Number> AbstractBaseConfigStorage.Parser<N> createNumberParser(Function<String, N> wrappedParser) {
         return str -> {
             try {
                 return Optional.of(wrappedParser.apply(str));
@@ -76,9 +76,9 @@ abstract class AbstractBaseConfigStorage implements ConfigStorage {
         return readValue(key, Long.class, createNumberParser(Long::parseLong)).getOrElse(defaultValue);
     }
 
-    protected <P> Either<ConfigurationException, P> parseValue(String key, String rawValue, Class<P> expectedType, Parser<P> parser) {
+    private <P> Either<ConfigurationException, P> parseValue(String key, String rawValue, Class<P> expectedType, Parser<P> parser) {
         return parser.parse(rawValue)
-                .map(p -> Either.<ConfigurationException, P>right(p))
+                .map((Function<P, Either<ConfigurationException, P>>) Either::right)
                 .orElseGet(() -> {
                     ConfigurationException exception;
                     if (rawValue == null) {

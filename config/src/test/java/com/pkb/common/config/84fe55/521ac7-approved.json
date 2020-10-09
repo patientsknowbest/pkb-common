@@ -1,0 +1,8 @@
+/*com.pkb.common.config.MutableRawConfigStorageTest.getBoolean7*/
+{
+  "0x1": {
+    "detailMessage": "missing configuration key: [booleanKey]",
+    "stackTrace": [],
+    "suppressedExceptions": []
+  }
+}
