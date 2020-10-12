@@ -63,6 +63,10 @@
             <groupId>com.github.karsaig</groupId>
             <artifactId>approvalcrest-junit-jupiter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
