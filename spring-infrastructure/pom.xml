@@ -54,6 +54,10 @@
             <groupId>com.pkb</groupId>
             <artifactId>rest-assured</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
     </dependencies>
 
 
