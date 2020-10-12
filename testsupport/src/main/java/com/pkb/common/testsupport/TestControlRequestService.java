@@ -1,10 +1,5 @@
 package com.pkb.common.testsupport;
 
-import org.apache.pulsar.client.api.Consumer;
-import org.apache.pulsar.client.api.Message;
-import org.apache.pulsar.client.api.MessageListener;
-import org.apache.pulsar.client.api.Producer;
-import org.apache.pulsar.client.api.PulsarClientException;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +17,7 @@ public class TestControlRequestService implements MessageListener<TestControlReq
     private final String serviceName;
     private final SetFixedTimestampService setFixedTimestampService;
     private final MoveTimeService moveTimeService;
-    private final PulsarNamespaceChangeService pulsarNamespaceChangeService;
+    private final NamespaceChangeService namespaceChangeService;
     private final InjectConfigValueService injectConfigValueService;
     private final ClearTestStatesService clearTestStatesService;
     private final LogTestNameService logTestNameService;
@@ -31,7 +26,7 @@ public class TestControlRequestService implements MessageListener<TestControlReq
     public TestControlRequestService(
             @NotNull Producer<TestControlResponse> testControlResponseProducer,
             @NotNull String serviceName,
-            @NotNull PulsarNamespaceChangeService pulsarNamespaceChangeService,
+            @NotNull NamespaceChangeService namespaceChangeService,
             @NotNull SetFixedTimestampService setFixedTimestampService,
             @NotNull MoveTimeService moveTimeService,
             @NotNull InjectConfigValueService injectConfigValueService,
@@ -40,7 +35,7 @@ public class TestControlRequestService implements MessageListener<TestControlReq
             @NotNull ToggleDetailedLoggingService toggleDetailedLoggingService) {
         this.testControlResponseProducer = testControlResponseProducer;
         this.serviceName = serviceName;
-        this.pulsarNamespaceChangeService = pulsarNamespaceChangeService;
+        this.namespaceChangeService = namespaceChangeService;
         this.setFixedTimestampService = setFixedTimestampService;
         this.moveTimeService = moveTimeService;
         this.injectConfigValueService = injectConfigValueService;
@@ -61,7 +56,7 @@ public class TestControlRequestService implements MessageListener<TestControlReq
                     .setService(serviceName);
             switch (messageType) {
                 case SET_NAMESPACE:
-                    response.setNamespaceChangeResponse(pulsarNamespaceChangeService.process(message.getValue().getNamespaceChangeRequest()));
+                    response.setNamespaceChangeResponse(namespaceChangeService.process(message.getValue().getNamespaceChangeRequest()));
                     break;
                 case SET_FIXED_TIMESTAMP:
                     response.setSetFixedTimestampResponse(setFixedTimestampService.process(message.getValue().getSetFixedTimestampRequest()));

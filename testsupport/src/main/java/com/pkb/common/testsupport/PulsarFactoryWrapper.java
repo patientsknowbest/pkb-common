@@ -1,13 +1,7 @@
 package com.pkb.common.testsupport;
 
 import com.pkb.common.util.FrameFilter;
-import com.pkb.pulsar.IPulsarFactory;
 import org.apache.avro.specific.SpecificRecord;
-import org.apache.pulsar.client.api.Consumer;
-import org.apache.pulsar.client.api.MessageListener;
-import org.apache.pulsar.client.api.Producer;
-import org.apache.pulsar.client.api.PulsarClient;
-import org.apache.pulsar.client.api.PulsarClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,11 +9,9 @@ public class PulsarFactoryWrapper {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(java.lang.invoke.MethodHandles.lookup().lookupClass());
 
-    private IPulsarFactory pulsarFactory;
     private PulsarClient pulsarClient;
 
-    public PulsarFactoryWrapper(IPulsarFactory pulsarFactory) {
-        this.pulsarFactory = pulsarFactory;
+    public PulsarFactoryWrapper( ) {
         try {
             pulsarClient = pulsarFactory.createClient();
         } catch (PulsarClientException e) {

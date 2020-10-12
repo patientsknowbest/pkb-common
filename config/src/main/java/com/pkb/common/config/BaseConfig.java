@@ -33,20 +33,16 @@ public interface BaseConfig {
         return getConfigStorage().getBoolean("fakedatetimeservice.enabled", false);
     }
 
-    default String getPulsarServiceURL() {
-        return getConfigStorage().getString("pulsarServiceURL", "pulsar://pulsar:6650");
+    default String getDefaultPubSubNamespace() {
+        return getConfigStorage().getString("defaultPubSubNamespce", "defaultNS");
     }
 
-    default String getPulsarDefaultNamespce() {
-        return getConfigStorage().getString("pulsarDefaultNamespce", "defaultNS");
+    default boolean isPubSubServiceRegistrationEnabled() {
+        return getConfigStorage().getBoolean("pubSubServiceRegistrationEnabled", false);
     }
 
-    default boolean isPulsarServiceRegistrationEnabled() {
-        return getConfigStorage().getBoolean("pulsarServiceRegistrationEnabled", false);
-    }
-
-    default boolean isPulsarTestSupportServicesEnabled() {
-        return getConfigStorage().getBoolean("pulsarTestSupportServicesEnabled", false);
+    default boolean isPubSubTestSupportServicesEnabled() {
+        return getConfigStorage().getBoolean("pubSubTestSupportServicesEnabled", false);
     }
 
     /**

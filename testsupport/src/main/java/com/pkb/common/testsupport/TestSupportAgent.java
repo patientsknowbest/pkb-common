@@ -1,24 +1,29 @@
 package com.pkb.common.testsupport;
 
+import com.google.api.core.ApiFuture;
+import com.google.cloud.pubsub.v1.AckReplyConsumer;
+import com.google.cloud.pubsub.v1.MessageReceiver;
+import com.google.cloud.pubsub.v1.Publisher;
+import com.google.cloud.pubsub.v1.Subscriber;
+import com.google.pubsub.v1.ProjectSubscriptionName;
+import com.google.pubsub.v1.PubsubMessage;
+import com.google.pubsub.v1.TopicName;
 import com.pkb.common.ClearableInternalState;
 import com.pkb.common.config.BaseConfig;
 import com.pkb.common.config.ConfigStorage;
 import com.pkb.common.datetime.DateTimeService;
 import com.pkb.common.testlogging.DetailLoggingProvider;
 import com.pkb.common.util.FrameFilter;
-import com.pkb.pulsar.IPulsarFactory;
 import com.pkb.pulsar.payload.Startup;
 import com.pkb.pulsar.payload.TestControlRequest;
 import com.pkb.pulsar.payload.TestControlResponse;
-import org.apache.pulsar.client.api.Consumer;
-import org.apache.pulsar.client.api.MessageListener;
-import org.apache.pulsar.client.api.Producer;
-import org.apache.pulsar.client.api.PulsarClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Instant;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import static com.pkb.pulsar.PulsarConstants.STARTUP;
 import static com.pkb.pulsar.PulsarConstants.TEST_CONTROL_REQUEST;
@@ -27,6 +32,8 @@ import static com.pkb.pulsar.PulsarConstants.TEST_CONTROL_RESPONSE;
 public class TestSupportAgent implements ITestSupportAgent {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(java.lang.invoke.MethodHandles.lookup().lookupClass());
+    private static final String PROJECT_ID = "develop-238811";
+    private static final String TOPIC_ID_STARTUP = "Startup";
 
     private final String serviceName;
     private final boolean registerStartup;
@@ -35,7 +42,7 @@ public class TestSupportAgent implements ITestSupportAgent {
     private final DateTimeService dateTimeService;
     private final ConfigStorage configStorage;
     private final BaseConfig baseConfig;
-    private Consumer<TestControlRequest> consumer;
+    private Subscriber subscriber;
     private final Set<ClearableInternalState> clearables;
     private final DetailLoggingProvider testLoggingService;
 
@@ -71,11 +78,21 @@ public class TestSupportAgent implements ITestSupportAgent {
         try {
             if (registerStartup) {
                 LOGGER.info("TestSupportAgent.registerStartup is enabled and starting");
-                Producer<Startup> startupProducer = pulsarFactoryWrapper.createTestControlProducer(STARTUP, Startup.class);
+
+                TopicName topicName = TopicName.of(PROJECT_ID, TOPIC_ID_STARTUP);
+
+                Publisher publisher = Publisher.newBuilder(topicName).build();
                 Startup message = Startup.newBuilder().setService(serviceName).build();
-                startupProducer.newMessage().value(message).send();
-                startupProducer.close();
-                LOGGER.info(String.format("TestSupportAgent.registerStartup %s startup message sent %s", serviceName, Instant.now()));
+                PubsubMessage pubsubMessage = PubsubMessage.parseFrom(message.toByteBuffer());
+                publisher.publish(pubsubMessage);
+
+                // Once published, returns a server-assigned message id (unique within the topic)
+                ApiFuture<String> messageIdFuture = publisher.publish(pubsubMessage);
+                String messageId = messageIdFuture.get();
+
+                publisher.shutdown();
+                publisher.awaitTermination(1, TimeUnit.MINUTES);
+                LOGGER.info(String.format("TestSupportAgent.registerStartup %s startup message sent message with id %s at %s", serviceName, messageId, Instant.now()));
             }
         } catch (Exception e) {
             LOGGER.error(String.format("%s registerStartup error", serviceName), FrameFilter.filter(e));
@@ -86,14 +103,32 @@ public class TestSupportAgent implements ITestSupportAgent {
     private void startListener() {
         LOGGER.info("TestSupportAgent.startListener");
         if (startListener) {
-            try {
-                LOGGER.info("TestSupportAgent.startListener is enabled and starting");
-                MessageListener<TestControlRequest> service = getTestControlRequestService();
+
+            MessageReceiver receiver =
+                    (PubsubMessage message, AckReplyConsumer consumer) -> {
+                        // Handle incoming message, then ack the received message.
+                        System.out.println("Id: " + message.getMessageId());
+                        System.out.println("Data: " + message.getData().toStringUtf8());
+                        consumer.ack();
+                    };
+
+            //try {
+            String projectId = "develop-238811";
+            String subscriptionId = TEST_CONTROL_REQUEST;
+            ProjectSubscriptionName subscriptionName =
+                    ProjectSubscriptionName.of(projectId, subscriptionId);
+
+            LOGGER.info("TestSupportAgent.startListener is enabled and starting");
+                subscriber = Subscriber.newBuilder(subscriptionName, receiver).build();
+                // Start the subscriber.
+                subscriber.startAsync().awaitRunning();
+                LOGGER.info("TestSupportAgent.startListener started and listening for messages on {}", subscriptionName);
+            //} catch (TimeoutException timeoutException) {
+            //    LOGGER.error(String.format("Stopping subscriber %s", serviceName), FrameFilter.filter(timeoutException));
+            //    subscriber.stopAsync();
+            //}
                 consumer = pulsarFactoryWrapper.createTestControlConsumer(TEST_CONTROL_REQUEST, serviceName, TestControlRequest.class, service);
-                LOGGER.info("TestSupportAgent.startListener started");
-            } catch (PulsarClientException e) {
-                LOGGER.error(String.format("Unable to startup %s", serviceName), FrameFilter.filter(e));
-            }
+
         }
     }
 
@@ -101,7 +136,7 @@ public class TestSupportAgent implements ITestSupportAgent {
         return new TestControlRequestService(
                 pulsarFactoryWrapper.createTestControlProducer(TEST_CONTROL_RESPONSE, TestControlResponse.class),
                 serviceName,
-                new PulsarNamespaceChangeService(this.pulsarFactoryWrapper),
+                new NamespaceChangeService(this.pulsarFactoryWrapper),
                 new SetFixedTimestampService(dateTimeService),
                 new MoveTimeService(dateTimeService),
                 new InjectConfigValueService(configStorage),
