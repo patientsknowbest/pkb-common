@@ -6,10 +6,14 @@ public final class ConfigStorageFactory {
     }
 
     public static ConfigStorage getConfigStorage() {
-        ImmutableRawConfigStorage immutableRawConfigStorage = ImmutableRawConfigStorage.createDefault();
-        if (immutableRawConfigStorage.isMutableConfigEnabled()) {
-            return new MutableRawConfigStorage(immutableRawConfigStorage);
+        return getConfigStorage(ImmutableRawConfigStorage.createDefault());
+    }
+
+
+    public static ConfigStorage getConfigStorage(ImmutableConfigStorage baseStorage) {
+        if (baseStorage.isMutableConfigEnabled()) {
+            return new MutableRawConfigStorage(baseStorage);
         }
-        return immutableRawConfigStorage;
+        return baseStorage;
     }
 }
