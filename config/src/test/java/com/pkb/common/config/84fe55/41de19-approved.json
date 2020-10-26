@@ -1,0 +1,8 @@
+/*com.pkb.common.config.MutableRawConfigStorageTest.getInt7*/
+{
+  "0x1": {
+    "detailMessage": "missing configuration key: [intKey]",
+    "stackTrace": [],
+    "suppressedExceptions": []
+  }
+}

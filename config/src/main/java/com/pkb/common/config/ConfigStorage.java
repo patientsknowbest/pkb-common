@@ -2,6 +2,8 @@ package com.pkb.common.config;
 
 public interface ConfigStorage {
 
+    String MUTABLE_CONFIG_KEY = "mutableConfig.enabled";
+
     Boolean getBoolean(String key);
 
     Boolean getBoolean(String key, Boolean defaultValue);
@@ -26,5 +28,5 @@ public interface ConfigStorage {
 
     void reset();
 
-    ConfigStorage getImmutableConfig();
+    ImmutableConfigStorage getImmutableConfig();
 }
