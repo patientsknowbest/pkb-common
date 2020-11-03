@@ -16,6 +16,13 @@
     </suppress>
     <suppress until="2020-12-01Z">
         <notes><![CDATA[
+   file name: pulsar-client-2.5.2.jar (shaded: org.eclipse.jetty:jetty-util:9.4.20.v20190813)
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.eclipse\.jetty/jetty\-util@.*$</packageUrl>
+        <cve>CVE-2020-27216</cve>
+    </suppress>
+    <suppress until="2020-12-01Z">
+        <notes><![CDATA[
    file name: protobuf-shaded-2.1.0-incubating.jar (shaded: com.google.protobuf:protobuf-java:2.4.1)
    ]]></notes>
         <sha1>d25481cf27aab12be6e7ba11eca5eea3f0bc4be2</sha1>
