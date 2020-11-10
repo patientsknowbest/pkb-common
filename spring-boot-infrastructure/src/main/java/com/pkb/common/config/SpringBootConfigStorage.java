@@ -68,7 +68,7 @@ public class SpringBootConfigStorage extends AbstractMutableConfigStorage {
     }
 
     @Override
-    public void setValueInternal(String key, String value) {
+    void setValueInternal(String key, String value) {
         if (isMutableConfigEnabled()) {
             overrides.put(key, value);
             refreshScope.refreshAll();
