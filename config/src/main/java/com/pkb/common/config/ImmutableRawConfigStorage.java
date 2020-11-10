@@ -1,12 +1,12 @@
 package com.pkb.common.config;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.unmodifiableMap;
 
-public final class ImmutableRawConfigStorage extends AbstractBaseConfigStorage implements ImmutableConfigStorage {
+import java.util.HashMap;
+import java.util.Map;
+
+public final class ImmutableRawConfigStorage extends AbstractBaseConfigStorage {
 
     public static final ImmutableRawConfigStorage EMPTY = new ImmutableRawConfigStorage(emptyMap());
 
@@ -34,6 +34,21 @@ public final class ImmutableRawConfigStorage extends AbstractBaseConfigStorage i
     @Override
     public String getString(String key, String defaultValue) {
         return storage.getOrDefault(key, defaultValue);
+    }
+
+    @Override
+    public void setValue(String key, String value) {
+        //No-op
+    }
+
+    @Override
+    public OverrideRemovalResult removeOverrideAtKey(String key) {
+        return OverrideRemovalResult.NO_OP_AS_CONFIG_IS_IMMUTABLE;
+    }
+
+    @Override
+    public void reset() {
+        //No-op
     }
 
 }
