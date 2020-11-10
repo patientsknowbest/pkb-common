@@ -4,7 +4,6 @@ import static com.github.karsaig.approvalcrest.jupiter.MatcherAssert.assertThat;
 import static com.github.karsaig.approvalcrest.jupiter.MatcherAssert.assertThrows;
 import static com.github.karsaig.approvalcrest.jupiter.matcher.Matchers.sameJsonAsApproved;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.HashMap;
@@ -197,9 +196,4 @@ public class ImmutableRawConfigStorageTest {
         assertEquals(OverrideRemovalResult.NO_OP_AS_CONFIG_IS_IMMUTABLE, removalResult);
     }
 
-    @Test
-    void getImmutableConfigReturnsSelf() {
-        ConfigStorage configStorage = underTest.getImmutableConfig();
-        assertThat(configStorage, sameInstance(underTest));
-    }
 }

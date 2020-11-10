@@ -12,11 +12,6 @@
     <artifactId>spring-infrastructure</artifactId>
     <name>pkb-common/spring-infrastructure</name>
 
-    <properties>
-        <spring.version>5.2.3.RELEASE</spring.version> <!-- copied from PHR -->
-        <commons.testing.version>20-789c720-63866</commons.testing.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -25,12 +20,10 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>com.pkb.pkbcommon</groupId>
             <artifactId>infrastructure</artifactId>
-            <version>${revision}${changelist}</version>
         </dependency>
         <dependency>
             <groupId>com.github.karsaig</groupId>
@@ -39,16 +32,10 @@
         <dependency>
             <groupId>com.pkb</groupId>
             <artifactId>commons-testing-base</artifactId>
-            <version>${commons.testing.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-params</artifactId>
         </dependency>
         <dependency>
             <groupId>com.pkb</groupId>

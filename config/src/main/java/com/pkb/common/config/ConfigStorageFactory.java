@@ -10,7 +10,7 @@ public final class ConfigStorageFactory {
     }
 
 
-    public static ConfigStorage getConfigStorage(ImmutableConfigStorage baseStorage) {
+    public static ConfigStorage getConfigStorage(ConfigStorage baseStorage) {
         if (baseStorage.isMutableConfigEnabled()) {
             return new MutableRawConfigStorage(baseStorage);
         }
