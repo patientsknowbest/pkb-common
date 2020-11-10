@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public final class MutableRawConfigStorage extends AbstractBaseConfigStorage implements MutableConfigStorage {
+public final class MutableRawConfigStorage extends AbstractMutableConfigStorage {
 
     private final Map<String, String> overrideMap = new HashMap<>();
-    private final ImmutableConfigStorage configStorage;
+    private final ConfigStorage configStorage;
 
-    MutableRawConfigStorage(ImmutableConfigStorage configStorage) {
+    MutableRawConfigStorage(ConfigStorage configStorage) {
         this.configStorage = configStorage;
     }
 
@@ -24,10 +24,8 @@ public final class MutableRawConfigStorage extends AbstractBaseConfigStorage imp
     }
 
     @Override
-    public void setValue(String key, String value) {
-        if (!MUTABLE_CONFIG_KEY.equals(key)) {
-            overrideMap.put(key, value);
-        }
+    void setValueInternal(String key, String value) {
+        overrideMap.put(key, value);
     }
 
     @Override
@@ -45,15 +43,15 @@ public final class MutableRawConfigStorage extends AbstractBaseConfigStorage imp
         overrideMap.clear();
     }
 
-    @Override
-    public ImmutableConfigStorage getImmutableConfig() {
-        return configStorage;
-    }
-
     private String getOverriddenOrOriginalValue(String key, Supplier<String> originalSupplier) {
         if (overrideMap.containsKey(key)) {
             return overrideMap.get(key);
         }
         return originalSupplier.get();
+    }
+
+    @Override
+    public boolean isMutableConfigEnabled() {
+        return true;
     }
 }

@@ -20,7 +20,9 @@ public interface ConfigStorage {
 
     Long getLong(String key, long defaultValue);
 
-    boolean isMutableConfigEnabled();
+    default boolean isMutableConfigEnabled() {
+        return getBoolean(MUTABLE_CONFIG_KEY, false);
+    }
 
     void setValue(String key, String value);
 
@@ -28,5 +30,4 @@ public interface ConfigStorage {
 
     void reset();
 
-    ImmutableConfigStorage getImmutableConfig();
 }

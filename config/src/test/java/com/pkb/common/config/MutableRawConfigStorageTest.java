@@ -4,7 +4,6 @@ import static com.github.karsaig.approvalcrest.jupiter.MatcherAssert.assertThat;
 import static com.github.karsaig.approvalcrest.jupiter.MatcherAssert.assertThrows;
 import static com.github.karsaig.approvalcrest.jupiter.matcher.Matchers.sameJsonAsApproved;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.HashMap;
@@ -195,11 +194,6 @@ class MutableRawConfigStorageTest {
         assertThat(underTest.isMutableConfigEnabled(), is(true));
     }
 
-    @Test
-    void getImmutableConfigReturnsOriginalImmutableConfig() {
-        ConfigStorage configStorage = underTest.getImmutableConfig();
-        assertThat(configStorage, sameInstance(immutableRawConfigStorage));
-    }
 
     @DisplayName("getInt returns original value without override")
     @Test
