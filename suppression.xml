@@ -259,4 +259,11 @@
       ]]></notes>
         <cve>CVE-2019-14900</cve>
     </suppress>
+    <suppress until="2020-12-01Z">
+        <notes><![CDATA[
+   file name: spring-security-crypto-5.3.3.RELEASE.jar
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework\.security/spring\-security\-crypto@.*$</packageUrl>
+        <cve>CVE-2018-1258</cve>
+    </suppress>
 </suppressions>
