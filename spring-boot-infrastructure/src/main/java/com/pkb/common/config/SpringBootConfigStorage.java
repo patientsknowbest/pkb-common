@@ -1,12 +1,14 @@
 package com.pkb.common.config;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import org.springframework.cloud.context.scope.refresh.RefreshScope;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MapPropertySource;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * This class provides an implementation of the PKB ConfigStorage interface that interacts
@@ -43,7 +45,7 @@ import java.util.Map;
  * infrastructure that may have been wired together according to their values - are dynamically updated.
  */
 @ParametersAreNonnullByDefault
-public class SpringBootConfigStorage extends AbstractBaseConfigStorage implements ImmutableConfigStorage {
+public class SpringBootConfigStorage extends AbstractMutableConfigStorage {
     private final ConfigurableEnvironment environment;
     private final RefreshScope refreshScope;
     private final Map<String, Object> overrides = new LinkedHashMap<>();
@@ -66,12 +68,7 @@ public class SpringBootConfigStorage extends AbstractBaseConfigStorage implement
     }
 
     @Override
-    public boolean isMutableConfigEnabled() {
-        return getBoolean("mutableConfig.enabled", false);
-    }
-
-    @Override
-    public void setValue(String key, String value) {
+    public void setValueInternal(String key, String value) {
         if (isMutableConfigEnabled()) {
             overrides.put(key, value);
             refreshScope.refreshAll();
@@ -99,4 +96,3 @@ public class SpringBootConfigStorage extends AbstractBaseConfigStorage implement
     }
 
 }
-

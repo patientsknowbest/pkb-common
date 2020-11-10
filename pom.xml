@@ -56,6 +56,7 @@
         <commons.testing.version>20-789c720-63866</commons.testing.version>
         <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
         <hibernate-core.version>5.3.15.Final</hibernate-core.version>
+        <spring.boot.version>2.3.5.RELEASE</spring.boot.version>
     </properties>
 
     <modules>
@@ -254,17 +255,22 @@
                 <artifactId>spring-context</artifactId>
                 <version>${spring.version}</version>
             </dependency>
-
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-test</artifactId>
-                <version>${spring.version}</version>
-                <scope>compile</scope>
-            </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-beans</artifactId>
                 <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-test</artifactId>
+                <version>${spring.boot.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${spring.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
