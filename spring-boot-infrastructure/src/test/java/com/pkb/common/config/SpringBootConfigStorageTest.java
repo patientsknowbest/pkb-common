@@ -34,11 +34,20 @@ class SpringBootConfigStorageTest {
     }
 
     @Test
-    void cantOverrideMutableConfigProperty() {
+    void cantOverrideMutableConfigPropertyWhenSetToFalse() {
         assertThat(underTest.isMutableConfigEnabled(), equalTo(false));
         underTest.setValue(ConfigStorage.MUTABLE_CONFIG_KEY, "true");
         assertThat(underTest.getBoolean(ConfigStorage.MUTABLE_CONFIG_KEY, false), equalTo(false));
         assertThat(underTest.isMutableConfigEnabled(), equalTo(false));
+    }
+
+    @Test
+    void cantOverrideMutableConfigPropertyWhenSetToTrue() {
+        lowPriorityProperties.put(ConfigStorage.MUTABLE_CONFIG_KEY, "true");
+        assertThat(underTest.isMutableConfigEnabled(), equalTo(true));
+        underTest.setValue(ConfigStorage.MUTABLE_CONFIG_KEY, "false");
+        assertThat(underTest.getBoolean(ConfigStorage.MUTABLE_CONFIG_KEY, false), equalTo(true));
+        assertThat(underTest.isMutableConfigEnabled(), equalTo(true));
     }
 
     @Test
