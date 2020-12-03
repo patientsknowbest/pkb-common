@@ -69,6 +69,7 @@
         <module>testlogging</module>
         <module>testsupport</module>
         <module>spring-boot-infrastructure</module>
+        <module>spring-boot-kotlin-infrastructure</module>
     </modules>
 
     <dependencyManagement>
