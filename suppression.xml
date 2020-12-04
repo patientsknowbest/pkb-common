@@ -1,249 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-      file name: pulsar-client-2.5.2.jar (shaded: com.typesafe.netty:netty-reactive-streams:2.0.0)
-      ]]></notes>
-        <sha1>d31003acb1fa57f83078aaf6224b463c1a69f077</sha1>
-        <cpe>cpe:/a:netty:netty</cpe>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: pulsar-client-2.5.2.jar (shaded: io.netty:netty-tcnative-boringssl-static:2.0.30.Final)
-   ]]></notes>
-        <sha1>ff550b80e833c94ed8e23726ec95d193363f098c</sha1>
-        <cpe>cpe:/a:netty:netty</cpe>
-    </suppress>
-    <suppress until="2020-12-01Z">
+    <suppress until="2021-01-01Z">
         <notes><![CDATA[
    file name: pulsar-client-2.5.2.jar (shaded: org.eclipse.jetty:jetty-util:9.4.20.v20190813)
    ]]></notes>
         <packageUrl regex="true">^pkg:maven/org\.eclipse\.jetty/jetty\-util@.*$</packageUrl>
-        <cve>CVE-2020-27216</cve>
+        <vulnerabilityName regex="true">CVE-2020-27216|CVE-2020-27218</vulnerabilityName>
     </suppress>
-    <suppress until="2020-12-01Z">
+    <suppress until="2021-01-01Z">
         <notes><![CDATA[
    file name: protobuf-shaded-2.1.0-incubating.jar (shaded: com.google.protobuf:protobuf-java:2.4.1)
    ]]></notes>
         <sha1>d25481cf27aab12be6e7ba11eca5eea3f0bc4be2</sha1>
         <vulnerabilityName>CVE-2015-5237</vulnerabilityName>
     </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
-        <vulnerabilityName>CVE-2019-14540</vulnerabilityName>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
-        <vulnerabilityName>CVE-2019-14892</vulnerabilityName>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
-        <vulnerabilityName>CVE-2019-14893</vulnerabilityName>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
-        <vulnerabilityName>CVE-2019-16335</vulnerabilityName>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson\-databind@.*$</packageUrl>
-        <vulnerabilityName>CVE-2019-16942</vulnerabilityName>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
-        <vulnerabilityName>CVE-2019-16942</vulnerabilityName>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
-        <vulnerabilityName>CVE-2019-16943</vulnerabilityName>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
-        <vulnerabilityName>CVE-2019-17267</vulnerabilityName>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
-        <vulnerabilityName>CVE-2019-17531</vulnerabilityName>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
-        <vulnerabilityName>CVE-2019-20330</vulnerabilityName>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
-        <vulnerabilityName>CVE-2020-10672</vulnerabilityName>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
-        <vulnerabilityName>CVE-2020-10673</vulnerabilityName>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
-        <vulnerabilityName>CVE-2020-10968</vulnerabilityName>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
-        <vulnerabilityName>CVE-2020-10969</vulnerabilityName>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
-        <vulnerabilityName>CVE-2020-11111</vulnerabilityName>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
-        <vulnerabilityName>CVE-2020-11112</vulnerabilityName>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
-        <vulnerabilityName>CVE-2020-11113</vulnerabilityName>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
-        <vulnerabilityName>CVE-2020-11619</vulnerabilityName>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
-        <vulnerabilityName>CVE-2020-11620</vulnerabilityName>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
-        <vulnerabilityName>CVE-2020-8840</vulnerabilityName>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
-        <vulnerabilityName>CVE-2020-9546</vulnerabilityName>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
-        <vulnerabilityName>CVE-2020-9547</vulnerabilityName>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
-        <vulnerabilityName>CVE-2020-9548</vulnerabilityName>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
-        <vulnerabilityName>CVE-2020-14060</vulnerabilityName>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
-        <vulnerabilityName>CVE-2020-14061</vulnerabilityName>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
-        <vulnerabilityName>CVE-2020-14062</vulnerabilityName>
-    </suppress>
-    <suppress until="2020-12-01Z">
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <sha1>68ddd453458765757fd3ffca9437f9a42d91003e</sha1>
-        <vulnerabilityName>CVE-2020-14195</vulnerabilityName>
-    </suppress>
-    <suppress>
-        <notes><![CDATA[
-   file name: jackson-core-2.9.9.jar
-   ]]></notes>
-        <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson\-core@.*$</packageUrl>
-        <cve>CVE-2020-24616</cve>
-    </suppress>
-    <suppress>
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson\-databind@.*$</packageUrl>
-        <cve>CVE-2020-24616</cve>
-    </suppress>
-    <suppress>
-        <notes><![CDATA[
-   file name: jackson-databind-2.9.9.3.jar
-   ]]></notes>
-        <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson\-databind@.*$</packageUrl>
-        <cve>CVE-2020-24750</cve>
-    </suppress>
-    <suppress>
-        <notes><![CDATA[
-   file name: jackson-annotations-2.9.0.jar
-   ]]></notes>
-        <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson\-annotations@.*$</packageUrl>
-        <cve>CVE-2020-24616</cve>
+    <suppress until="2021-01-01Z">
+        <notes>Jackson vulnerabilities</notes>
+        <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson.*$</packageUrl>
+        <vulnerabilityName regex="true">
+            CVE-2019-14540|CVE-2019-14892|CVE-2019-14893|CVE-2019-16335|CVE-2019-16942|CVE-2019-16942|CVE-2019-16943|CVE-2019-17267|CVE-2019-17531|CVE-2019-20330|CVE-2020-10672|CVE-2020-10673|CVE-2020-10968|CVE-2020-10969|CVE-2020-11111|CVE-2020-11112|CVE-2020-11113|CVE-2020-11619|CVE-2020-11620|CVE-2020-8840|CVE-2020-9546|CVE-2020-9547|CVE-2020-9548|CVE-2020-14060|CVE-2020-14061|CVE-2020-14062|CVE-2020-14195|CVE-2020-24616|CVE-2020-24750
+        </vulnerabilityName>
     </suppress>
     <suppress>
         <notes><![CDATA[
@@ -259,7 +35,7 @@
       ]]></notes>
         <cve>CVE-2019-14900</cve>
     </suppress>
-    <suppress until="2020-12-01Z">
+    <suppress until="2021-01-01Z">
         <notes><![CDATA[
    file name: spring-security-crypto-5.3.3.RELEASE.jar
    ]]></notes>
