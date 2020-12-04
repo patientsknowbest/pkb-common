@@ -13,6 +13,10 @@
     <artifactId>testsupport</artifactId>
     <name>pkb-common/testsupport</name>
 
+    <properties>
+        <camel.version>3.6.0</camel.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.pkb.pkbcommon</groupId>
@@ -35,6 +39,26 @@
             <groupId>com.pkb</groupId>
             <artifactId>pulsar</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-google-pubsub</artifactId>
+        </dependency>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-bom</artifactId>
+                <version>${camel.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 </project>

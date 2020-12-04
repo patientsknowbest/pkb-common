@@ -1,13 +1,14 @@
 package com.pkb.common.testsupport;
 
-import com.pkb.common.datetime.DateTimeService;
-import com.pkb.pulsar.payload.MoveTimeRequest;
-import com.pkb.pulsar.payload.MoveTimeResponse;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
+import com.pkb.common.datetime.DateTimeService;
+import com.pkb.pulsar.payload.MoveTimeRequest;
+import com.pkb.pulsar.payload.MoveTimeResponse;
 
 public class MoveTimeService {
 
@@ -23,7 +24,7 @@ public class MoveTimeService {
         LOGGER.info("MoveTimeService.process received message");
         long amount = message.getAmount();
         TemporalUnit unit = ChronoUnit.valueOf(message.getUnit());
-        LOGGER.info(String.format("MoveTimeService.process moving by {} {}", amount, unit));
+        LOGGER.info(String.format("MoveTimeService.process moving by %s %s", amount, unit));
         dateTimeService.moveTime(amount, unit);
         LOGGER.info("MoveTimeService.process done.");
         return MoveTimeResponse.newBuilder().setAmount(amount).setUnit(unit.toString()).build();
