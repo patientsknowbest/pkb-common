@@ -18,7 +18,7 @@
         <notes>Jackson vulnerabilities</notes>
         <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson.*$</packageUrl>
         <vulnerabilityName regex="true">
-            CVE-2019-14540|CVE-2019-14892|CVE-2019-14893|CVE-2019-16335|CVE-2019-16942|CVE-2019-16942|CVE-2019-16943|CVE-2019-17267|CVE-2019-17531|CVE-2019-20330|CVE-2020-10672|CVE-2020-10673|CVE-2020-10968|CVE-2020-10969|CVE-2020-11111|CVE-2020-11112|CVE-2020-11113|CVE-2020-11619|CVE-2020-11620|CVE-2020-8840|CVE-2020-9546|CVE-2020-9547|CVE-2020-9548|CVE-2020-14060|CVE-2020-14061|CVE-2020-14062|CVE-2020-14195|CVE-2020-24616|CVE-2020-24750
+            CVE-2019-14540|CVE-2019-14892|CVE-2019-14893|CVE-2019-16335|CVE-2019-16942|CVE-2019-16942|CVE-2019-16943|CVE-2019-17267|CVE-2019-17531|CVE-2019-20330|CVE-2020-10672|CVE-2020-10673|CVE-2020-10968|CVE-2020-10969|CVE-2020-11111|CVE-2020-11112|CVE-2020-11113|CVE-2020-11619|CVE-2020-11620|CVE-2020-8840|CVE-2020-9546|CVE-2020-9547|CVE-2020-9548|CVE-2020-14060|CVE-2020-14061|CVE-2020-14062|CVE-2020-14195|CVE-2020-24616|CVE-2020-24750|CVE-2020-25649
         </vulnerabilityName>
     </suppress>
     <suppress>
@@ -28,12 +28,17 @@
         <packageUrl regex="true">^pkg:maven/org\.yaml/snakeyaml@.*$</packageUrl>
         <cve>CVE-2017-18640</cve>
     </suppress>
+    <suppress until="2021-01-01Z">
+        <notes>Http client</notes>
+        <packageUrl regex="true">^pkg:maven/org.apache.httpcomponents/httpclient.*$</packageUrl>
+        <vulnerabilityName>CVE-2020-13956</vulnerabilityName>
+    </suppress>
     <!-- This is a wildfly provided dependency, so cannot be changed unless we upgrade our wf version-->
     <suppress until="2021-10-07">
         <notes><![CDATA[
       file name: hibernate-core-5.3.15.Final.jar
       ]]></notes>
-        <cve>CVE-2019-14900</cve>
+        <vulnerabilityName regex="true">CVE-2019-14900|CVE-2020-25638</vulnerabilityName>
     </suppress>
     <suppress until="2021-01-01Z">
         <notes><![CDATA[
