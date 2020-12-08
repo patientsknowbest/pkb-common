@@ -33,6 +33,10 @@ public interface BaseConfig {
         return getConfigStorage().getBoolean("fakedatetimeservice.enabled", false);
     }
 
+    default String getDefaultDocumentStore() {
+        return getConfigStorage().getString("defaultDocumentStore", "DOC");
+    }
+
     default String getPulsarServiceURL() {
         return getConfigStorage().getString("pulsarServiceURL", "pulsar://pulsar:6650");
     }
