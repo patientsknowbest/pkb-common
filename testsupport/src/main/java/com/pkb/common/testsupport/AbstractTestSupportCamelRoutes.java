@@ -1,26 +1,25 @@
 package com.pkb.common.testsupport;
 
-import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
-import org.apache.avro.specific.SpecificRecordBase;
-import org.apache.camel.Consume;
 import org.apache.camel.Endpoint;
 import org.apache.camel.EndpointInject;
-import org.apache.camel.Exchange;
-import org.apache.camel.Predicate;
-import org.apache.camel.Produce;
-import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.component.google.pubsub.GooglePubsubConstants;
+import org.apache.camel.component.google.pubsub.GooglePubsubComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.pkb.pulsar.payload.MoveTimeRequest;
-import com.pkb.pulsar.payload.MoveTimeResponse;
-import com.pkb.pulsar.payload.NamespaceChangeRequest;
+import com.pkb.common.ClearableInternalState;
+import com.pkb.common.config.BaseConfig;
+import com.pkb.common.config.ConfigStorage;
+import com.pkb.common.datetime.DateTimeService;
+import com.pkb.common.testlogging.DetailLoggingProvider;
+import com.pkb.pulsar.payload.MessageType;
 import com.pkb.pulsar.payload.NamespaceChangeResponse;
-import com.pkb.pulsar.payload.SetFixedTimestampRequest;
-import com.pkb.pulsar.payload.SetFixedTimestampResponse;
+import com.pkb.pulsar.payload.Startup;
+import com.pkb.pulsar.payload.TestControlRequest;
+import com.pkb.pulsar.payload.TestControlResponse;
 
 /**
  * An instance of this needs to be injected into the camel context (application), either manually or with the relevant
@@ -32,56 +31,80 @@ public abstract class AbstractTestSupportCamelRoutes extends RouteBuilder {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(java.lang.invoke.MethodHandles.lookup().lookupClass());
 
-    public static final String AVROCLASS_ATTRIBUTE = "avroclass";
-
-    //TODO there'll be a nicer way of doing this
-    private static final String EXPRESSION_TO_EXTRACT_AVRO_CLASS_USING_SIMPLE = "${headers[" + GooglePubsubConstants.ATTRIBUTES + "]get(" + AVROCLASS_ATTRIBUTE + ")}";
-
+    @SuppressWarnings("unused") //@EndpointInject, @Consume, @Produce aren't seen by intellij as entrypoints, you can configure it to but that's a project specific inspections file
     @EndpointInject(property = "subscriptionUri")
-    private Endpoint testSupportSubscription;
+    private Endpoint testControlRequestSubscription;
 
-    @EndpointInject("google-pubsub:pubsub-295918:testTopic")
-    private Endpoint testSupportTopic;
+    @SuppressWarnings("unused")
+    @EndpointInject("google-pubsub:pubsub-295918:startup")
+    private Endpoint startupTopic;
 
-    @Produce("direct:responses")
-    private ProducerTemplate avroResponse;
+    @SuppressWarnings("unused")
+    @EndpointInject("google-pubsub:pubsub-295918:testControlResponse")
+    private Endpoint testControlResponseTopic;
 
+    //temporary impl, will be replaced with a service once we create our first real message
     private String currentNamespace = "NOT YET SET";
 
-    @Consume("direct:ConsumeSetFixedTimestampRequest")
-    public void handleSetFixedTimestampRequest(SetFixedTimestampRequest avroMessage) {
-        SetFixedTimestampResponse response = getSetFixedTimestampService().process(avroMessage);
-        reply(response);
-    }
+    public TestControlResponse handleTestSupportRequest(TestControlRequest request) {
+        MessageType messageType = request.getMessageType();
+        LOGGER.info(String.format(getApplicationName() + ": handleRequest messageType %s", messageType));
+        TestControlResponse.Builder response = TestControlResponse.newBuilder()
+                .setMessageType(messageType)
+                .setService(getApplicationName());
 
-    @Consume("direct:ConsumeMoveTimeRequest")
-    public void handleSetFixedTimestampRequest(MoveTimeRequest avroMessage) {
-        MoveTimeResponse response = getMoveTimeService().process(avroMessage);
-        reply(response);
-    }
-
-    @Consume("direct:ConsumeNamespaceChangeRequest")
-    public void handleConsumeNamespaceChangeRequest(NamespaceChangeRequest avroMessage) {
-        this.currentNamespace = avroMessage.getNewNamespace();
-        NamespaceChangeResponse response = NamespaceChangeResponse.newBuilder().setNamespace(currentNamespace).build();
-        reply(response);
+        switch (messageType) {
+            case SET_NAMESPACE:
+                this.currentNamespace = request.getNamespaceChangeRequest().getNewNamespace();
+                response.setNamespaceChangeResponse(NamespaceChangeResponse.newBuilder().setNamespace(currentNamespace).build());
+                break;
+            case SET_FIXED_TIMESTAMP:
+                response.setSetFixedTimestampResponse(getSetFixedTimestampService().process(request.getSetFixedTimestampRequest()));
+                break;
+            case MOVE_TIME:
+                response.setMoveTimeResponse(getMoveTimeService().process(request.getMoveTimeRequest()));
+                break;
+            case INJECT_CONFIG_VALUE:
+                response.setInjectConfigResponse(getInjectConfigValueService().process(request.getInjectConfigRequest()));
+                break;
+            case CLEAR_TEST_STATES:
+                response.setClearTestStatesResponse(getClearTestStatesService().process(request.getClearTestStatesRequest()));
+                break;
+            case LOG_TEST_NAME:
+                response.setLogTestNameResponse(getLogTestNameService().process(request.getLogTestNameRequest()));
+                break;
+            case TOGGLE_DETAILED_LOGGING:
+                response.setToggleDetailedLoggingResponse(getToggleDetailedLoggingService().process(request.getToggleDetailedLoggingRequest()));
+                break;
+        }
+        LOGGER.info(String.format(getApplicationName() + ": finished handleRequest messageType %s", messageType));
+        return response.build();
     }
 
     /**
-     * each instance should have a different subscription, the application name would work well.
-     * @return
+     * @return A unique name for the application, used to build the subscription URI
      */
-    public abstract String getSubscriptionName();
+    public abstract String getApplicationName();
 
     /**
-     * The project should we point at an actual pubsub instance. This could just be "emulator".
-     * @return
+     * @return Should the application register itself with test control.
      */
-    public abstract String getProject();
+    public abstract boolean registerStartup();
 
-    public abstract SetFixedTimestampService getSetFixedTimestampService();
+    /**
+     * @return Should the application listen to test control messages.
+     */
+    public abstract boolean startListening();
 
-    public abstract MoveTimeService getMoveTimeService();
+    public abstract DateTimeService getDateTimeService();
+
+    public abstract ConfigStorage getConfigStorage();
+
+    public abstract Set<ClearableInternalState> getClearables();
+
+    public abstract DetailLoggingProvider getTestLoggingService();
+
+    public abstract BaseConfig getBaseConfig();
 
     /**
      * Basics: https://camel.apache.org/manual/latest/java-dsl.html
@@ -93,100 +116,66 @@ public abstract class AbstractTestSupportCamelRoutes extends RouteBuilder {
      *  - org.apache.camel.component.google.pubsub.consumer.CamelMessageReceiver#receiveMessage
      *
      * If the message fails with an exception, we won't ack it and we'll just retry indefinitely (until the test times out)
-     *
-     * If we receive a message for the wrong namespace, we just log it happened and ignore it
-     *
-     * Leaky abstractions:
-     *  - PubSub just deals with raw byte arrays, we put the avro class in a message attribute
-     *   which is available as a header under a pubsub specific key
      * @throws Exception
      */
     @Override
     public void configure() throws Exception {
-        //the main receiver for test support messages.
-        from(testSupportSubscription)
-            .threads(1) //even though we pull messages asynchronously (much faster to read ahead), we want to process them in order so just use one thread
-            .routeId("testSupportReceiver")
-            .to("log:receiving a message")
-            .toD("dataformat:avro:unmarshal?instanceClassName=" + EXPRESSION_TO_EXTRACT_AVRO_CLASS_USING_SIMPLE)
-            .choice()
-                .when(isAvroType(NamespaceChangeRequest.class))
-                    .to("direct:ConsumeNamespaceChangeRequest")
-                .otherwise()
-                    .choice()
-                        .when(correctNamespace())
-                            .choice()
-                                .when(isAvroType(SetFixedTimestampRequest.class))
-                                    .to("direct:ConsumeSetFixedTimestampRequest")
-                                .when(isAvroType(MoveTimeRequest.class))
-                                    .to("direct:ConsumeMoveTimeRequest")
-                                .otherwise()
-                                    .to("log: unexpected type")
-                            .endChoice()
-                        .otherwise()
-                            .to("log: skipping incorrect namespace"); //could throw exception instead
 
-        //dummy timer to send a message until we configure the test support agent
-        from("timer:10s?period=30000")
-            .routeId("dummyFixedTimestamp")
-            .setBody((exchange) -> SetFixedTimestampRequest.newBuilder().setTimestamp("2020-06-05T11:12:13Z").build())
-            .setHeader(GooglePubsubConstants.ATTRIBUTES, () -> Map.of("avroclass", SetFixedTimestampRequest.class.getCanonicalName(), "namespace", "newNamespace"))
-            .toD("dataformat:avro:marshal?instanceClassName=" + EXPRESSION_TO_EXTRACT_AVRO_CLASS_USING_SIMPLE)
-            .to("log:sending SetFixedTimestampRequest")
-            .to(testSupportTopic);
+        //configure the component - this eventually needs moving out as it should be shared across multiple routes
+        GooglePubsubComponent component = (GooglePubsubComponent) getContext().getComponent("google-pubsub");
+        component.setPublisherCacheTimeout(0);
+        if (getEmulatorEndpoint().isPresent()) {
+            component.setEndpoint(getEmulatorEndpoint().get());
+        }
 
-        //dummy timer to send a message until we configure the test support agent
-        from("timer:20s?period=20000")
-            .routeId("dummyMoveTime")
-            .setBody((exchange) -> MoveTimeRequest.newBuilder().setAmount(1).setUnit("MINUTES").build())
-            .setHeader(GooglePubsubConstants.ATTRIBUTES, () -> Map.of("avroclass",MoveTimeRequest.class.getCanonicalName(), "namespace", "newNamespace"))
-            .toD("dataformat:avro:marshal?instanceClassName=" + EXPRESSION_TO_EXTRACT_AVRO_CLASS_USING_SIMPLE)
-            .to("log:sending MoveTimeRequest")
-            .to(testSupportTopic);
+        //announce the app wants to receive test control messages
+        if (registerStartup()) {
+            from("timer:startup?repeatCount=1")
+                    .routeId("startupMessage")
+                    .setBody((exchange) -> Startup.newBuilder().setService(getApplicationName()).build())
+                    .marshal().avro(Startup.getClassSchema())
+                    .log(getApplicationName() + ": sending startup msg")
+                    .to(startupTopic);
+        }
 
-        //dummy timer to send a message until we configure the test support agent
-        from("timer:30s?period=20000&delay=30s")
-            .routeId("dummyChangeNamespace")
-            .setBody((exchange) -> NamespaceChangeRequest.newBuilder().setNewNamespace("newNamespace").build())
-            .setHeader(GooglePubsubConstants.ATTRIBUTES, () -> Map.of("avroclass",NamespaceChangeRequest.class.getCanonicalName(), "namespace", "irrelevant here, won't be checked"))
-            .toD("dataformat:avro:marshal?instanceClassName=" + EXPRESSION_TO_EXTRACT_AVRO_CLASS_USING_SIMPLE)
-            .to("log:sending NamespaceChangeRequest")
-            .to(testSupportTopic);
-
-        //the response channel, dummy until we configure the testsupportagent
-        from("direct:responses")
-            .to("log:Dummy response log");
+        if (startListening()) {
+            //requests in from test control
+            from(testControlRequestSubscription)
+                    .threads(1) //even though we pull messages asynchronously (much faster to read ahead), we want to process them in order so just use one thread
+                    .routeId("testSupportReceiver")
+                    .unmarshal().avro(TestControlRequest.getClassSchema())
+                    .log(getApplicationName() + ": receiving a ${mandatoryBodyAs(" + TestControlRequest.class.getCanonicalName() + ").getMessageType} request")
+                    .bean(this, "handleTestSupportRequest")
+                    .log(getApplicationName() + ": sending a ${mandatoryBodyAs(" + TestControlResponse.class.getCanonicalName() + ").getMessageType} response")
+                    .marshal().avro(TestControlResponse.getClassSchema())
+                    .to(testControlResponseTopic)
+                    .log(getApplicationName() + ": sent");
+        }
     }
 
-    private Predicate isAvroType(Class<?> avroRecordType) {
-        return exchange -> {
-            Object avroclass = extractMessageAttributes(exchange).get("avroclass");
-            return avroclass != null
-                    && avroclass.equals(avroRecordType.getCanonicalName());
-        };
-    }
-
-    private Predicate correctNamespace() {
-        return exchange -> {
-            Object requestedNamespace = extractMessageAttributes(exchange).get("namespace");
-            if (requestedNamespace == null || !requestedNamespace.equals(currentNamespace)) {
-                LOGGER.error("Incoming message {} has namespace {} but we're expecting {}", exchange.getIn().getBody(), requestedNamespace, currentNamespace);
-                return false;
-            }
-            return true;
-        };
-    }
-
-    @SuppressWarnings("unchecked")
-    private Map<String, String> extractMessageAttributes(Exchange exchange) {
-        return (Map<String, String>)exchange.getIn().getHeader(GooglePubsubConstants.ATTRIBUTES, Map.class);
-    }
+    private SetFixedTimestampService getSetFixedTimestampService() { return new SetFixedTimestampService(getDateTimeService()); }
+    private MoveTimeService getMoveTimeService() { return new MoveTimeService(getDateTimeService()); }
+    private InjectConfigValueService getInjectConfigValueService() { return new InjectConfigValueService(getConfigStorage());}
+    private ClearTestStatesService getClearTestStatesService() { return new ClearTestStatesService(getDateTimeService(), getConfigStorage(), getClearables());}
+    private LogTestNameService getLogTestNameService() { return new LogTestNameService(getBaseConfig());}
+    private ToggleDetailedLoggingService getToggleDetailedLoggingService() { return new ToggleDetailedLoggingService(getBaseConfig(), getTestLoggingService());}
 
     public String getSubscriptionUri() {
-        return String.format("google-pubsub:%s:%s?synchronousPull=false&maxMessagesPerPoll=1", getProject(), getSubscriptionName());
+        return String.format("google-pubsub:%s:testControlRequest-%s?synchronousPull=false&maxMessagesPerPoll=1", getProject(), getApplicationName());
     }
 
-    public void reply(SpecificRecordBase response) {
-        avroResponse.sendBody(response);
+    /**
+     * @return The URL of the emulator, or Optional.empty if we're running against an actual pubsub instance
+     */
+    public Optional<String> getEmulatorEndpoint() {
+        return Optional.of("pubsub:8085");
+    }
+
+    /**
+     * @return The project should we point at an actual pubsub instance, used as part of the endpoint URI. This could just be "emulator".
+     */
+    public String getProject()
+    {
+        return "emulator";
     }
 }
