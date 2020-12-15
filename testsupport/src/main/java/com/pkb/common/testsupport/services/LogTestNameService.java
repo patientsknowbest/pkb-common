@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.pkb.common.config.BaseConfig;
-import com.pkb.pulsar.payload.LogTestNameRequest;
-import com.pkb.pulsar.payload.LogTestNameResponse;
+import com.pkb.pubsub.testsupport.payload.LogTestNameRequest;
+import com.pkb.pubsub.testsupport.payload.LogTestNameResponse;
 
 public class LogTestNameService {
 

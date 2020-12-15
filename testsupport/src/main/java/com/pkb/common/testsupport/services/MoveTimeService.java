@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.pkb.common.datetime.DateTimeService;
-import com.pkb.pulsar.payload.MoveTimeRequest;
-import com.pkb.pulsar.payload.MoveTimeResponse;
+import com.pkb.pubsub.testsupport.payload.MoveTimeRequest;
+import com.pkb.pubsub.testsupport.payload.MoveTimeResponse;
 
 public class MoveTimeService {
 

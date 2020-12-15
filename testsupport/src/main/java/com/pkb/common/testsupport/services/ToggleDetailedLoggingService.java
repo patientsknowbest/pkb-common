@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 
 import com.pkb.common.config.BaseConfig;
 import com.pkb.common.testlogging.DetailLoggingProvider;
-import com.pkb.pulsar.payload.ToggleDetailedLoggingRequest;
-import com.pkb.pulsar.payload.ToggleDetailedLoggingResponse;
+import com.pkb.pubsub.testsupport.payload.ToggleDetailedLoggingRequest;
+import com.pkb.pubsub.testsupport.payload.ToggleDetailedLoggingResponse;
 
 public class ToggleDetailedLoggingService {
 

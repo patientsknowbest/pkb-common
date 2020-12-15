@@ -32,10 +32,6 @@
             <version>${revision}${changelist}</version>
         </dependency>
         <dependency>
-            <groupId>com.pkb</groupId>
-            <artifactId>pulsar</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-core</artifactId>
             <scope>provided</scope>
@@ -94,6 +90,10 @@
         <dependency>
             <groupId>com.github.karsaig</groupId>
             <artifactId>approvalcrest-junit-jupiter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro</artifactId>
         </dependency>
 
     </dependencies>

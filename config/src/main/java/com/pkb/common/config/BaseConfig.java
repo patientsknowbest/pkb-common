@@ -37,14 +37,6 @@ public interface BaseConfig {
         return getConfigStorage().getString("defaultDocumentStore", "DOC");
     }
 
-    default String getPulsarServiceURL() {
-        return getConfigStorage().getString("pulsarServiceURL", "pulsar://pulsar:6650");
-    }
-
-    default String getPulsarDefaultNamespce() {
-        return getConfigStorage().getString("pulsarDefaultNamespce", "defaultNS");
-    }
-
     default String getPubSubProjectName() {
         return getConfigStorage().getString("pubsub.projectname");
     }

@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 import com.pkb.common.ClearableInternalState;
 import com.pkb.common.config.ConfigStorage;
 import com.pkb.common.datetime.DateTimeService;
-import com.pkb.pulsar.payload.ClearTestStatesRequest;
-import com.pkb.pulsar.payload.ClearTestStatesResponse;
+import com.pkb.pubsub.testsupport.payload.ClearTestStatesRequest;
+import com.pkb.pubsub.testsupport.payload.ClearTestStatesResponse;
 
 public class ClearTestStatesService {
 
