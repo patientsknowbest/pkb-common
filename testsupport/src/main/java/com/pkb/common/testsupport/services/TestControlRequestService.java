@@ -1,4 +1,4 @@
-package com.pkb.common.testsupport;
+package com.pkb.common.testsupport.services;
 
 import org.apache.pulsar.client.api.Consumer;
 import org.apache.pulsar.client.api.Message;
@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.pkb.common.testsupport.PulsarNamespaceChangeService;
 import com.pkb.pulsar.payload.MessageType;
 import com.pkb.pulsar.payload.TestControlRequest;
 import com.pkb.pulsar.payload.TestControlResponse;

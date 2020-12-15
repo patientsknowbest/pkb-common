@@ -1,22 +1,23 @@
-package com.pkb.common.testsupport;
+package com.pkb.common.testsupport.services;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.pkb.common.config.BaseConfig;
 import com.pkb.pulsar.payload.LogTestNameRequest;
 import com.pkb.pulsar.payload.LogTestNameResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-class LogTestNameService {
+public class LogTestNameService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(java.lang.invoke.MethodHandles.lookup().lookupClass());
 
     private final BaseConfig config;
 
-    LogTestNameService(BaseConfig config) {
+    public LogTestNameService(BaseConfig config) {
         this.config = config;
     }
 
-    LogTestNameResponse process(LogTestNameRequest message) {
+    public LogTestNameResponse process(LogTestNameRequest message) {
         LOGGER.info("LogTestNameService.process message received");
         String testName = message.getTestName();
         boolean success = true;

@@ -1,4 +1,4 @@
-package com.pkb.common.testsupport;
+package com.pkb.common.testsupport.services;
 
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;

@@ -1,0 +1,8 @@
+/*com.pkb.common.testsupport.route.AbstractNamespaceAwareRouteBuilderTest.namespacedRoute_noNamespaceOnIncomingMessage_throwsException*/
+{
+  "0x1": {
+    "detailMessage": "Message received with invalid namespace, expected \u0027initialNamespace\u0027 but received \u0027no pubusub attributes\u0027",
+    "stackTrace": [],
+    "suppressedExceptions": []
+  }
+}
