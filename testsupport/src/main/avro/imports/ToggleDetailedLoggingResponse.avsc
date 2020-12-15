@@ -1,4 +1,4 @@
-{"namespace": "com.pkb.pulsar.payload",
+{"namespace": "com.pkb.pubsub.testsupport.payload",
   "type": "record",
   "name": "ToggleDetailedLoggingResponse",
   "fields": [

@@ -1,6 +1,6 @@
 // note other types used here need to be imported in the avro plugin in pom.xml
 {
-    "namespace": "com.pkb.pulsar.payload",
+    "namespace": "com.pkb.pubsub.testsupport.payload",
     "type": "record",
     "name": "TestControlRequest",
     "fields": [
