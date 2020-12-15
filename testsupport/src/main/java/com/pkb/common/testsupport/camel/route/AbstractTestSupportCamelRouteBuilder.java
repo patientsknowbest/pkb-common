@@ -8,11 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.pkb.common.testsupport.config.ITestControlServiceConfig;
-import com.pkb.pulsar.payload.MessageType;
-import com.pkb.pulsar.payload.NamespaceChangeResponse;
-import com.pkb.pulsar.payload.Startup;
-import com.pkb.pulsar.payload.TestControlRequest;
-import com.pkb.pulsar.payload.TestControlResponse;
+import com.pkb.pubsub.testsupport.payload.MessageType;
+import com.pkb.pubsub.testsupport.payload.NamespaceChangeResponse;
+import com.pkb.pubsub.testsupport.payload.Startup;
+import com.pkb.pubsub.testsupport.payload.TestControlRequest;
+import com.pkb.pubsub.testsupport.payload.TestControlResponse;
 
 /**
  * An instance of this needs to be injected into the camel context, either manually or with the relevant

@@ -6,8 +6,8 @@ import org.slf4j.LoggerFactory;
 import com.google.common.base.Strings;
 
 import com.pkb.common.datetime.DateTimeService;
-import com.pkb.pulsar.payload.SetFixedTimestampRequest;
-import com.pkb.pulsar.payload.SetFixedTimestampResponse;
+import com.pkb.pubsub.testsupport.payload.SetFixedTimestampRequest;
+import com.pkb.pubsub.testsupport.payload.SetFixedTimestampResponse;
 
 public class SetFixedTimestampService {
 
