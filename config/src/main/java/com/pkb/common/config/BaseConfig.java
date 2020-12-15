@@ -45,12 +45,20 @@ public interface BaseConfig {
         return getConfigStorage().getString("pulsarDefaultNamespce", "defaultNS");
     }
 
-    default boolean isPulsarServiceRegistrationEnabled() {
-        return getConfigStorage().getBoolean("pulsarServiceRegistrationEnabled", false);
+    default String getPubSubProjectName() {
+        return getConfigStorage().getString("pubsub.projectname");
     }
 
-    default boolean isPulsarTestSupportServicesEnabled() {
-        return getConfigStorage().getBoolean("pulsarTestSupportServicesEnabled", false);
+    default String getPubSubEmulatorEndpoint() {
+        return getConfigStorage().getString("pubsub.emulatorendpoint");
+    }
+
+    default boolean isPubSubApplicationRegistrationEnabled() {
+        return getConfigStorage().getBoolean("pubsub.applicationregistrationenabled", false);
+    }
+
+    default boolean isPubSubTestControlEnabled() {
+        return getConfigStorage().getBoolean("pubsub.testcontrolenabled", false);
     }
 
     /**
