@@ -38,6 +38,7 @@
         <version.apache-commons-io>2.6</version.apache-commons-io>
         <javax.javaee-api.version>8.0</javax.javaee-api.version>
         <avro.version>1.10.1</avro.version>
+        <camel.version>3.6.0</camel.version>
 
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.source.plugin.version>3.2.1</maven.source.plugin.version>
@@ -280,6 +281,13 @@
                 <artifactId>spring-test</artifactId>
                 <version>${spring.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-bom</artifactId>
+                <version>${camel.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
