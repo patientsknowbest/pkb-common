@@ -28,6 +28,7 @@ import com.pkb.common.testsupport.services.PubSubNamespaceService;
 
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
 @ExtendWith(MockitoExtension.class)
+// 9fdb9b
 class AbstractNamespaceAwareRouteBuilderTest extends ContextTestSupport {
 
     public static final String INITIAL_NAMESPACE = "initialNamespace";
@@ -41,6 +42,7 @@ class AbstractNamespaceAwareRouteBuilderTest extends ContextTestSupport {
     }
 
     @Test
+    // 67cf1f
     void namespacedRoute_noNamespaceOnIncomingMessage_throwsException(TestInfo info) throws Exception {
 
         MockEndpoint resultEndpoint = resolveMandatoryEndpoint("mock:resultNamespaced", MockEndpoint.class);
@@ -53,6 +55,7 @@ class AbstractNamespaceAwareRouteBuilderTest extends ContextTestSupport {
     }
 
     @Test
+    // e6ee57
     void namespacedRoute_differentNamespaceOnIncomingMessage_throwsException(TestInfo info) throws Exception {
 
         MockEndpoint resultEndpoint = resolveMandatoryEndpoint("mock:resultNamespaced", MockEndpoint.class);
