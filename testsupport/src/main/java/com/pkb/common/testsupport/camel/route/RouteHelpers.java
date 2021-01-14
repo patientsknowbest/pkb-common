@@ -10,8 +10,8 @@ public class RouteHelpers {
     public static final String NAMESPACE_HEADER_ATTRIBUTE = "namespace";
     public static final String GOOGLE_PUBSUB_COMPONENT_URI = "google-pubsub";
 
+    @SuppressWarnings("unchecked")
     public static Optional<Map<String, String>> maybeGetMessageAttributes(Message message) {
-        //noinspection unchecked
         return Optional.ofNullable((Map<String, String>) message.getHeader(GooglePubsubConstants.ATTRIBUTES, Map.class));
     }
 }
