@@ -132,7 +132,7 @@ public abstract class AbstractNamespaceAwareRouteBuilder extends RouteBuilder {
             if (fromUri.startsWith(getNamespaceComponentPrefix())) {
                 String messageNamespace = maybeGetMessageAttributes(exchange.getIn())
                         .map(attributes -> attributes.getOrDefault(NAMESPACE_HEADER_ATTRIBUTE, "missing"))
-                        .orElse("no pubusub attributes");
+                        .orElse("no pubsub attributes");
 
                 String currentNamespace = camelNamespaceService().getCurrentNamespace();
                 if (!currentNamespace.equals(messageNamespace)) {
