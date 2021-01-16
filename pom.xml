@@ -8,18 +8,40 @@
     <version>${revision}${changelist}</version>
     <packaging>pom</packaging>
 
-    <distributionManagement>
-        <repository>
-            <id>pkb-common</id>
-            <name>pkb-common Packages</name>
-            <url>https://maven.pkg.github.com/patientsknowbest/pkb-common</url>
-        </repository>
-        <snapshotRepository>
-            <id>pkb-common</id>
-            <name>pkb-common Packages</name>
-            <url>https://maven.pkg.github.com/patientsknowbest/pkb-common</url>
-        </snapshotRepository>
-    </distributionManagement>
+    <profiles>
+        <profile>
+            <id>ci</id>
+            <activation>
+                <property><name>ci-server</name><value>true</value></property>
+            </activation>
+            <distributionManagement>
+                <repository>
+                    <id>artifact-registry</id>
+                    <url>https://europe-west2-maven.pkg.dev/infra-240614/main</url>
+                </repository>
+                <snapshotRepository>
+                    <id>artifact-registry</id>
+                    <url>https://europe-west2-maven.pkg.dev/infra-240614/main</url>
+                </snapshotRepository>
+            </distributionManagement>
+        </profile>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <distributionManagement>
+                <repository>
+                    <id>artifact-registry</id>
+                    <url>artifactregistry://europe-west2-maven.pkg.dev/infra-240614/main</url>
+                </repository>
+                <snapshotRepository>
+                    <id>artifact-registry</id>
+                    <url>artifactregistry://europe-west2-maven.pkg.dev/infra-240614/main</url>
+                </snapshotRepository>
+            </distributionManagement>
+        </profile>
+    </profiles>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -49,11 +71,11 @@
         <changelist>-SNAPSHOT</changelist>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <javax.inject.version>1</javax.inject.version>
-        <phr-pulsar.version>12-a115018-86851</phr-pulsar.version>
-        <restassured.version>3.0.7-PKB</restassured.version>
+        <phr-pulsar.version>13-head-1053393-113280-SNAPSHOT</phr-pulsar.version>
+        <restassured.version>3.0.9-PKB</restassured.version>
 
         <spring.version>5.2.3.RELEASE</spring.version> <!-- copied from PHR -->
-        <commons.testing.version>20-789c720-63866</commons.testing.version>
+        <commons.testing.version>38-head-2c78a71-113284-SNAPSHOT</commons.testing.version>
         <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
         <hibernate-core.version>5.3.15.Final</hibernate-core.version>
         <spring.boot.version>2.3.5.RELEASE</spring.boot.version>
@@ -279,6 +301,13 @@
     </dependencyManagement>
 
     <build>
+        <extensions>
+            <extension>
+                <groupId>com.google.cloud.artifactregistry</groupId>
+                <artifactId>artifactregistry-maven-wagon</artifactId>
+                <version>2.1.1</version>
+            </extension>
+        </extensions>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
