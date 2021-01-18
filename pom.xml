@@ -71,11 +71,11 @@
         <changelist>-SNAPSHOT</changelist>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <javax.inject.version>1</javax.inject.version>
-        <phr-pulsar.version>13-head-1053393-113280-SNAPSHOT</phr-pulsar.version>
+        <phr-pulsar.version>13-7a28241-113580</phr-pulsar.version>
         <restassured.version>3.0.9-PKB</restassured.version>
 
         <spring.version>5.2.3.RELEASE</spring.version> <!-- copied from PHR -->
-        <commons.testing.version>38-head-4eade39-113408-SNAPSHOT</commons.testing.version>
+        <commons.testing.version>38-a45a3a1-113588</commons.testing.version>
         <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
         <hibernate-core.version>5.3.15.Final</hibernate-core.version>
         <spring.boot.version>2.3.5.RELEASE</spring.boot.version>
