@@ -75,7 +75,7 @@
         <restassured.version>3.0.9-PKB</restassured.version>
 
         <spring.version>5.2.3.RELEASE</spring.version> <!-- copied from PHR -->
-        <commons.testing.version>38-head-2c78a71-113284-SNAPSHOT</commons.testing.version>
+        <commons.testing.version>38-head-4eade39-113408-SNAPSHOT</commons.testing.version>
         <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
         <hibernate-core.version>5.3.15.Final</hibernate-core.version>
         <spring.boot.version>2.3.5.RELEASE</spring.boot.version>
