@@ -1,0 +1,7 @@
+{"namespace": "com.pkb.pubsub.testsupport.payload",
+  "type": "record",
+  "name": "SetFixedTimestampRequest",
+  "fields": [
+    {"name": "timestamp", "type": "string"}
+  ]
+}

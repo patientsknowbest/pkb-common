@@ -1,10 +1,11 @@
-package com.pkb.common.testsupport;
+package com.pkb.common.testsupport.services;
 
-import com.pkb.common.config.ConfigStorage;
-import com.pkb.pulsar.payload.InjectConfigRequest;
-import com.pkb.pulsar.payload.InjectConfigResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.pkb.common.config.ConfigStorage;
+import com.pkb.pubsub.testsupport.payload.InjectConfigRequest;
+import com.pkb.pubsub.testsupport.payload.InjectConfigResponse;
 
 public class InjectConfigValueService {
 
