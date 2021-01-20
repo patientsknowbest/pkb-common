@@ -1,0 +1,17 @@
+// note other types used here need to be imported in the avro plugin in pom.xml
+{
+    "namespace": "com.pkb.pubsub.testsupport.payload",
+    "type": "record",
+    "name": "TestControlResponse",
+    "fields": [
+        {"name": "messageType", "type": "MessageType"},
+        {"name": "service", "type": "string"},
+        {"name": "namespaceChangeResponse", "type": ["null", "NamespaceChangeResponse"], "default": null},
+        {"name": "setFixedTimestampResponse", "type": ["null", "SetFixedTimestampResponse"], "default": null},
+        {"name": "moveTimeResponse", "type": ["null", "MoveTimeResponse"], "default": null},
+        {"name": "injectConfigResponse", "type": ["null", "InjectConfigResponse"], "default": null},
+        {"name": "clearTestStatesResponse", "type": ["null", "ClearTestStatesResponse"], "default": null},
+        {"name": "logTestNameResponse", "type": ["null", "LogTestNameResponse"], "default": null},
+        {"name": "toggleDetailedLoggingResponse", "type": ["null", "ToggleDetailedLoggingResponse"], "default": null}
+    ]
+}

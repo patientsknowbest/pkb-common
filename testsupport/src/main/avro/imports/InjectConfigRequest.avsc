@@ -1,0 +1,8 @@
+{"namespace": "com.pkb.pubsub.testsupport.payload",
+  "type": "record",
+  "name": "InjectConfigRequest",
+  "fields": [
+    {"name": "key", "type": "string"},
+    {"name": "value", "type": ["null", "string"]}
+  ]
+}

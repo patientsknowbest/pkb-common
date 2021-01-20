@@ -37,20 +37,20 @@ public interface BaseConfig {
         return getConfigStorage().getString("defaultDocumentStore", "DOC");
     }
 
-    default String getPulsarServiceURL() {
-        return getConfigStorage().getString("pulsarServiceURL", "pulsar://pulsar:6650");
+    default String getPubSubProjectName() {
+        return getConfigStorage().getString("pubsub.projectname");
     }
 
-    default String getPulsarDefaultNamespce() {
-        return getConfigStorage().getString("pulsarDefaultNamespce", "defaultNS");
+    default String getPubSubEmulatorEndpoint() {
+        return getConfigStorage().getString("pubsub.emulatorendpoint");
     }
 
-    default boolean isPulsarServiceRegistrationEnabled() {
-        return getConfigStorage().getBoolean("pulsarServiceRegistrationEnabled", false);
+    default boolean isPubSubApplicationRegistrationEnabled() {
+        return getConfigStorage().getBoolean("pubsub.applicationregistrationenabled", false);
     }
 
-    default boolean isPulsarTestSupportServicesEnabled() {
-        return getConfigStorage().getBoolean("pulsarTestSupportServicesEnabled", false);
+    default boolean isPubSubTestControlEnabled() {
+        return getConfigStorage().getBoolean("pubsub.testcontrolenabled", false);
     }
 
     /**

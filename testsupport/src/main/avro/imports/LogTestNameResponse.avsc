@@ -1,0 +1,8 @@
+{"namespace": "com.pkb.pubsub.testsupport.payload",
+  "type": "record",
+  "name": "LogTestNameResponse",
+  "fields": [
+    {"name": "testName", "type": "string"},
+    {"name": "success", "type": "boolean"}
+  ]
+}

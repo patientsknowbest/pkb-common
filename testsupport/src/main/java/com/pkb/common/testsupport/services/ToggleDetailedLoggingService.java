@@ -1,24 +1,25 @@
-package com.pkb.common.testsupport;
+package com.pkb.common.testsupport.services;
 
-import com.pkb.common.config.BaseConfig;
-import com.pkb.common.testlogging.DetailLoggingProvider;
-import com.pkb.pulsar.payload.ToggleDetailedLoggingRequest;
-import com.pkb.pulsar.payload.ToggleDetailedLoggingResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class ToggleDetailedLoggingService {
+import com.pkb.common.config.BaseConfig;
+import com.pkb.common.testlogging.DetailLoggingProvider;
+import com.pkb.pubsub.testsupport.payload.ToggleDetailedLoggingRequest;
+import com.pkb.pubsub.testsupport.payload.ToggleDetailedLoggingResponse;
+
+public class ToggleDetailedLoggingService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(java.lang.invoke.MethodHandles.lookup().lookupClass());
     private final DetailLoggingProvider testLoggingService;
     private final BaseConfig config;
 
-    ToggleDetailedLoggingService(BaseConfig config, DetailLoggingProvider testLoggingService) {
+    public ToggleDetailedLoggingService(BaseConfig config, DetailLoggingProvider testLoggingService) {
         this.config = config;
         this.testLoggingService = testLoggingService;
     }
 
-    ToggleDetailedLoggingResponse process(ToggleDetailedLoggingRequest message) {
+    public ToggleDetailedLoggingResponse process(ToggleDetailedLoggingRequest message) {
         LOGGER.info("ToggleDetailedLoggingService.process message received");
         boolean success = true;
         if (config.isFakeDateTimeServiceEnabled()) {

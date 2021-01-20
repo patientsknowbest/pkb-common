@@ -1,16 +1,17 @@
-package com.pkb.common.testsupport;
+package com.pkb.common.testsupport.services;
+
+import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.pkb.common.ClearableInternalState;
 import com.pkb.common.config.ConfigStorage;
 import com.pkb.common.datetime.DateTimeService;
-import com.pkb.pulsar.payload.ClearTestStatesRequest;
-import com.pkb.pulsar.payload.ClearTestStatesResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.pkb.pubsub.testsupport.payload.ClearTestStatesRequest;
+import com.pkb.pubsub.testsupport.payload.ClearTestStatesResponse;
 
-import java.util.Set;
-
-class ClearTestStatesService {
+public class ClearTestStatesService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(java.lang.invoke.MethodHandles.lookup().lookupClass());
 
@@ -18,13 +19,13 @@ class ClearTestStatesService {
     private final ConfigStorage configStorage;
     private final Set<ClearableInternalState> clearables;
 
-    ClearTestStatesService(DateTimeService dateTimeService, ConfigStorage configStorage, Set<ClearableInternalState> clearables) {
+    public ClearTestStatesService(DateTimeService dateTimeService, ConfigStorage configStorage, Set<ClearableInternalState> clearables) {
         this.dateTimeService = dateTimeService;
         this.configStorage = configStorage;
         this.clearables = clearables;
     }
 
-    ClearTestStatesResponse process(ClearTestStatesRequest message) {
+    public ClearTestStatesResponse process(ClearTestStatesRequest message) {
         LOGGER.info("ClearTestStatesService.process message received");
 
         boolean clearFixedTimestamp = message.getClearFixedTimestamp();
