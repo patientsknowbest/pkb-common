@@ -1,17 +1,21 @@
 package com.pkb.common.config;
 
+import io.vavr.control.Either;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Optional;
+import java.util.function.Function;
+
 import static io.vavr.API.$;
 import static io.vavr.API.Case;
 import static io.vavr.API.Match;
 import static io.vavr.Predicates.instanceOf;
 import static java.util.function.Function.identity;
 
-import java.util.Optional;
-import java.util.function.Function;
-
-import io.vavr.control.Either;
-
 abstract class AbstractBaseConfigStorage implements ConfigStorage {
+
+    protected static final Logger LOGGER = LoggerFactory.getLogger(java.lang.invoke.MethodHandles.lookup().lookupClass());
 
     protected interface Parser<P> {
         Optional<P> parse(String rawValue);
@@ -36,6 +40,7 @@ abstract class AbstractBaseConfigStorage implements ConfigStorage {
             try {
                 return Optional.of(wrappedParser.apply(str));
             } catch (NumberFormatException e) {
+                LOGGER.error("Bad config property value [{}] was supposed to be  a number but wasn't parseable", str, e);
                 return Optional.empty();
             }
         };
