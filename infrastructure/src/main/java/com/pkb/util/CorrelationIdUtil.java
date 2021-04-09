@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.pkb.util.Constants.NHS_LOGIN_CORRELATION_ID;
+
 import static java.util.UUID.randomUUID;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
@@ -20,6 +20,8 @@ public class CorrelationIdUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(java.lang.invoke.MethodHandles.lookup().lookupClass());
     private static final String CORRELATION_ID = "correlationId";
+
+    public static final String NHS_LOGIN_CORRELATION_ID = "nhs.login.correlation.id";
 
     public @Nullable UUID get() {
         return maybeGet().orElse(null);
