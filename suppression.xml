@@ -56,7 +56,7 @@
     </suppress>
     <suppress until="2021-10-01Z">
         <notes><![CDATA[ grpc-netty-shaded-1.30.2.jar/]]></notes>
-        <vulnerabilityName regex="true">CVE-2021-21290</vulnerabilityName>
+        <vulnerabilityName regex="true">CVE-2021-21290|CVE-2021-21295|CVE-2021-21409</vulnerabilityName>
     </suppress>
     <suppress until="2021-10-01Z">
         <notes><![CDATA[  kotlin-stdlib-1.4.20.jar/]]></notes>
