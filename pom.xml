@@ -66,7 +66,7 @@
         <maven.source.plugin.version>3.2.1</maven.source.plugin.version>
         <maven.flatten.plugin.version>1.2.1</maven.flatten.plugin.version>
         <maven.surefire.plugin.version>3.0.0-M4</maven.surefire.plugin.version>
-        <owasp-dependency-check.version>5.3.2</owasp-dependency-check.version>
+        <owasp-dependency-check.version>6.1.5</owasp-dependency-check.version>
         <pitest.version>1.5.0</pitest.version>
 
         <revision>0.0.0</revision>
@@ -354,6 +354,8 @@
                         <exclude>org.springframework</exclude>
                     </excludes>
                     <suppressionFile>suppression.xml</suppressionFile>
+                    <cveUrlModified>https://freedumbytes.gitlab.io/setup/nist-nvd-mirror/nvdcve-1.1-modified.json.gz</cveUrlModified>
+                    <cveUrlBase>https://freedumbytes.gitlab.io/setup/nist-nvd-mirror/nvdcve-1.1-%d.json.gz</cveUrlBase>
                 </configuration>
             </plugin>
             <plugin>
