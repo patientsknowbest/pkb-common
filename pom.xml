@@ -61,6 +61,7 @@
         <javax.javaee-api.version>8.0</javax.javaee-api.version>
         <avro.version>1.10.1</avro.version>
         <camel.version>3.6.0</camel.version>
+        <logback.version>1.2.3</logback.version>
 
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.source.plugin.version>3.2.1</maven.source.plugin.version>
@@ -140,11 +141,6 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
             <dependency>
@@ -314,7 +310,7 @@
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
-                <version>1.2.3</version>
+                <version>${logback.version}</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
