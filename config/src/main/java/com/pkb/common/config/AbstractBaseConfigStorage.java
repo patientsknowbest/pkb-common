@@ -26,7 +26,10 @@ abstract class AbstractBaseConfigStorage implements ConfigStorage {
     }
 
     private Optional<Boolean> parseBooleanLiteral(String str) {
-        String normalizedRawString = str == null ? "" : str.trim().toLowerCase();
+        if (str == null) {
+            return Optional.empty();
+        }
+        String normalizedRawString = str.trim().toLowerCase();
         if ("true".equals(normalizedRawString)) {
             return Optional.of(true);
         } else if ("false".equals(normalizedRawString)) {
@@ -38,6 +41,9 @@ abstract class AbstractBaseConfigStorage implements ConfigStorage {
     private <N extends Number> AbstractBaseConfigStorage.Parser<N> createNumberParser(Function<String, N> wrappedParser) {
         return str -> {
             try {
+                if (str == null) {
+                    return Optional.empty();
+                }
                 return Optional.of(wrappedParser.apply(str));
             } catch (NumberFormatException e) {
                 LOGGER.error("Bad config property value [{}] was supposed to be  a number but wasn't parseable", str, e);
