@@ -1,12 +1,7 @@
 package com.pkb.common.testsupport.camel.route;
 
-import static com.pkb.common.testsupport.camel.route.RouteHelpers.GOOGLE_PUBSUB_COMPONENT_URI;
-import static com.pkb.common.testsupport.camel.route.RouteHelpers.NAMESPACE_HEADER_ATTRIBUTE;
-import static com.pkb.common.testsupport.camel.route.RouteHelpers.maybeGetMessageAttributes;
-
-import java.util.HashMap;
-import java.util.Map;
-
+import com.pkb.common.testsupport.camel.InvalidNamespaceException;
+import com.pkb.common.testsupport.services.PubSubNamespaceService;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
@@ -19,8 +14,12 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.pkb.common.testsupport.camel.InvalidNamespaceException;
-import com.pkb.common.testsupport.services.PubSubNamespaceService;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.pkb.common.testsupport.camel.route.RouteHelpers.GOOGLE_PUBSUB_COMPONENT_URI;
+import static com.pkb.common.testsupport.camel.route.RouteHelpers.NAMESPACE_HEADER_ATTRIBUTE;
+import static com.pkb.common.testsupport.camel.route.RouteHelpers.maybeGetMessageAttributes;
 
 /**
  * Allows us to more easily create routes that handle test namespacing
@@ -64,10 +63,10 @@ public abstract class AbstractNamespaceAwareRouteBuilder extends RouteBuilder {
             Message message = exchange.getMessage();
             String tempEndpointProperty = (String) exchange.getProperties().computeIfAbsent(NAMESPACE_EXCHANGE_PROPERTY,
                     (k) -> camelNamespaceService().getCurrentNamespace());
-
             Map<String, String> attributes = maybeGetMessageAttributes(message).orElse(new HashMap<>());
-            attributes.putIfAbsent(NAMESPACE_HEADER_ATTRIBUTE, tempEndpointProperty);
-            message.setHeader(GooglePubsubConstants.ATTRIBUTES, attributes);
+            message.setHeader(GooglePubsubConstants.ATTRIBUTES, io.vavr.collection.HashMap.ofAll(attributes)
+                    .put(NAMESPACE_HEADER_ATTRIBUTE, tempEndpointProperty, (current, ignored) -> current)
+                    .toJavaMap());
         };
     }
 
