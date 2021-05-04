@@ -34,6 +34,10 @@ public abstract class AbstractTestSupportCamelRouteBuilder extends RouteBuilder 
     @EndpointInject(property = "testControlResponseTopicUri")
     private Endpoint testControlResponseTopic;
 
+    @EndpointInject(property = "surveyEventTopicUri")
+    private Endpoint surveyEventTopic;
+
+
     /**
      * Encapsulates the app-specific config required for these routes
      */
@@ -52,6 +56,10 @@ public abstract class AbstractTestSupportCamelRouteBuilder extends RouteBuilder 
 
     public String getTestControlResponseTopicUri() {
         return String.format("google-pubsub:%s:testControlResponse", config().getProject());
+    }
+
+    public String getSurveyEventTopicUri() {
+        return String.format("google-pubsub:%s:surveyEventTopic", config().getProject());
     }
 
     /**
@@ -90,7 +98,17 @@ public abstract class AbstractTestSupportCamelRouteBuilder extends RouteBuilder 
                     .to(testControlResponseTopic)
                     .log(config().getApplicationName() + ": sent");
         }
+
+        from("direct:surveyEventTopic")
+                .routeId("survey-event-topic route")
+                .setBody((exchange) -> Startup.newBuilder().setService("Test survey-event-topic service").build())
+                .marshal().avro(Startup.getClassSchema())
+                .log(config().getApplicationName() + ":survey-event-topic log")
+                .to(surveyEventTopic);
     }
+
+
+
 
     public TestControlResponse handleTestSupportRequest(TestControlRequest request) {
         MessageType messageType = request.getMessageType();
