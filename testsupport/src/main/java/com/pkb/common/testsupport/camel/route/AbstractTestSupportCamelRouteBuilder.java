@@ -100,10 +100,6 @@ public abstract class AbstractTestSupportCamelRouteBuilder extends RouteBuilder 
         }
 
         from("direct:surveyEventTopic")
-                .routeId("survey-event-topic route")
-                .setBody((exchange) -> Startup.newBuilder().setService("Test survey-event-topic service").build())
-                .marshal().avro(Startup.getClassSchema())
-                .log(config().getApplicationName() + ":survey-event-topic log")
                 .to(surveyEventTopic);
     }
 
