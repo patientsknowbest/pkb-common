@@ -1,0 +1,11 @@
+{
+    "namespace": "com.pkb.pubsub.testsupport.payload",
+    "type": "record",
+    "name": "ConsultationCompletedMessage",
+    "fields": [
+        {"name": "patientId", "type": "int"},
+        {"name": "consultationId", "type": "int"},
+        {"name": "consultationResponseId", "type": "int"},
+        {"name": "consultationName", "type": "string"}
+    ]
+}
