@@ -3,7 +3,6 @@ package com.pkb.common.testsupport.camel.route;
 import org.apache.camel.Endpoint;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.component.google.pubsub.GooglePubsubComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +34,10 @@ public abstract class AbstractTestSupportCamelRouteBuilder extends RouteBuilder 
     @EndpointInject(property = "testControlResponseTopicUri")
     private Endpoint testControlResponseTopic;
 
+    @EndpointInject(property = "surveyEventTopicUri")
+    private Endpoint surveyEventTopic;
+
+
     /**
      * Encapsulates the app-specific config required for these routes
      */
@@ -55,6 +58,10 @@ public abstract class AbstractTestSupportCamelRouteBuilder extends RouteBuilder 
         return String.format("google-pubsub:%s:testControlResponse", config().getProject());
     }
 
+    public String getSurveyEventTopicUri() {
+        return String.format("google-pubsub:%s:surveyEventTopic", config().getProject());
+    }
+
     /**
      * Basics: https://camel.apache.org/manual/latest/java-dsl.html
      * Makes use of the Simple Expression Language: https://camel.apache.org/components/latest/languages/simple-language.html#top
@@ -68,15 +75,6 @@ public abstract class AbstractTestSupportCamelRouteBuilder extends RouteBuilder 
      */
     @Override
     public void configure() throws Exception {
-
-        // configure the component - TODO (next ticket?): this needs to get moved out as it should be shared across all routes
-        // that use the pubsub component. Possibly by definining a CamelContextConfiguration @Bean (or equivalent)
-        GooglePubsubComponent component = (GooglePubsubComponent) getContext().getComponent("google-pubsub");
-        component.setPublisherCacheTimeout(0); //not necessary to expire
-        if (config().getEmulatorEndpoint().isPresent()) {
-            component.setEndpoint(config().getEmulatorEndpoint().get());
-        }
-
         //announce the app is ready to receive test control messages
         if (config().getShouldRegisterStartup()) {
             from("timer:startup?repeatCount=1")
@@ -100,7 +98,13 @@ public abstract class AbstractTestSupportCamelRouteBuilder extends RouteBuilder 
                     .to(testControlResponseTopic)
                     .log(config().getApplicationName() + ": sent");
         }
+
+        from("direct:surveyEventTopic")
+                .to(surveyEventTopic);
     }
+
+
+
 
     public TestControlResponse handleTestSupportRequest(TestControlRequest request) {
         MessageType messageType = request.getMessageType();
