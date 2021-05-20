@@ -34,8 +34,8 @@ public abstract class AbstractTestSupportCamelRouteBuilder extends RouteBuilder 
     @EndpointInject(property = "testControlResponseTopicUri")
     private Endpoint testControlResponseTopic;
 
-    @EndpointInject(property = "surveyEventTopicUri")
-    private Endpoint surveyEventTopic;
+    @EndpointInject(property = "consultationEventTopicUri")
+    private Endpoint consultationEventTopic;
 
 
     /**
@@ -58,8 +58,8 @@ public abstract class AbstractTestSupportCamelRouteBuilder extends RouteBuilder 
         return String.format("google-pubsub:%s:testControlResponse", config().getProject());
     }
 
-    public String getSurveyEventTopicUri() {
-        return String.format("google-pubsub:%s:surveyEventTopic", config().getProject());
+    public String getConsultationEventTopicUri() {
+        return String.format("google-pubsub:%s:consultationEventTopic", config().getProject());
     }
 
     /**
@@ -99,11 +99,9 @@ public abstract class AbstractTestSupportCamelRouteBuilder extends RouteBuilder 
                     .log(config().getApplicationName() + ": sent");
         }
 
-        from("direct:surveyEventTopic")
-                .to(surveyEventTopic);
+        from("direct:consultationEventTopic")
+                .to(consultationEventTopic);
     }
-
-
 
 
     public TestControlResponse handleTestSupportRequest(TestControlRequest request) {
