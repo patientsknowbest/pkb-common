@@ -67,7 +67,7 @@ public class CorrelationIdUtil {
     private Optional<UUID> getRequestIdFromNhsSession(HttpServletRequest request) {
         //WARNING: calling getSession without the falseParam can create a new session which can cause big problems across the app
         var existingSession =  request.getSession(false);
-        if(existingSession != null){
+        if (existingSession != null){
             String requestId = (String)existingSession.getAttribute(NHS_LOGIN_CORRELATION_ID);
             return parseRequestId(requestId);
         }
