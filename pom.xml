@@ -61,6 +61,7 @@
         <javax.javaee-api.version>8.0</javax.javaee-api.version>
         <avro.version>1.10.1</avro.version>
         <camel.version>3.6.0</camel.version>
+        <logback.version>1.2.3</logback.version>
 
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.source.plugin.version>3.2.1</maven.source.plugin.version>
@@ -305,6 +306,13 @@
                 <version>${camel.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <!-- required to have a concrete implementation of slf4j's MDC in unit tests -->
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
