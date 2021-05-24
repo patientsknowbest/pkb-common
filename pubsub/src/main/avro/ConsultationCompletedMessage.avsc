@@ -1,5 +1,5 @@
 {
-    "namespace": "com.pkb.pubsub.testsupport.payload",
+    "namespace": "com.pkb.common.pubsub.payload",
     "type": "record",
     "name": "ConsultationCompletedMessage",
     "fields": [
