@@ -4,6 +4,4 @@ public interface IGeneralPubsubConfig {
 
     String getProject();
 
-    String getApplicationName();
-
 }

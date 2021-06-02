@@ -3,11 +3,9 @@ package com.pkb.common.pubsub.config;
 public class GeneralPubsubConfig implements IGeneralPubsubConfig {
 
     private final String project;
-    private final String applicationName;
 
-    public GeneralPubsubConfig(String project, String applicationName) {
+    public GeneralPubsubConfig(String project) {
         this.project = project;
-        this.applicationName = applicationName;
     }
 
     @Override
@@ -15,8 +13,4 @@ public class GeneralPubsubConfig implements IGeneralPubsubConfig {
         return project;
     }
 
-    @Override
-    public String getApplicationName() {
-        return applicationName;
-    }
 }
