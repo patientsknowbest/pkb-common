@@ -13,7 +13,7 @@ public abstract class QuestionnaireCompletedRoute extends RouteBuilder {
     public abstract IGeneralPubsubConfig config();
 
     public String getConsultationEventTopicUri() {
-        return String.format("google-pubsub:%s:questionnaireEventTopicUri", config().getProject());
+        return String.format("google-pubsub:%s:questionnaireEventTopic", config().getProject());
     }
 
     @Override
