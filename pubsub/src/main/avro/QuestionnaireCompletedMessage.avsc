@@ -3,9 +3,9 @@
     "type": "record",
     "name": "QuestionnaireCompletedMessage",
     "fields": [
-        {"name": "patientId", "type": "int"},
-        {"name": "questionnaireId", "type": "int"},
-        {"name": "questionnaireResponseId", "type": "int"},
+        {"name": "patientId", "type": "string"},
+        {"name": "questionnaireId", "type": "string"},
+        {"name": "questionnaireResponseId", "type": "string"},
         {"name": "questionnaireName", "type": "string"}
     ]
 }
