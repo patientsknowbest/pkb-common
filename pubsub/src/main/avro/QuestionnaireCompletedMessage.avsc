@@ -6,6 +6,7 @@
         {"name": "patientId", "type": "string"},
         {"name": "questionnaireId", "type": "string"},
         {"name": "questionnaireResponseId", "type": "string"},
-        {"name": "questionnaireName", "type": "string"}
+        {"name": "questionnaireName", "type": "string"},
+        {"name": "sourceCluster", "type": "string"}
     ]
 }
