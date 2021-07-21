@@ -1,0 +1,12 @@
+{
+    "namespace": "com.pkb.common.pubsub.payload",
+    "type": "record",
+    "name": "QuestionnaireCompletedMessage",
+    "fields": [
+        {"name": "patientId", "type": "string"},
+        {"name": "questionnaireId", "type": "string"},
+        {"name": "questionnaireResponseId", "type": "string"},
+        {"name": "questionnaireName", "type": "string"},
+        {"name": "sourceCluster", "type": "string"}
+    ]
+}

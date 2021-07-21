@@ -94,6 +94,7 @@
         <module>testsupport</module>
         <module>spring-boot-infrastructure</module>
         <module>spring-boot-kotlin-infrastructure</module>
+        <module>pubsub</module>
     </modules>
 
     <dependencyManagement>
