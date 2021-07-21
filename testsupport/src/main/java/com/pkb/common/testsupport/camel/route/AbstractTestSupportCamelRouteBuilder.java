@@ -3,7 +3,6 @@ package com.pkb.common.testsupport.camel.route;
 import org.apache.camel.Endpoint;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.component.google.pubsub.GooglePubsubComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,15 +67,6 @@ public abstract class AbstractTestSupportCamelRouteBuilder extends RouteBuilder 
      */
     @Override
     public void configure() throws Exception {
-
-        // configure the component - TODO (next ticket?): this needs to get moved out as it should be shared across all routes
-        // that use the pubsub component. Possibly by definining a CamelContextConfiguration @Bean (or equivalent)
-        GooglePubsubComponent component = (GooglePubsubComponent) getContext().getComponent("google-pubsub");
-        component.setPublisherCacheTimeout(0); //not necessary to expire
-        if (config().getEmulatorEndpoint().isPresent()) {
-            component.setEndpoint(config().getEmulatorEndpoint().get());
-        }
-
         //announce the app is ready to receive test control messages
         if (config().getShouldRegisterStartup()) {
             from("timer:startup?repeatCount=1")
@@ -101,6 +91,7 @@ public abstract class AbstractTestSupportCamelRouteBuilder extends RouteBuilder 
                     .log(config().getApplicationName() + ": sent");
         }
     }
+
 
     public TestControlResponse handleTestSupportRequest(TestControlRequest request) {
         MessageType messageType = request.getMessageType();

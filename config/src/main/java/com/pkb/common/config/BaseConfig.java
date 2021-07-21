@@ -53,6 +53,10 @@ public interface BaseConfig {
         return getConfigStorage().getBoolean("pubsub.testcontrolenabled", false);
     }
 
+    default String getEnvironmentName() {
+        return getConfigStorage().getString("environment.name", "NOT_SET");
+    }
+
     /**
      * @param protocol defaults to http
      * @param host     valid value required
