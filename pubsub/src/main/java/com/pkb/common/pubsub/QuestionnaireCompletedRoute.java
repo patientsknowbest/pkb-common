@@ -28,7 +28,7 @@ public abstract class QuestionnaireCompletedRoute extends RouteBuilder {
     @Override
     public void configure() {
         from("direct:questionnaire_event_topic")
-                .to(questionnaireEventTopic);
+                .to(getQuestionnaireEventTopicUri());
     }
 
 
