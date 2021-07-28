@@ -24,7 +24,7 @@
    file name: spring-security-crypto-5.3.3.RELEASE.jar
    ]]></notes>
         <packageUrl regex="true">^pkg:maven/org\.springframework\.security/spring\-security\-crypto@.*$</packageUrl>
-        <vulnerabilityName regex="true">CVE-2018-1258|CVE-2021-22112</vulnerabilityName>
+        <vulnerabilityName regex="true">CVE-2018-1258|CVE-2021-22112|CVE-2021-22119</vulnerabilityName>
     </suppress>
     <suppress>
         <notes><![CDATA[
