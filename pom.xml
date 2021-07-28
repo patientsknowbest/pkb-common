@@ -52,6 +52,7 @@
         <micrometer.version>1.2.1</micrometer.version>
         <slf4j.version>1.7.30</slf4j.version>
         <vavr.version>0.10.2</vavr.version>
+
         <version.apache.commons.lang3>3.9</version.apache.commons.lang3>
         <version.jetbrain.annotations>19.0.0</version.jetbrain.annotations>
         <junit5.version>5.5.2</junit5.version>
@@ -79,9 +80,9 @@
 
         <spring.version>5.2.3.RELEASE</spring.version> <!-- copied from PHR -->
         <commons.testing.version>38-a45a3a1-113588</commons.testing.version>
-        <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
+        <spring-cloud.version>2020.0.3</spring-cloud.version>
         <hibernate-core.version>5.3.15.Final</hibernate-core.version>
-        <spring.boot.version>2.3.5.RELEASE</spring.boot.version>
+        <spring.boot.version>2.5.2</spring.boot.version>
     </properties>
 
     <modules>
