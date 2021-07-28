@@ -4,4 +4,6 @@ public interface IGeneralPubsubConfig {
 
     String getProject();
 
+    String getServiceAccountKey();
+
 }
