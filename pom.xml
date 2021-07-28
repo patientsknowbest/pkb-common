@@ -59,7 +59,8 @@
         <version.guava>28.2-jre</version.guava>
         <version.apache-commons-io>2.6</version.apache-commons-io>
         <javax.javaee-api.version>8.0</javax.javaee-api.version>
-        <avro.version>1.10.1</avro.version>
+        <avro.version>1.10.2</avro.version>
+        <commons.compress.version>1.21</commons.compress.version>
         <camel.version>3.6.0</camel.version>
         <logback.version>1.2.3</logback.version>
 
@@ -252,6 +253,13 @@
                 <groupId>org.apache.avro</groupId>
                 <artifactId>avro</artifactId>
                 <version>${avro.version}</version>
+            </dependency>
+            <dependency>
+                <!-- this can be removed once org.apache.avro bumps commons-compress version -->
+                <!-- latest org.apache.avro 1.10.2 version still includes commons-compress 1.20 (owasp is complaining) -->
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-compress</artifactId>
+                <version>${commons.compress.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
