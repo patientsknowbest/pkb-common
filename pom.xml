@@ -80,7 +80,7 @@
 
         <spring.version>5.2.3.RELEASE</spring.version> <!-- copied from PHR -->
         <commons.testing.version>38-a45a3a1-113588</commons.testing.version>
-        <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
+        <spring-cloud.version>2020.0.3</spring-cloud.version>
         <hibernate-core.version>5.3.15.Final</hibernate-core.version>
         <spring.boot.version>2.3.5.RELEASE</spring.boot.version>
     </properties>
