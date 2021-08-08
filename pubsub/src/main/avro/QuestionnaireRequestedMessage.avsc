@@ -9,6 +9,7 @@
         {"name": "requestorPersonId", "type": "string"},
         {"name": "requestingTeamId", "type": "string"},
         {"name": "patientId", "type": "string"},
-        {"name": "createdDate", "type": "string", "logicalType": "timestamp-millis" }
+        {"name": "createdDate", "type": "string", "logicalType": "timestamp-millis" },
+        {"name": "sourceCluster", "type": "string"}
     ]
 }
