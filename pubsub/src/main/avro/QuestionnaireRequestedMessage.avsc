@@ -5,10 +5,10 @@
     "fields": [
         {"name": "questionnaireRequestId", "type": "string"},
         {"name": "questionnaireId", "type": "string"},
-		{"name": "questionnaireName", "type": "string"},
+        {"name": "questionnaireName", "type": "string"},
         {"name": "requestorPersonId", "type": "string"},
         {"name": "requestingTeamId", "type": "string"},
         {"name": "patientId", "type": "string"},
-		{"name": "createdDate", "type": "string", "logicalType": "timestamp-millis" }
+        {"name": "createdDate", "type": "string", "logicalType": "timestamp-millis" }
     ]
 }
