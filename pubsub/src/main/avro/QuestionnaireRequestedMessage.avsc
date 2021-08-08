@@ -1,0 +1,14 @@
+{
+    "namespace": "com.pkb.common.pubsub.payload",
+    "type": "record",
+    "name": "QuestionnaireRequestedMessage",
+    "fields": [
+        {"name": "questionnaireRequestId", "type": "string"},
+        {"name": "questionnaireId", "type": "string"},
+		{"name": "questionnaireName", "type": "string"},
+        {"name": "requestorPersonId", "type": "string"},
+        {"name": "requestingTeamId", "type": "string"},
+        {"name": "patientId", "type": "string"},
+		{"name": "createdDate", "type": "string", "logicalType": "timestamp-millis" }
+    ]
+}
