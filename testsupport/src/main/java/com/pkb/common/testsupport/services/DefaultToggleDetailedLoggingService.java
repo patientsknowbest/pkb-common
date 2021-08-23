@@ -1,12 +1,10 @@
 package com.pkb.common.testsupport.services;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.pkb.common.config.BaseConfig;
 import com.pkb.common.testlogging.DetailLoggingProvider;
 import com.pkb.pubsub.testsupport.payload.ToggleDetailedLoggingRequest;
 import com.pkb.pubsub.testsupport.payload.ToggleDetailedLoggingResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DefaultToggleDetailedLoggingService implements ToggleDetailedLoggingService {
     private static final Logger LOGGER = LoggerFactory.getLogger(java.lang.invoke.MethodHandles.lookup().lookupClass());
