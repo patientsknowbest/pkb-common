@@ -43,6 +43,19 @@ class CorrelationIdUtilTest {
     }
 
     @Test
+    void testCorrelationIdIsCreatedIfAbsent() {
+        // GIVEN
+        UUID actual = randomUUID();
+        when(underTest.getAlternativeUUID()).thenReturn(actual);
+
+        // WHEN
+        UUID expected = underTest.getOrDefault();
+
+        // THEN
+        assertThat(expected, sameBeanAs(actual));
+    }
+
+    @Test
     void testCorrelationIdAsUUIDIsPutOnlyIfAbsentAndRead() {
         // GIVEN
         UUID actual = randomUUID();
