@@ -1,0 +1,9 @@
+{
+  "namespace": "com.pkb.common.pubsub.payload",
+  "type": "record",
+  "name": "PingMessage",
+  "fields": [
+    {"name": "content", "type": "string"}
+  ]
+
+}
