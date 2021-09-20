@@ -1,25 +1,20 @@
 package com.pkb.common.testsupport.config;
 
+import java.util.Optional;
+import java.util.Set;
+
 import com.pkb.common.ClearableInternalState;
+import com.pkb.common.config.BaseConfig;
 import com.pkb.common.config.ConfigStorage;
 import com.pkb.common.datetime.DateTimeService;
 import com.pkb.common.testlogging.DetailLoggingProvider;
 import com.pkb.common.testsupport.services.ClearTestStatesService;
-import com.pkb.common.testsupport.services.DefaultClearTestStatesService;
-import com.pkb.common.testsupport.services.DefaultInjectConfigValueService;
-import com.pkb.common.testsupport.services.DefaultLogTestNameService;
-import com.pkb.common.testsupport.services.DefaultMoveTimeService;
-import com.pkb.common.testsupport.services.DefaultSetFixedTimestampService;
-import com.pkb.common.testsupport.services.DefaultToggleDetailedLoggingService;
 import com.pkb.common.testsupport.services.InjectConfigValueService;
 import com.pkb.common.testsupport.services.LogTestNameService;
 import com.pkb.common.testsupport.services.MoveTimeService;
 import com.pkb.common.testsupport.services.PubSubNamespaceService;
 import com.pkb.common.testsupport.services.SetFixedTimestampService;
 import com.pkb.common.testsupport.services.ToggleDetailedLoggingService;
-
-import java.util.Optional;
-import java.util.Set;
 
 /**
  * Configuration required to handle test control requests
@@ -33,6 +28,7 @@ public class TestControlServiceConfig implements ITestControlServiceConfig {
     private final boolean shouldStartListener;
     private final DateTimeService dateTimeService;
     private final ConfigStorage configStorage;
+    private final BaseConfig baseConfig;
     private final Set<ClearableInternalState> clearables;
     private final DetailLoggingProvider testLoggingService;
     private final PubSubNamespaceService namespaceService;
@@ -54,6 +50,7 @@ public class TestControlServiceConfig implements ITestControlServiceConfig {
                                     ConfigStorage configStorage,
                                     Set<ClearableInternalState> clearables,
                                     DetailLoggingProvider testLoggingService,
+                                    BaseConfig baseConfig,
                                     PubSubNamespaceService namespaceService) {
 
         this.applicationName = applicationName;
@@ -65,14 +62,15 @@ public class TestControlServiceConfig implements ITestControlServiceConfig {
         this.configStorage = configStorage;
         this.clearables = clearables;
         this.testLoggingService = testLoggingService;
+        this.baseConfig = baseConfig;
         this.namespaceService = namespaceService;
 
-        this.setFixedTimestampService = new DefaultSetFixedTimestampService(dateTimeService);
-        this.moveTimeService = new DefaultMoveTimeService(dateTimeService);
-        this.injectConfigValueService = new DefaultInjectConfigValueService(configStorage);
-        this.clearTestStatesService = new DefaultClearTestStatesService(dateTimeService, configStorage, clearables);
-        this.toggleDetailedLoggingService = new DefaultToggleDetailedLoggingService(testLoggingService);
-        this.logTestNameService = new DefaultLogTestNameService();
+        this.setFixedTimestampService = new SetFixedTimestampService(dateTimeService);
+        this.moveTimeService = new MoveTimeService(dateTimeService);
+        this.injectConfigValueService = new InjectConfigValueService(configStorage);
+        this.clearTestStatesService = new ClearTestStatesService(dateTimeService, configStorage, clearables);
+        this.logTestNameService = new LogTestNameService(baseConfig);
+        this.toggleDetailedLoggingService = new ToggleDetailedLoggingService(baseConfig, testLoggingService);
     }
 
     @Override
@@ -109,7 +107,12 @@ public class TestControlServiceConfig implements ITestControlServiceConfig {
     public ConfigStorage getConfigStorage() {
         return configStorage;
     }
-    
+
+    @Override
+    public BaseConfig getBaseConfig() {
+        return baseConfig;
+    }
+
     @Override
     public Set<ClearableInternalState> getClearables() {
         return clearables;
