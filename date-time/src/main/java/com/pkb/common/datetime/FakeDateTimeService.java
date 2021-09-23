@@ -1,20 +1,21 @@
 package com.pkb.common.datetime;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.invoke.MethodHandles;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZonedDateTime;
+import java.time.temporal.TemporalAmount;
 import java.time.temporal.TemporalUnit;
 import java.util.concurrent.TimeUnit;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class FakeDateTimeService implements DateTimeService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    private volatile ZonedDateTime currentFixedTime;
-    private volatile Clock currentFixedClock;
+    protected volatile ZonedDateTime currentFixedTime;
+    protected volatile Clock currentFixedClock;
 
     private final DateTimeService fallbackService;
 
@@ -42,6 +43,11 @@ public class FakeDateTimeService implements DateTimeService {
     @Override
     public void moveTime(long amountToAdd, TemporalUnit unit) {
         fixTime(currentFixedTime.plus(amountToAdd, unit));
+    }
+
+    @Override
+    public void moveTime(TemporalAmount duration) {
+        fixTime(currentFixedTime.plus(duration));
     }
 
     @Override
