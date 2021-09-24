@@ -1,17 +1,16 @@
 package com.pkb.common.testsupport.camel.route;
 
-import org.apache.camel.Endpoint;
-import org.apache.camel.EndpointInject;
-import org.apache.camel.builder.RouteBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.pkb.common.testsupport.config.ITestControlServiceConfig;
 import com.pkb.pubsub.testsupport.payload.MessageType;
 import com.pkb.pubsub.testsupport.payload.NamespaceChangeResponse;
 import com.pkb.pubsub.testsupport.payload.Startup;
 import com.pkb.pubsub.testsupport.payload.TestControlRequest;
 import com.pkb.pubsub.testsupport.payload.TestControlResponse;
+import org.apache.camel.Endpoint;
+import org.apache.camel.EndpointInject;
+import org.apache.camel.builder.RouteBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An instance of this needs to be injected into the camel context, either manually or with the relevant
@@ -134,8 +133,12 @@ public abstract class AbstractTestSupportCamelRouteBuilder extends RouteBuilder 
             case TOGGLE_DETAILED_LOGGING:
                 response.setToggleDetailedLoggingResponse(config().getToggleDetailedLoggingService().process(request.getToggleDetailedLoggingRequest()));
                 break;
+            case RESET_DATABASE:
+                response.setResetDatabaseResponse(config().getDatabaseResetService().process(request.getResetDatabaseRequest()));
+                break;
         }
         LOGGER.info(String.format(config().getApplicationName() + ": finished handleRequest messageType %s", messageType));
         return response.build();
     }
+
 }

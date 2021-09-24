@@ -8,14 +8,13 @@ import java.time.Clock;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.temporal.TemporalAmount;
-import java.time.temporal.TemporalUnit;
 import java.util.concurrent.TimeUnit;
 
 public class FakeDateTimeService implements DateTimeService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    protected volatile ZonedDateTime currentFixedTime;
-    protected volatile Clock currentFixedClock;
+    private volatile ZonedDateTime currentFixedTime;
+    volatile Clock currentFixedClock;
 
     private final DateTimeService fallbackService;
 
@@ -38,11 +37,6 @@ public class FakeDateTimeService implements DateTimeService {
     @Override
     public void setFixedCurrentTimeForTesting(String isoZonedDateTime) {
         fixTime(ZonedDateTime.parse(isoZonedDateTime));
-    }
-
-    @Override
-    public void moveTime(long amountToAdd, TemporalUnit unit) {
-        fixTime(currentFixedTime.plus(amountToAdd, unit));
     }
 
     @Override

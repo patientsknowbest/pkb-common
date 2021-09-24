@@ -5,6 +5,7 @@ import com.pkb.common.config.ConfigStorage;
 import com.pkb.common.datetime.DateTimeService;
 import com.pkb.common.testlogging.DetailLoggingProvider;
 import com.pkb.common.testsupport.services.ClearTestStatesService;
+import com.pkb.common.testsupport.services.DatabaseResetService;
 import com.pkb.common.testsupport.services.InjectConfigValueService;
 import com.pkb.common.testsupport.services.LogTestNameService;
 import com.pkb.common.testsupport.services.MoveTimeService;
@@ -33,6 +34,8 @@ public interface ITestControlServiceConfig {
     ToggleDetailedLoggingService getToggleDetailedLoggingService();
 
     String getApplicationName();
+
+    DatabaseResetService getDatabaseResetService();
 
     boolean getShouldRegisterStartup();
 
@@ -71,4 +74,5 @@ public interface ITestControlServiceConfig {
     default int testControlHandlerSuccessThreshold() {
         return 100;
     }
+
 }

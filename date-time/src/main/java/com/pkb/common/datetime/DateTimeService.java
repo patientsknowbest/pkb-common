@@ -4,6 +4,7 @@ import io.vavr.Tuple2;
 
 import java.text.ParsePosition;
 import java.time.Clock;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,15 +25,15 @@ public interface DateTimeService {
     Clock clock();
 
     /**
-     * @param isoZonedDateTime
-     *            formatted ISO format date for a fixed "now"
+     * @param isoZonedDateTime formatted ISO format date for a fixed "now"
+     * @throws IllegalStateException outside of testing environments
      * @see java.time.ZonedDateTime#parse(CharSequence) for format
-     * @throws IllegalStateException
-     *             outside of testing environments
      */
     void setFixedCurrentTimeForTesting(String isoZonedDateTime);
 
-    void moveTime(long amountToAdd, TemporalUnit unit);
+    default void moveTime(long amountToAdd, TemporalUnit unit) {
+        moveTime(Duration.of(amountToAdd, unit));
+    }
 
     void moveTime(TemporalAmount duration);
 

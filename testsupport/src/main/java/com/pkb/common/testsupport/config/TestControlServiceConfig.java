@@ -5,7 +5,9 @@ import com.pkb.common.config.ConfigStorage;
 import com.pkb.common.datetime.DateTimeService;
 import com.pkb.common.testlogging.DetailLoggingProvider;
 import com.pkb.common.testsupport.services.ClearTestStatesService;
+import com.pkb.common.testsupport.services.DatabaseResetService;
 import com.pkb.common.testsupport.services.DefaultClearTestStatesService;
+import com.pkb.common.testsupport.services.DefaultDatabaseResetService;
 import com.pkb.common.testsupport.services.DefaultInjectConfigValueService;
 import com.pkb.common.testsupport.services.DefaultLogTestNameService;
 import com.pkb.common.testsupport.services.DefaultMoveTimeService;
@@ -43,6 +45,7 @@ public class TestControlServiceConfig implements ITestControlServiceConfig {
     private final ClearTestStatesService clearTestStatesService;
     private final LogTestNameService logTestNameService;
     private final ToggleDetailedLoggingService toggleDetailedLoggingService;
+    private final DatabaseResetService databaseResetService;
 
 
     public TestControlServiceConfig(String applicationName,
@@ -55,7 +58,21 @@ public class TestControlServiceConfig implements ITestControlServiceConfig {
                                     Set<ClearableInternalState> clearables,
                                     DetailLoggingProvider testLoggingService,
                                     PubSubNamespaceService namespaceService) {
+        this(applicationName, project, emulatorEndpoint, shouldRegisterStartup, shouldStartListener,
+                dateTimeService, configStorage, clearables, testLoggingService, namespaceService, new DefaultDatabaseResetService());
+    }
 
+    public TestControlServiceConfig(String applicationName,
+                                    String project,
+                                    Optional<String> emulatorEndpoint,
+                                    boolean shouldRegisterStartup,
+                                    boolean shouldStartListener,
+                                    DateTimeService dateTimeService,
+                                    ConfigStorage configStorage,
+                                    Set<ClearableInternalState> clearables,
+                                    DetailLoggingProvider testLoggingService,
+                                    PubSubNamespaceService namespaceService,
+                                    DatabaseResetService databaseResetService) {
         this.applicationName = applicationName;
         this.project = project;
         this.emulatorEndpoint = emulatorEndpoint;
@@ -73,6 +90,7 @@ public class TestControlServiceConfig implements ITestControlServiceConfig {
         this.clearTestStatesService = new DefaultClearTestStatesService(dateTimeService, configStorage, clearables);
         this.toggleDetailedLoggingService = new DefaultToggleDetailedLoggingService(testLoggingService);
         this.logTestNameService = new DefaultLogTestNameService();
+        this.databaseResetService = databaseResetService;
     }
 
     @Override
@@ -154,5 +172,10 @@ public class TestControlServiceConfig implements ITestControlServiceConfig {
     @Override
     public ToggleDetailedLoggingService getToggleDetailedLoggingService() {
         return toggleDetailedLoggingService;
+    }
+
+    @Override
+    public DatabaseResetService getDatabaseResetService() {
+        return databaseResetService;
     }
 }
