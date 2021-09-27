@@ -18,7 +18,7 @@ class AutoAdvanceFakeDateTimeServiceTest {
     @Test
     void testAdvancesTimeBetweenCalls() {
         underTest.setFixedCurrentTimeForTesting("2020-01-01T00:00:00Z");
-        underTest.setAutoAdvanceDuration(Duration.of(1, ChronoUnit.DAYS));
+        underTest.setAutoAdvanceDuration(1, ChronoUnit.DAYS);
 
         assertThat(underTest.now(), equalTo(Instant.parse("2020-01-02T00:00:00Z")));
         assertThat(underTest.now(), equalTo(Instant.parse("2020-01-03T00:00:00Z")));
@@ -27,17 +27,17 @@ class AutoAdvanceFakeDateTimeServiceTest {
     @Test
     void testStopsAdvancingWhenCleared() {
         underTest.setFixedCurrentTimeForTesting("2020-01-01T00:00:00Z");
-        underTest.setAutoAdvanceDuration(Duration.of(1, ChronoUnit.DAYS));
+        underTest.setAutoAdvanceDuration(1, ChronoUnit.DAYS);
 
         assertThat(underTest.now(), equalTo(Instant.parse("2020-01-02T00:00:00Z")));
-        underTest.setAutoAdvanceDuration(null);
+        underTest.clearAutoAdvance();
         assertThat(underTest.now(), equalTo(Instant.parse("2020-01-02T00:00:00Z")));
     }
 
     @Test
     void testDoesNothingIfTimeNotFixed() throws InterruptedException {
 
-        underTest.setAutoAdvanceDuration(Duration.of(1, ChronoUnit.DAYS));
+        underTest.setAutoAdvanceDuration(1, ChronoUnit.DAYS);
 
         Instant start = underTest.now();
         Thread.sleep(1);

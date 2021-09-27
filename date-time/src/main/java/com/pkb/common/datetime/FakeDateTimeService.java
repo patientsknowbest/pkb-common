@@ -7,7 +7,7 @@ import java.lang.invoke.MethodHandles;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZonedDateTime;
-import java.time.temporal.TemporalAmount;
+import java.time.temporal.TemporalUnit;
 import java.util.concurrent.TimeUnit;
 
 public class FakeDateTimeService implements DateTimeService {
@@ -40,8 +40,8 @@ public class FakeDateTimeService implements DateTimeService {
     }
 
     @Override
-    public void moveTime(TemporalAmount duration) {
-        fixTime(currentFixedTime.plus(duration));
+    public void moveTime(long amountToAdd, TemporalUnit unit) {
+        fixTime(currentFixedTime.plus(amountToAdd, unit));
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.pkb.common.datetime;
 
 import java.time.Clock;
-import java.time.temporal.TemporalAmount;
+import java.time.temporal.TemporalUnit;
 
 /**
  * Override of FakeDateTimeService that supports automatically advancing
@@ -12,17 +12,24 @@ import java.time.temporal.TemporalAmount;
  */
 public class AutoAdvanceFakeDateTimeService extends FakeDateTimeService {
 
-    private TemporalAmount autoAdvanceDuration = null;
+    private long autoAdvanceAmount = 0;
+    private TemporalUnit autoAdvanceUnit = null;
 
     @Override
     public Clock clock() {
-        if (this.currentFixedClock != null && autoAdvanceDuration != null) {
-            moveTime(autoAdvanceDuration);
+        if (this.currentFixedClock != null && autoAdvanceUnit != null) {
+            moveTime(autoAdvanceAmount, autoAdvanceUnit);
         }
         return super.clock();
     }
 
-    public void setAutoAdvanceDuration(TemporalAmount autoAdvanceDuration) {
-        this.autoAdvanceDuration = autoAdvanceDuration;
+    public void setAutoAdvanceDuration(long autoAdvanceAmount, TemporalUnit autoAdvanceUnit) {
+        this.autoAdvanceAmount = autoAdvanceAmount;
+        this.autoAdvanceUnit = autoAdvanceUnit;
+    }
+
+    public void clearAutoAdvance() {
+        this.autoAdvanceAmount = 0;
+        this.autoAdvanceUnit = null;
     }
 }

@@ -4,7 +4,6 @@ import io.vavr.Tuple2;
 
 import java.text.ParsePosition;
 import java.time.Clock;
-import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,7 +14,6 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAmount;
 import java.time.temporal.TemporalUnit;
 import java.util.Date;
 
@@ -31,11 +29,7 @@ public interface DateTimeService {
      */
     void setFixedCurrentTimeForTesting(String isoZonedDateTime);
 
-    default void moveTime(long amountToAdd, TemporalUnit unit) {
-        moveTime(Duration.of(amountToAdd, unit));
-    }
-
-    void moveTime(TemporalAmount duration);
+    void moveTime(long amountToAdd, TemporalUnit unit);
 
     long nowNanoTime();
 
