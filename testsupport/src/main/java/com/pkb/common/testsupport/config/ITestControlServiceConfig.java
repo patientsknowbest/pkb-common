@@ -39,7 +39,7 @@ public interface ITestControlServiceConfig {
     boolean getShouldStartListener();
 
     DateTimeService getDateTimeService();
-    
+
     ConfigStorage getConfigStorage();
 
     Set<ClearableInternalState> getClearables();
@@ -47,4 +47,28 @@ public interface ITestControlServiceConfig {
     DetailLoggingProvider getTestLoggingService();
 
     PubSubNamespaceService getNamespaceService();
+
+    default boolean testControlTimeoutEnabled() {
+        return true;
+    }
+
+    default long testControlTimeoutMillis() {
+        return 30000;
+    }
+
+    default long testControlHandlerDelayMillis() {
+        return 0;
+    }
+
+    default int testControlHandlerRequestVolumeThreshold() {
+        return 1000;
+    }
+
+    default int testControlHandlerFailureRatio() {
+        return 100;
+    }
+
+    default int testControlHandlerSuccessThreshold() {
+        return 100;
+    }
 }

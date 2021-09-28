@@ -1,5 +1,7 @@
 package com.pkb.common.datetime;
 
+import io.vavr.Tuple2;
+
 import java.text.ParsePosition;
 import java.time.Clock;
 import java.time.Instant;
@@ -12,10 +14,9 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAmount;
 import java.time.temporal.TemporalUnit;
 import java.util.Date;
-
-import io.vavr.Tuple2;
 
 @SuppressWarnings({ "UseOfObsoleteDateTimeApi", "SSBasedInspection" })
 public interface DateTimeService {
@@ -33,11 +34,12 @@ public interface DateTimeService {
 
     void moveTime(long amountToAdd, TemporalUnit unit);
 
+    void moveTime(TemporalAmount duration);
+
     long nowNanoTime();
 
     /**
-     * @throws IllegalStateException
-     *             outside of testing environments
+     * @throws IllegalStateException outside of testing environments
      */
     void forgetFixedCurrentTimeForTesting();
 
@@ -88,9 +90,6 @@ public interface DateTimeService {
 
     /**
      * DO NOT USE THIS! Only here temporarily to fix up some legacy (static) code.
-     * @param input
-     * @param formatter
-     * @return
      */
     static Tuple2<Instant, ParsePosition> parseToInstantBackwardCompatibleWayStatic(String input, DateTimeFormatter formatter){
         ParsePosition remainder = new ParsePosition(0);
@@ -103,9 +102,6 @@ public interface DateTimeService {
 
     /**
      * @deprecated Use {@link java.time} instead of {@link Date}, then there is no need for this method.
-     * @param input
-     * @param formatter
-     * @return
      */
     @Deprecated
     default String dateToString(Date input, DateTimeFormatter formatter) {

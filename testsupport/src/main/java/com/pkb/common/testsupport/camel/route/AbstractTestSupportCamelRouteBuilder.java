@@ -81,6 +81,16 @@ public abstract class AbstractTestSupportCamelRouteBuilder extends RouteBuilder 
         if (config().getShouldStartListener()) {
             from(testControlRequestSubscription)
                     .threads(1) //One thread is enough
+                    // We really want to just enable timeout, we don't need circuit breaker in e2e
+                    .circuitBreaker()
+                        .faultToleranceConfiguration()
+                        .timeoutEnabled(config().testControlTimeoutEnabled())
+                        .timeoutDuration(config().testControlTimeoutMillis())
+                        .delay(config().testControlHandlerDelayMillis())
+                        .requestVolumeThreshold(config().testControlHandlerRequestVolumeThreshold())
+                        .failureRatio(config().testControlHandlerFailureRatio()) 
+                        .successThreshold(config().testControlHandlerSuccessThreshold())
+                    .end()
                     .routeId("testSupportReceiver")
                     .unmarshal().avro(TestControlRequest.getClassSchema())
                     .log(config().getApplicationName() + ": receiving a ${mandatoryBodyAs(" + TestControlRequest.class.getCanonicalName() + ").getMessageType} request")
