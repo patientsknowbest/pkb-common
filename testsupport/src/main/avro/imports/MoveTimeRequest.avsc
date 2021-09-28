@@ -1,8 +1,0 @@
-{"namespace": "com.pkb.pubsub.testsupport.payload",
-  "type": "record",
-  "name": "MoveTimeRequest",
-  "fields": [
-    {"name": "amount", "type": "long"},
-    {"name": "unit", "type": "string"}
-  ]
-}
