@@ -83,6 +83,7 @@
         <spring-cloud.version>2020.0.3</spring-cloud.version>
         <hibernate-core.version>5.3.15.Final</hibernate-core.version>
         <spring.boot.version>2.5.2</spring.boot.version>
+        <immutables.version>2.8.8</immutables.version>
     </properties>
 
     <modules>
@@ -93,7 +94,8 @@
         <module>infrastructure</module>
         <module>spring-infrastructure</module>
         <module>testlogging</module>
-        <module>testsupport</module>
+        <module>test-control</module>
+        <module>test-control-client</module>
         <module>spring-boot-infrastructure</module>
         <module>spring-boot-kotlin-infrastructure</module>
         <module>pubsub</module>
@@ -105,6 +107,11 @@
             <dependency>
                 <groupId>com.pkb.pkbcommon</groupId>
                 <artifactId>infrastructure</artifactId>
+                <version>${revision}${changelist}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.pkb.pkbcommon</groupId>
+                <artifactId>test-control-client</artifactId>
                 <version>${revision}${changelist}</version>
             </dependency>
             <dependency>
@@ -322,6 +329,12 @@
                 <artifactId>logback-classic</artifactId>
                 <version>${logback.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.immutables</groupId>
+                <artifactId>value</artifactId>
+                <version>${immutables.version}</version>
+                <scope>provided</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

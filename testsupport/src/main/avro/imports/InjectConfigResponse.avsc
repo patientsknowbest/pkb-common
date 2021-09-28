@@ -1,9 +1,0 @@
-{"namespace": "com.pkb.pubsub.testsupport.payload",
-  "type": "record",
-  "name": "InjectConfigResponse",
-  "fields": [
-    {"name": "key", "type": "string"},
-    {"name": "value", "type": ["null", "string"]},
-    {"name": "success", "type": "boolean"}
-  ]
-}
