@@ -45,16 +45,43 @@ public interface BaseConfig {
         return getConfigStorage().getString("pubsub.emulatorendpoint");
     }
 
-    default boolean isPubSubApplicationRegistrationEnabled() {
-        return getConfigStorage().getBoolean("pubsub.applicationregistrationenabled", false);
-    }
-
-    default boolean isPubSubTestControlEnabled() {
-        return getConfigStorage().getBoolean("pubsub.testcontrolenabled", false);
-    }
-
     default String getEnvironmentName() {
         return getConfigStorage().getString("environment.name", "NOT_SET");
+    }
+
+    /**
+     * Should this application listen for test control requests?
+     */
+    default boolean isTestControlEnabled() {
+        return getConfigStorage().getBoolean("testcontrol.enabled", false);
+    }
+
+    /**
+     * Should this application register it's test-control endpoint with service registry?
+     */
+    default boolean isTestControlRegistrationEnabled() {
+        return getConfigStorage().getBoolean("testcontrol.registration.enabled", true);
+    }
+
+    /**
+     * URL for the test-control server where this application will register itself
+     */
+    default String getTestControlUrl() {
+        return getConfigStorage().getString("testcontrol.url");
+    }
+
+    /**
+     * Unique application name to register on test-control server
+     */
+    default String getTestControlAppName() {
+        return getConfigStorage().getString("testcontrol.appname");
+    }
+
+    /**
+     * Address for this application's test control endpoint.
+     */
+    default String getTestControlCallbackUrl() {
+        return getConfigStorage().getString("testcontrol.callbackurl", "");
     }
 
     /**

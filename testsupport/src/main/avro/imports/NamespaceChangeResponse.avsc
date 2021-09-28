@@ -1,7 +1,0 @@
-{"namespace": "com.pkb.pubsub.testsupport.payload",
-  "type": "record",
-  "name": "NamespaceChangeResponse",
-  "fields": [
-    {"name": "namespace", "type": "string"}
-  ]
-}
