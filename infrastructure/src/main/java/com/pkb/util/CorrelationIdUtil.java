@@ -35,6 +35,10 @@ public class CorrelationIdUtil {
         return Optional.ofNullable(StringUtils.trimToNull(MDC.get(CORRELATION_ID))).map(UUID::fromString);
     }
 
+    public UUID getOrDefault() {
+        return maybeGet().orElse(getAlternativeUUID());
+    }
+
     public void putIfAbsent(UUID value) {
         if (get() == null) {
             put(value);
