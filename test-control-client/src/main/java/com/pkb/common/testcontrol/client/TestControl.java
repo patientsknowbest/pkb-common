@@ -1,6 +1,6 @@
 package com.pkb.common.testcontrol.client;
 
-import com.pkb.common.testcontrol.message.ClearCachesRequest;
+import com.pkb.common.testcontrol.message.ClearInternalStateRequest;
 import com.pkb.common.testcontrol.message.ClearStorageRequest;
 import com.pkb.common.testcontrol.message.DetailedLoggingRequest;
 import com.pkb.common.testcontrol.message.FixTimeRequest;
@@ -48,7 +48,7 @@ public interface TestControl {
     @PUT("injectConfig")
     Void injectConfig(@Body InjectConfigRequest request);
     @PUT("clearCaches")
-    Void clearCaches(@Body ClearCachesRequest request);
+    Void clearCaches(@Body ClearInternalStateRequest request);
     @PUT("clearStorage")
     Void clearStorage(@Body ClearStorageRequest request);
     @PUT("logTestName")

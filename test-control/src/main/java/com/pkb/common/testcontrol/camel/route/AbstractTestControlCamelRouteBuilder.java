@@ -1,7 +1,7 @@
 package com.pkb.common.testcontrol.camel.route;
 
 import com.pkb.common.testcontrol.config.ITestControlServiceConfig;
-import com.pkb.common.testcontrol.message.ClearCachesRequest;
+import com.pkb.common.testcontrol.message.ClearInternalStateRequest;
 import com.pkb.common.testcontrol.message.ClearStorageRequest;
 import com.pkb.common.testcontrol.message.DetailedLoggingRequest;
 import com.pkb.common.testcontrol.message.FixTimeRequest;
@@ -59,7 +59,7 @@ public abstract class AbstractTestControlCamelRouteBuilder extends RouteBuilder 
                     .put("setFixedTimestamp").route().bean(this, "setFixedTimestamp").endRest()
                     .put("moveTime").route().bean(this, "moveTime").endRest()
                     .put("injectConfig").route().bean(this, "injectConfig").endRest()
-                    .put("clearCaches").route().bean(this, "clearCaches").endRest()
+                    .put("clearInternalState").route().bean(this, "clearInternalState").endRest()
                     .put("clearStorage").route().bean(this, "clearStorage").endRest()
                     .put("logTestName").route().bean(this, "logTestName").endRest()
                     .put("toggleDetailedLogging").route().bean(this, "toggleDetailedLogging").endRest();
@@ -85,8 +85,8 @@ public abstract class AbstractTestControlCamelRouteBuilder extends RouteBuilder 
         config().getInjectConfigValueService().process(request);
         return "";
     }
-    public String clearCaches(ClearCachesRequest clearCachesRequest) {
-        config().getClearTestStatesService().process(clearCachesRequest);
+    public String clearInternalState(ClearInternalStateRequest clearInternalStateRequest) {
+        config().getClearTestStatesService().process(clearInternalStateRequest);
         return "";
     }
     public String clearStorage(ClearStorageRequest clearStorageRequest) {
