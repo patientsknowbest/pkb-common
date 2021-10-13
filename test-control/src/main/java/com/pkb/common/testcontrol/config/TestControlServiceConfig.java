@@ -5,8 +5,8 @@ import com.pkb.common.config.ConfigStorage;
 import com.pkb.common.datetime.DateTimeService;
 import com.pkb.common.testcontrol.services.ClearStorageService;
 import com.pkb.common.testlogging.DetailLoggingProvider;
-import com.pkb.common.testcontrol.services.ClearCachesService;
-import com.pkb.common.testcontrol.services.DefaultClearCachesService;
+import com.pkb.common.testcontrol.services.ClearInternalStateService;
+import com.pkb.common.testcontrol.services.DefaultClearInternalStateService;
 import com.pkb.common.testcontrol.services.DefaultInjectConfigValueService;
 import com.pkb.common.testcontrol.services.DefaultLogTestNameService;
 import com.pkb.common.testcontrol.services.DefaultMoveTimeService;
@@ -39,7 +39,7 @@ public class TestControlServiceConfig implements ITestControlServiceConfig {
     private final SetFixedTimestampService setFixedTimestampService;
     private final MoveTimeService moveTimeService;
     private final InjectConfigValueService injectConfigValueService;
-    private final ClearCachesService clearCachesService;
+    private final ClearInternalStateService clearInternalStateService;
     private final LogTestNameService logTestNameService;
     private final ToggleDetailedLoggingService toggleDetailedLoggingService;
     private final Optional<ClearStorageService> clearStorageService;
@@ -70,7 +70,7 @@ public class TestControlServiceConfig implements ITestControlServiceConfig {
         this.moveTimeService = new DefaultMoveTimeService(dateTimeService);
         this.injectConfigValueService = new DefaultInjectConfigValueService(configStorage);
         this.clearStorageService = clearStorageService;
-        this.clearCachesService = new DefaultClearCachesService(dateTimeService, configStorage, clearables);
+        this.clearInternalStateService = new DefaultClearInternalStateService(dateTimeService, configStorage, clearables);
         this.toggleDetailedLoggingService = new DefaultToggleDetailedLoggingService(testLoggingService);
         this.logTestNameService = new DefaultLogTestNameService();
     }
@@ -142,8 +142,8 @@ public class TestControlServiceConfig implements ITestControlServiceConfig {
     }
 
     @Override
-    public ClearCachesService getClearTestStatesService() {
-        return clearCachesService;
+    public ClearInternalStateService getClearTestStatesService() {
+        return clearInternalStateService;
     }
 
     @Override

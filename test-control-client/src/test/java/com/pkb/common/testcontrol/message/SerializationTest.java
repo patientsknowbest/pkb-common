@@ -16,7 +16,7 @@ import static com.github.karsaig.approvalcrest.jupiter.matcher.Matchers.sameBean
 public class SerializationTest {
     static Object[][] testCases() {
         return new Object[][]{
-                {ClearCachesRequest.class, ImmutableClearCachesRequest.builder().clearFixedTimestamp(false).build()},
+                {ClearInternalStateRequest.class, ImmutableClearInternalStateRequest.builder().clearFixedTimestamp(false).build()},
                 {ClearStorageRequest.class, ImmutableClearStorageRequest.builder().build()},
                 {DetailedLoggingRequest.class, ImmutableDetailedLoggingRequest.builder().enableDetailedLogging(false).build()},
                 {FixTimeRequest.class, ImmutableFixTimeRequest.builder().timestamp(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(ZonedDateTime.now())).build()},

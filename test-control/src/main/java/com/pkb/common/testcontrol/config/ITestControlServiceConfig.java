@@ -5,7 +5,7 @@ import com.pkb.common.config.ConfigStorage;
 import com.pkb.common.datetime.DateTimeService;
 import com.pkb.common.testcontrol.services.ClearStorageService;
 import com.pkb.common.testlogging.DetailLoggingProvider;
-import com.pkb.common.testcontrol.services.ClearCachesService;
+import com.pkb.common.testcontrol.services.ClearInternalStateService;
 import com.pkb.common.testcontrol.services.InjectConfigValueService;
 import com.pkb.common.testcontrol.services.LogTestNameService;
 import com.pkb.common.testcontrol.services.MoveTimeService;
@@ -55,7 +55,7 @@ public interface ITestControlServiceConfig {
     SetFixedTimestampService getSetFixedTimestampService();
     MoveTimeService getMoveTimeService();
     InjectConfigValueService getInjectConfigValueService();
-    ClearCachesService getClearTestStatesService();
+    ClearInternalStateService getClearTestStatesService();
     Optional<ClearStorageService> getClearStorageService();
     LogTestNameService getLogTestNameService();
     ToggleDetailedLoggingService getToggleDetailedLoggingService();
