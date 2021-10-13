@@ -47,8 +47,8 @@ public interface TestControl {
     Void moveTime(@Body MoveTimeRequest request);
     @PUT("injectConfig")
     Void injectConfig(@Body InjectConfigRequest request);
-    @PUT("clearCaches")
-    Void clearCaches(@Body ClearInternalStateRequest request);
+    @PUT("clearInternalState")
+    Void clearInternalState(@Body ClearInternalStateRequest request);
     @PUT("clearStorage")
     Void clearStorage(@Body ClearStorageRequest request);
     @PUT("logTestName")
