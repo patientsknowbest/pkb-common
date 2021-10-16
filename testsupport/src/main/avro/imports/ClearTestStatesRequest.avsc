@@ -1,7 +1,0 @@
-{"namespace": "com.pkb.pubsub.testsupport.payload",
-  "type": "record",
-  "name": "ClearTestStatesRequest",
-  "fields": [
-    {"name": "clearFixedTimestamp", "type": "boolean"}
-  ]
-}
