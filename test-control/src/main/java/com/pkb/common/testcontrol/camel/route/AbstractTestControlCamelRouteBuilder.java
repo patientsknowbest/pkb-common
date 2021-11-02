@@ -10,6 +10,7 @@ import com.pkb.common.testcontrol.message.InjectConfigRequest;
 import com.pkb.common.testcontrol.message.LogTestNameRequest;
 import com.pkb.common.testcontrol.message.MoveTimeRequest;
 import com.pkb.common.testcontrol.message.NamespaceChangeRequest;
+import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 
@@ -50,6 +51,8 @@ public abstract class AbstractTestControlCamelRouteBuilder extends RouteBuilder 
                                 .callback(config().getApplicationTestControlCallbackURL())
                                 .build()))
                         .log(config().getApplicationName() + ": sending startup msg")
+                        // Add a redelivery attempt, and die if we couldn't start up.
+                        .errorHandler(defaultErrorHandler().maximumRedeliveries(3).redeliveryDelay(100).onPrepareFailure(this::die))
                         .to("rest://put:/register?host=" + testControlUrl.getHost() + ":" + testControlUrl.getPort());
             }
             
@@ -64,6 +67,11 @@ public abstract class AbstractTestControlCamelRouteBuilder extends RouteBuilder 
                     .put("logTestName").route().bean(this, "logTestName").endRest()
                     .put("toggleDetailedLogging").route().bean(this, "toggleDetailedLogging").endRest();
         }
+    }
+    
+    public void die(Exchange ignored) {
+        log.error("Failed to register application startup, dying now!!!");
+        System.exit(1);
     }
 
     /**
