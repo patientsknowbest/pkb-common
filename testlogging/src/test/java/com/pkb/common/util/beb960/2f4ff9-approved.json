@@ -1,32 +1,7 @@
 /*com.pkb.common.util.FrameFilterTest.testFrameFilterExcludesNonPkbAndInterceptorCode*/
 {
   "0x1": {
-    "stackTrace": [
-      {
-        "classLoaderName": "app",
-        "declaringClass": "com.pkb.common.util.FrameFilterTest",
-        "methodName": "bar",
-        "fileName": "FrameFilterTest.java",
-        "lineNumber": 47,
-        "format": 1
-      },
-      {
-        "classLoaderName": "app",
-        "declaringClass": "com.pkb.common.util.FrameFilterTest",
-        "methodName": "foo",
-        "fileName": "FrameFilterTest.java",
-        "lineNumber": 43,
-        "format": 1
-      },
-      {
-        "classLoaderName": "app",
-        "declaringClass": "com.pkb.common.util.FrameFilterTest",
-        "methodName": "testFrameFilterExcludesNonPkbAndInterceptorCode",
-        "fileName": "FrameFilterTest.java",
-        "lineNumber": 19,
-        "format": 1
-      }
-    ],
+    "class": "java.lang.Exception",
     "suppressedExceptions": []
   }
 }

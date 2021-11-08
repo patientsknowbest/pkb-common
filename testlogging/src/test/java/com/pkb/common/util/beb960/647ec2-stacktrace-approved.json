@@ -1,0 +1,10 @@
+/*com.pkb.common.util.FrameFilterTest.testFrameFilterAlwaysIncludesRootFrame*/
+[
+  {
+    "classLoaderName": "app",
+    "declaringClass": "com.pkb.common.util.FrameFilterTest",
+    "fileName": "FrameFilterTest.java",
+    "format": 1,
+    "methodName": "bar"
+  }
+]
