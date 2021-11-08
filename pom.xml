@@ -68,7 +68,7 @@
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.source.plugin.version>3.2.1</maven.source.plugin.version>
         <maven.flatten.plugin.version>1.2.7</maven.flatten.plugin.version>
-        <maven.surefire.plugin.version>3.0.0-M4</maven.surefire.plugin.version>
+        <maven.surefire.plugin.version>3.0.0-M5</maven.surefire.plugin.version>
         <owasp-dependency-check.version>6.1.5</owasp-dependency-check.version>
         <pitest.version>1.7.2</pitest.version>
 
@@ -78,7 +78,7 @@
         <javax.inject.version>1</javax.inject.version>
         <restassured.version>3.0.9-PKB</restassured.version>
 
-        <spring.version>5.2.3.RELEASE</spring.version> <!-- copied from PHR -->
+        <spring.version>5.3.12</spring.version> <!-- copied from PHR -->
         <commons.testing.version>49-head-a39d672-174384-SNAPSHOT</commons.testing.version>
         <spring-cloud.version>2020.0.3</spring-cloud.version>
         <hibernate-core.version>5.3.15.Final</hibernate-core.version>
@@ -124,12 +124,6 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-text</artifactId>
                 <version>${apache.commons.text.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.karsaig</groupId>
-                <artifactId>approvalcrest</artifactId>
-                <version>${approvalcrest.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>com.github.karsaig</groupId>
@@ -192,12 +186,6 @@
                 <groupId>com.pkb.pkbcommon</groupId>
                 <artifactId>config</artifactId>
                 <version>${revision}${changelist}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.junit.vintage</groupId>
-                <artifactId>junit-vintage-engine</artifactId>
-                <version>${junit5.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
@@ -347,21 +335,26 @@
                 <version>2.1.1</version>
             </extension>
         </extensions>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven.compiler.plugin.version}</version>
+                    <configuration>
+                        <release>11</release>
+                        <showWarnings>true</showWarnings>
+                        <compilerArgs>
+                            <arg>-Xlint:all</arg>
+                            <arg>-Xlint:-processing</arg>
+                            <arg>-Xlint:-rawtypes</arg>
+                            <arg>-Werror</arg>
+                        </compilerArgs>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.plugin.version}</version>
-                <configuration>
-                    <release>11</release>
-                    <showWarnings>true</showWarnings>
-                    <compilerArgs>
-                        <arg>-Xlint:all</arg>
-                        <arg>-Xlint:-processing</arg>
-                        <arg>-Werror</arg>
-                    </compilerArgs>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>

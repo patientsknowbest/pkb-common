@@ -1,8 +1,8 @@
 /*com.pkb.common.config.MutableRawConfigStorageTest.getBoolean3*/
 {
   "0x1": {
+    "class": "com.pkb.common.config.MissingValueException",
     "detailMessage": "missing configuration key: [notExistingKey]",
-    "stackTrace": [],
     "suppressedExceptions": []
   }
 }

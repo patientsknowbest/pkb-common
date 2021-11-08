@@ -1,8 +1,8 @@
 /*com.pkb.common.config.ImmutableRawConfigStorageTest.getLong_missingKey*/
 {
   "0x1": {
+    "class": "com.pkb.common.config.MissingValueException",
     "detailMessage": "missing configuration key: [missingKey]",
-    "stackTrace": [],
     "suppressedExceptions": []
   }
 }

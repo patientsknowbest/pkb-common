@@ -4,7 +4,8 @@ import static com.pkb.common.config.LayeredLoader.DEFAULT_CONFIG_FILE_PATH;
 import static com.pkb.common.config.LayeredLoader.mapEnvVarValueToPropertyFileList;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 import java.util.List;
 
