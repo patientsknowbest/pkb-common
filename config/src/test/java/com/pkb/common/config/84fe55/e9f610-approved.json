@@ -1,8 +1,8 @@
 /*com.pkb.common.config.MutableRawConfigStorageTest.getBoolean10*/
 {
   "0x1": {
+    "class": "com.pkb.common.config.MalformedValueException",
     "detailMessage": "malformed value\u003d[not a boolean] for configuration key\u003d[stringKey] (expected type\u003d[Boolean])",
-    "stackTrace": [],
     "suppressedExceptions": []
   }
 }
