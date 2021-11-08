@@ -1,8 +1,9 @@
 package com.pkb.common.datetime;
 
-import static com.github.karsaig.approvalcrest.MatcherAssert.assertThat;
-import static org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo;
-import static org.hamcrest.number.OrderingComparison.lessThanOrEqualTo;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -11,18 +12,15 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.junit.MockitoJUnitRunner;
+import static com.github.karsaig.approvalcrest.jupiter.MatcherAssert.assertThat;
+import static com.github.karsaig.approvalcrest.jupiter.MatcherAssert.assertThrows;
+import static com.github.karsaig.approvalcrest.jupiter.matcher.Matchers.sameBeanAs;
+import static org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo;
+import static org.hamcrest.number.OrderingComparison.lessThanOrEqualTo;
 
-@RunWith(MockitoJUnitRunner.StrictStubs.class)
+@SuppressWarnings("ThrowableNotThrown")
+@ExtendWith(MockitoExtension.class)
 public class DefaultDateTimeServiceTest {
-
-    @Rule
-    public ExpectedException exceptionRule = ExpectedException.none();
 
     @InjectMocks
     private DefaultDateTimeService underTest;
@@ -30,34 +28,25 @@ public class DefaultDateTimeServiceTest {
     @Test
     public void setFixedCurrentTimeForTesting() {
         //GIVEN
-        exceptionRule.expect(IllegalStateException.class);
-        exceptionRule.expectMessage("Not currently in a test environment");
-        //WHEN
-        underTest.setFixedCurrentTimeForTesting("2010-10-10T22:22:22Z");
-        //THEN
-        //Exception thrown
+        var expected = new IllegalStateException("Not currently in a test environment");
+        //WHEN-THEN
+        assertThrows(sameBeanAs(expected), () -> underTest.setFixedCurrentTimeForTesting("2010-10-10T22:22:22Z"));
     }
 
     @Test
     public void moveTime() {
         //GIVEN
-        exceptionRule.expect(IllegalStateException.class);
-        exceptionRule.expectMessage("Not currently in a test environment");
-        //WHEN
-        underTest.moveTime(1L, ChronoUnit.SECONDS);
-        //THEN
-        //Exception thrown
+        var expected = new IllegalStateException("Not currently in a test environment");
+        //WHEN-THEN
+        assertThrows(sameBeanAs(expected), () -> underTest.moveTime(1L, ChronoUnit.SECONDS));
     }
 
     @Test
     public void forgetFixedCurrentTimeForTesting() {
         //GIVEN
-        exceptionRule.expect(IllegalStateException.class);
-        exceptionRule.expectMessage("Not currently in a test environment");
-        //WHEN
-        underTest.forgetFixedCurrentTimeForTesting();
-        //THEN
-        //Exception thrown
+        var expected = new IllegalStateException("Not currently in a test environment");
+        //WHEN-THEN
+        assertThrows(sameBeanAs(expected), () -> underTest.forgetFixedCurrentTimeForTesting());
     }
 
     @Test
