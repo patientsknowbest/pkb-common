@@ -71,7 +71,7 @@
         <maven.source.plugin.version>3.2.1</maven.source.plugin.version>
         <maven.flatten.plugin.version>1.2.7</maven.flatten.plugin.version>
         <maven.surefire.plugin.version>3.0.0-M5</maven.surefire.plugin.version>
-        <owasp-dependency-check.version>6.1.5</owasp-dependency-check.version>
+        <owasp-dependency-check.version>6.4.1</owasp-dependency-check.version>
         <plugin.version.maven.enforcer>3.0.0</plugin.version.maven.enforcer>
         <plugin.version.maven.extra.enforcer.rules.version>1.4</plugin.version.maven.extra.enforcer.rules.version>
         <pitest.version>1.7.2</pitest.version>
@@ -418,6 +418,7 @@
                 <artifactId>dependency-check-maven</artifactId>
                 <version>${owasp-dependency-check.version}</version>
                 <configuration>
+                    <skipProvidedScope>true</skipProvidedScope>
                     <failBuildOnAnyVulnerability>true</failBuildOnAnyVulnerability>
                     <excludes>
                         <exclude>org.springframework</exclude>
