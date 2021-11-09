@@ -46,18 +46,20 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <apache.commons.text.version>1.8</apache.commons.text.version>
-        <approvalcrest.version>0.56.3</approvalcrest.version>
+        <apache.commons.text.version>1.9</apache.commons.text.version>
+        <approvalcrest.version>0.60.3</approvalcrest.version>
         <hamcrest.version>2.2</hamcrest.version>
-        <micrometer.version>1.2.1</micrometer.version>
-        <slf4j.version>1.7.30</slf4j.version>
+        <micrometer.version>1.7.5</micrometer.version>
+        <slf4j.version>1.7.32</slf4j.version>
         <vavr.version>0.10.2</vavr.version>
+        <commons-codec.version>1.15</commons-codec.version>
+        <apache.httpclient.version>4.5.13</apache.httpclient.version>
 
-        <version.apache.commons.lang3>3.9</version.apache.commons.lang3>
+        <version.apache.commons.lang3>3.12.0</version.apache.commons.lang3>
         <version.jetbrain.annotations>19.0.0</version.jetbrain.annotations>
-        <junit5.version>5.5.2</junit5.version>
-        <version.mockito>3.3.3</version.mockito>
-        <version.guava>28.2-jre</version.guava>
+        <junit5.version>5.8.1</junit5.version>
+        <version.mockito>4.0.0</version.mockito>
+        <version.guava>30.1.1-jre</version.guava>
         <version.apache-commons-io>2.6</version.apache-commons-io>
         <javax.javaee-api.version>8.0</javax.javaee-api.version>
         <avro.version>1.10.2</avro.version>
@@ -67,10 +69,12 @@
 
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.source.plugin.version>3.2.1</maven.source.plugin.version>
-        <maven.flatten.plugin.version>1.2.1</maven.flatten.plugin.version>
-        <maven.surefire.plugin.version>3.0.0-M4</maven.surefire.plugin.version>
-        <owasp-dependency-check.version>6.1.5</owasp-dependency-check.version>
-        <pitest.version>1.5.0</pitest.version>
+        <maven.flatten.plugin.version>1.2.7</maven.flatten.plugin.version>
+        <maven.surefire.plugin.version>3.0.0-M5</maven.surefire.plugin.version>
+        <owasp-dependency-check.version>6.4.1</owasp-dependency-check.version>
+        <plugin.version.maven.enforcer>3.0.0</plugin.version.maven.enforcer>
+        <plugin.version.maven.extra.enforcer.rules.version>1.4</plugin.version.maven.extra.enforcer.rules.version>
+        <pitest.version>1.7.2</pitest.version>
 
         <revision>0.0.0</revision>
         <changelist>-SNAPSHOT</changelist>
@@ -78,8 +82,8 @@
         <javax.inject.version>1</javax.inject.version>
         <restassured.version>3.0.9-PKB</restassured.version>
 
-        <spring.version>5.2.3.RELEASE</spring.version> <!-- copied from PHR -->
-        <commons.testing.version>38-a45a3a1-113588</commons.testing.version>
+        <spring.version>5.3.12</spring.version> <!-- copied from PHR -->
+        <commons.testing.version>49-7ad925d-174903</commons.testing.version>
         <spring-cloud.version>2020.0.3</spring-cloud.version>
         <hibernate-core.version>5.3.15.Final</hibernate-core.version>
         <spring.boot.version>2.5.2</spring.boot.version>
@@ -103,7 +107,6 @@
 
     <dependencyManagement>
         <dependencies>
-
             <dependency>
                 <groupId>com.pkb.pkbcommon</groupId>
                 <artifactId>infrastructure</artifactId>
@@ -121,15 +124,19 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${commons-codec.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${apache.httpclient.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-text</artifactId>
                 <version>${apache.commons.text.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.karsaig</groupId>
-                <artifactId>approvalcrest</artifactId>
-                <version>${approvalcrest.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>com.github.karsaig</groupId>
@@ -192,12 +199,6 @@
                 <groupId>com.pkb.pkbcommon</groupId>
                 <artifactId>config</artifactId>
                 <version>${revision}${changelist}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.junit.vintage</groupId>
-                <artifactId>junit-vintage-engine</artifactId>
-                <version>${junit5.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
@@ -347,21 +348,58 @@
                 <version>2.1.1</version>
             </extension>
         </extensions>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven.compiler.plugin.version}</version>
+                    <configuration>
+                        <release>11</release>
+                        <showWarnings>true</showWarnings>
+                        <compilerArgs>
+                            <arg>-Xlint:all</arg>
+                            <arg>-Xlint:-processing</arg>
+                            <arg>-Xlint:-rawtypes</arg>
+                            <arg>-Werror</arg>
+                        </compilerArgs>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>${plugin.version.maven.enforcer}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>extra-enforcer-rules</artifactId>
+                            <version>${plugin.version.maven.extra.enforcer.rules.version}</version>
+                        </dependency>
+                    </dependencies>
+                    <executions>
+                        <execution>
+                            <id>enforce-dependencies</id>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                            <configuration>
+                                <rules>
+                                    <!-- for any duplicate transient dependencies we have, make sure they're being managed
+                                    to pick the highest version. Otherwise we may end up unexpectedly swapping to an older
+                                    version if the 'nearest' definition changes, or end up unexpectedly using a different version
+                                    to what we've specified via a parent bom -->
+                                    <requireUpperBoundDeps/>
+                                    <banCircularDependencies/>
+                                    <!-- TODO ban duplicate classes, etc -->
+                                </rules>
+                                <fail>true</fail>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.plugin.version}</version>
-                <configuration>
-                    <release>11</release>
-                    <showWarnings>true</showWarnings>
-                    <compilerArgs>
-                        <arg>-Xlint:all</arg>
-                        <arg>-Xlint:-processing</arg>
-                        <arg>-Werror</arg>
-                    </compilerArgs>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -380,6 +418,7 @@
                 <artifactId>dependency-check-maven</artifactId>
                 <version>${owasp-dependency-check.version}</version>
                 <configuration>
+                    <skipProvidedScope>true</skipProvidedScope>
                     <failBuildOnAnyVulnerability>true</failBuildOnAnyVulnerability>
                     <excludes>
                         <exclude>org.springframework</exclude>

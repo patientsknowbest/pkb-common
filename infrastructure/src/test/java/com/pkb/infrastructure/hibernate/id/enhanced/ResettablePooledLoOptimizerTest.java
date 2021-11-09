@@ -1,16 +1,17 @@
 package com.pkb.infrastructure.hibernate.id.enhanced;
 
-import static com.github.karsaig.approvalcrest.MatcherAssert.assertThat;
-import static com.pkb.infrastructure.hibernate.id.enhanced.ResettablePooledLoOptimizer.OPTIMIZER_CANONICAL_NAME;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.junit.Assert.assertEquals;
-
 import org.hibernate.id.IdentifierGeneratorHelper;
 import org.hibernate.id.IntegralDataTypeHolder;
 import org.hibernate.id.enhanced.AccessCallback;
 import org.hibernate.id.enhanced.Optimizer;
 import org.hibernate.id.enhanced.OptimizerFactory;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static com.github.karsaig.approvalcrest.jupiter.MatcherAssert.assertThat;
+import static com.pkb.infrastructure.hibernate.id.enhanced.ResettablePooledLoOptimizer.OPTIMIZER_CANONICAL_NAME;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class ResettablePooledLoOptimizerTest {
 
@@ -29,22 +30,22 @@ public class ResettablePooledLoOptimizerTest {
         assertEquals(0, sequence.getTimesCalled());
         assertEquals(-1, sequence.getCurrentValue());
 
-        Long next = (Long)optimizer.generate(sequence);
+        Long next = (Long) optimizer.generate(sequence);
         assertEquals(1, next.intValue());
         assertEquals(1, sequence.getTimesCalled());
         assertEquals(1, sequence.getCurrentValue());
 
-        next = (Long)optimizer.generate(sequence);
+        next = (Long) optimizer.generate(sequence);
         assertEquals(2, next.intValue());
         assertEquals(1, sequence.getTimesCalled());
         assertEquals(1, sequence.getCurrentValue());
 
-        next = (Long)optimizer.generate(sequence);
+        next = (Long) optimizer.generate(sequence);
         assertEquals(3, next.intValue());
         assertEquals(1, sequence.getTimesCalled());
         assertEquals(1, sequence.getCurrentValue());
 
-        next = (Long)optimizer.generate(sequence);
+        next = (Long) optimizer.generate(sequence);
         assertEquals(4, next.intValue());
         assertEquals(2, sequence.getTimesCalled());
         assertEquals(4, sequence.getCurrentValue());
@@ -53,7 +54,7 @@ public class ResettablePooledLoOptimizerTest {
     @Test
     public void optimizerResetCausesIncrementEarlier() {
         SourceMock sequence = new SourceMock(1, 3);
-        ResettablePooledLoOptimizer optimizer = (ResettablePooledLoOptimizer)OptimizerFactory.buildOptimizer(
+        ResettablePooledLoOptimizer optimizer = (ResettablePooledLoOptimizer) OptimizerFactory.buildOptimizer(
                 ResettablePooledLoOptimizer.class.getCanonicalName(),
                 Long.class,
                 3,
@@ -62,19 +63,19 @@ public class ResettablePooledLoOptimizerTest {
         assertEquals(0, sequence.getTimesCalled());
         assertEquals(-1, sequence.getCurrentValue());
 
-        Long next = (Long)optimizer.generate(sequence);
+        Long next = (Long) optimizer.generate(sequence);
         assertEquals(1, next.intValue());
         assertEquals(1, sequence.getTimesCalled());
         assertEquals(1, sequence.getCurrentValue());
 
         ResettablePooledLoOptimizer.clearStateGlobal();
 
-        next = (Long)optimizer.generate(sequence);
+        next = (Long) optimizer.generate(sequence);
         assertEquals(4, next.intValue());
         assertEquals(2, sequence.getTimesCalled());
         assertEquals(4, sequence.getCurrentValue());
 
-        next = (Long)optimizer.generate(sequence);
+        next = (Long) optimizer.generate(sequence);
         assertEquals(5, next.intValue());
         assertEquals(2, sequence.getTimesCalled());
         assertEquals(4, sequence.getCurrentValue());
@@ -87,10 +88,10 @@ public class ResettablePooledLoOptimizerTest {
         private IdentifierGeneratorHelper.BasicHolder value = new IdentifierGeneratorHelper.BasicHolder(Long.class);
         private long initialValue;
         private int increment;
-        private int timesCalled ;
+        private int timesCalled;
 
         private SourceMock(long initialValue, int increment) {
-            this(initialValue, increment, 0 );
+            this(initialValue, increment, 0);
         }
 
         private SourceMock(long initialValue, int increment, int timesCalled) {
@@ -98,11 +99,10 @@ public class ResettablePooledLoOptimizerTest {
             this.timesCalled = timesCalled;
 
             if (timesCalled == 0) {
-                this.value.initialize( -1 );
+                this.value.initialize(-1);
                 this.initialValue = initialValue;
-            }
-            else {
-                this.value.initialize( initialValue );
+            } else {
+                this.value.initialize(initialValue);
                 this.initialValue = 1;
             }
         }
@@ -113,12 +113,10 @@ public class ResettablePooledLoOptimizerTest {
                 if (timesCalled == 0) {
                     initValue();
                     return value.copy();
-                }
-                else {
+                } else {
                     return value.add(increment).copy();
                 }
-            }
-            finally {
+            } finally {
                 timesCalled++;
             }
         }

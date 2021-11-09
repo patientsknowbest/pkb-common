@@ -1,8 +1,8 @@
 /*com.pkb.common.config.MutableRawConfigStorageTest.getInt10*/
 {
   "0x1": {
+    "class": "com.pkb.common.config.MalformedValueException",
     "detailMessage": "malformed value\u003d[not an integer] for configuration key\u003d[stringKey] (expected type\u003d[Integer])",
-    "stackTrace": [],
     "suppressedExceptions": []
   }
 }
