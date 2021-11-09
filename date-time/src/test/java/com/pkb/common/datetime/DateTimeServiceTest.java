@@ -2,7 +2,8 @@ package com.pkb.common.datetime;
 
 import static com.github.karsaig.approvalcrest.jupiter.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 import java.text.ParsePosition;
 import java.time.Instant;

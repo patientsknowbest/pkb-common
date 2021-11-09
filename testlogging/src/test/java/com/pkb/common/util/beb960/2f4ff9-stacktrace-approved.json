@@ -1,0 +1,24 @@
+/*com.pkb.common.util.FrameFilterTest.testFrameFilterExcludesNonPkbAndInterceptorCode*/
+[
+  {
+    "classLoaderName": "app",
+    "declaringClass": "com.pkb.common.util.FrameFilterTest",
+    "fileName": "FrameFilterTest.java",
+    "format": 1,
+    "methodName": "bar"
+  },
+  {
+    "classLoaderName": "app",
+    "declaringClass": "com.pkb.common.util.FrameFilterTest",
+    "fileName": "FrameFilterTest.java",
+    "format": 1,
+    "methodName": "foo"
+  },
+  {
+    "classLoaderName": "app",
+    "declaringClass": "com.pkb.common.util.FrameFilterTest",
+    "fileName": "FrameFilterTest.java",
+    "format": 1,
+    "methodName": "testFrameFilterExcludesNonPkbAndInterceptorCode"
+  }
+]

@@ -1,7 +1,6 @@
 package com.pkb.common.testcontrol.message;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.karsaig.approvalcrest.jupiter.MatcherAssert;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -11,6 +10,7 @@ import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+import static com.github.karsaig.approvalcrest.jupiter.MatcherAssert.assertThat;
 import static com.github.karsaig.approvalcrest.jupiter.matcher.Matchers.sameBeanAs;
 
 public class SerializationTest {
@@ -28,15 +28,16 @@ public class SerializationTest {
                 {Startup.class, ImmutableStartup.builder().name("doo").callback("woo").build()},
         };
     }
+
     @ParameterizedTest
     @MethodSource("testCases")
     <T> void serializationTest(Class<T> clazz, T in) throws IOException {
         var om = new ObjectMapper();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         om.writerFor(clazz)
-            .writeValue(baos, in);
+                .writeValue(baos, in);
         T out = om.readerFor(clazz)
                 .readValue(new ByteArrayInputStream(baos.toByteArray()));
-        MatcherAssert.assertThat(in, sameBeanAs(out));
+        assertThat(in, sameBeanAs(out));
     }
 }

@@ -1,8 +1,8 @@
 /*com.pkb.common.config.ImmutableRawConfigStorageTest.getBoolean_emptyKeyFailure*/
 {
   "0x1": {
+    "class": "com.pkb.common.config.MalformedValueException",
     "detailMessage": "malformed value\u003d[] for configuration key\u003d[emptyKey] (expected type\u003d[Boolean])",
-    "stackTrace": [],
     "suppressedExceptions": []
   }
 }
