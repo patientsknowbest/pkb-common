@@ -46,14 +46,16 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <apache.commons.text.version>1.8</apache.commons.text.version>
+        <apache.commons.text.version>1.9</apache.commons.text.version>
         <approvalcrest.version>0.60.3</approvalcrest.version>
         <hamcrest.version>2.2</hamcrest.version>
         <micrometer.version>1.7.5</micrometer.version>
-        <slf4j.version>1.7.30</slf4j.version>
+        <slf4j.version>1.7.32</slf4j.version>
         <vavr.version>0.10.2</vavr.version>
+        <commons-codec.version>1.15</commons-codec.version>
+        <apache.httpclient.version>4.5.13</apache.httpclient.version>
 
-        <version.apache.commons.lang3>3.9</version.apache.commons.lang3>
+        <version.apache.commons.lang3>3.12.0</version.apache.commons.lang3>
         <version.jetbrain.annotations>19.0.0</version.jetbrain.annotations>
         <junit5.version>5.8.1</junit5.version>
         <version.mockito>4.0.0</version.mockito>
@@ -70,6 +72,8 @@
         <maven.flatten.plugin.version>1.2.7</maven.flatten.plugin.version>
         <maven.surefire.plugin.version>3.0.0-M5</maven.surefire.plugin.version>
         <owasp-dependency-check.version>6.1.5</owasp-dependency-check.version>
+        <plugin.version.maven.enforcer>3.0.0</plugin.version.maven.enforcer>
+        <plugin.version.maven.extra.enforcer.rules.version>1.4</plugin.version.maven.extra.enforcer.rules.version>
         <pitest.version>1.7.2</pitest.version>
 
         <revision>0.0.0</revision>
@@ -103,7 +107,6 @@
 
     <dependencyManagement>
         <dependencies>
-
             <dependency>
                 <groupId>com.pkb.pkbcommon</groupId>
                 <artifactId>infrastructure</artifactId>
@@ -119,6 +122,16 @@
                 <artifactId>commons-testing-base</artifactId>
                 <version>${commons.testing.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${commons-codec.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${apache.httpclient.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -351,6 +364,38 @@
                             <arg>-Werror</arg>
                         </compilerArgs>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>${plugin.version.maven.enforcer}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>extra-enforcer-rules</artifactId>
+                            <version>${plugin.version.maven.extra.enforcer.rules.version}</version>
+                        </dependency>
+                    </dependencies>
+                    <executions>
+                        <execution>
+                            <id>enforce-dependencies</id>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                            <configuration>
+                                <rules>
+                                    <!-- for any duplicate transient dependencies we have, make sure they're being managed
+                                    to pick the highest version. Otherwise we may end up unexpectedly swapping to an older
+                                    version if the 'nearest' definition changes, or end up unexpectedly using a different version
+                                    to what we've specified via a parent bom -->
+                                    <requireUpperBoundDeps/>
+                                    <banCircularDependencies/>
+                                    <!-- TODO ban duplicate classes, etc -->
+                                </rules>
+                                <fail>true</fail>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
