@@ -83,7 +83,7 @@
         <restassured.version>3.0.9-PKB</restassured.version>
 
         <spring.version>5.3.12</spring.version> <!-- copied from PHR -->
-        <commons.testing.version>49-head-a39d672-174384-SNAPSHOT</commons.testing.version>
+        <commons.testing.version>49-7ad925d-174903</commons.testing.version>
         <spring-cloud.version>2020.0.3</spring-cloud.version>
         <hibernate-core.version>5.3.15.Final</hibernate-core.version>
         <spring.boot.version>2.5.2</spring.boot.version>
