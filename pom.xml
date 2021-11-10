@@ -94,7 +94,6 @@
         <module>config</module>
         <module>datamigrator</module>
         <module>date-time</module>
-        <module>error</module>
         <module>infrastructure</module>
         <module>spring-infrastructure</module>
         <module>testlogging</module>
