@@ -22,6 +22,7 @@ import java.net.URL;
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 public abstract class AbstractTestControlCamelRouteBuilder extends RouteBuilder {
+    public static final String ROUTE_PROPERTY_IS_TEST_CONTROL = "io.pkb.route.property.istestcontrol";
     /**
      * Encapsulates the app-specific config required for these routes
      */
@@ -58,14 +59,14 @@ public abstract class AbstractTestControlCamelRouteBuilder extends RouteBuilder 
             
             // Routes for test control requests
             rest()
-                    .put("setNamespace").route().bean(this, "setNamespace").endRest()
-                    .put("setFixedTimestamp").route().bean(this, "setFixedTimestamp").endRest()
-                    .put("moveTime").route().bean(this, "moveTime").endRest()
-                    .put("injectConfig").route().bean(this, "injectConfig").endRest()
-                    .put("clearInternalState").route().bean(this, "clearInternalState").endRest()
-                    .put("clearStorage").route().bean(this, "clearStorage").endRest()
-                    .put("logTestName").route().bean(this, "logTestName").endRest()
-                    .put("toggleDetailedLogging").route().bean(this, "toggleDetailedLogging").endRest();
+                    .put("setNamespace").route().routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "setNamespace").endRest()
+                    .put("setFixedTimestamp").route().routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "setFixedTimestamp").endRest()
+                    .put("moveTime").route().routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "moveTime").endRest()
+                    .put("injectConfig").route().routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "injectConfig").endRest()
+                    .put("clearInternalState").route().routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "clearInternalState").endRest()
+                    .put("clearStorage").route().routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "clearStorage").endRest()
+                    .put("logTestName").route().routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "logTestName").endRest()
+                    .put("toggleDetailedLogging").route().routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "toggleDetailedLogging").endRest();
         }
     }
     
