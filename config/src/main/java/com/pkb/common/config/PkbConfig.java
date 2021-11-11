@@ -24,10 +24,6 @@ public interface PkbConfig extends BaseConfig {
         return getConfigStorage().getInt("letter.invitation.token.expiry", (int) TimeUnit.DAYS.toSeconds(70L));
     }
 
-    default boolean isDocumentDplEncryptionEnabled() {
-        return getConfigStorage().getBoolean("feature.documentDplEncryptionEnabled", false);
-    }
-
     default boolean isMessageDplEncryptionEnabled() {
         return getConfigStorage().getBoolean("feature.messageDplEncryptionEnabled", false);
     }
