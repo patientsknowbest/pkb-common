@@ -27,4 +27,8 @@ public interface PkbConfig extends BaseConfig {
     default boolean isDocumentDplEncryptionEnabled() {
         return getConfigStorage().getBoolean("feature.documentDplEncryptionEnabled", false);
     }
+
+    default boolean isMessageDplEncryptionEnabled() {
+        return getConfigStorage().getBoolean("feature.messageDplEncryptionEnabled", false);
+    }
 }
