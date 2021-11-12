@@ -27,12 +27,10 @@ public class Error implements Serializable {
     public static String USER_TYPE_NOT_PERM_ERROR_CODE = "user.type.not.perm";
 
     public enum NHS_EMAIL_MISMATCH {
-        EMPTY_FIELD,
-        EMAIL_AND_DIFFERENT_NHS_NUMBER,
-        NO_NHS_NUMBER_NO_EMAIL,
-        MULTIPLE_EMAIL,
-        MULTIPLE_NHS_NUMBER,
-        MULTIPLE_EMAIL_AND_NHS_NUMBER
+        DEMOGRAPHICS_MISMATCH,
+        DIFFERENT_PKB_RECORDS,
+        MISSING_DEFAULT_ACCOUNT,
+        NO_NHS_NUMBER_NO_EMAIL
     }
 
     private static final long serialVersionUID = 1L;
