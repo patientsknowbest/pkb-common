@@ -39,13 +39,16 @@ public abstract class AbstractTestControlCamelRouteBuilder extends RouteBuilder 
             getContext().getGlobalOptions().put("CamelJacksonEnableTypeConverter", "true");
             getContext().getGlobalOptions().put("CamelJacksonTypeConverterToPojo", "true");
             var selfUrl = new URL(config().getApplicationTestControlCallbackURL());
-            var testControlUrl = new URL(config().getTestControlUrl());
-            
+
             restConfiguration().host("0.0.0.0").port(selfUrl.getPort()).component("netty-http").bindingMode(RestBindingMode.json);
             
             if (config().getEnableTestControlRegistration()) {
+                var testControlUrl = new URL(config().getTestControlUrl());
+
                 // Maybe replace this with a proper service discovery system later.
-                from("timer:startup?repeatCount=1")
+                // https://camel.apache.org/components/3.12.x/timer-component.html#_firing_as_soon_as_possible
+                // https://camel.apache.org/components/3.12.x/timer-component.html#_endpoint_query_option_synchronous
+                from("timer:startup?delay=-1&repeatCount=1&synchronous=true")
                         .routeId("startupMessage")
                         .routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString())
                         .setBody(constant(ImmutableStartup.builder()
