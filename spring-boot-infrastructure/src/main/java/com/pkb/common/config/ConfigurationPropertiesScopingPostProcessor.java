@@ -1,21 +1,20 @@
 package com.pkb.common.config;
 
-import java.util.Optional;
-
-import javax.annotation.ParametersAreNonnullByDefault;
-
 import org.springframework.aop.scope.ScopedProxyUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
-import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Optional;
 
 /**
  * This post-processor works around a bug/limitation of Spring Boot/Spring Cloud whereby
@@ -38,19 +37,19 @@ public class ConfigurationPropertiesScopingPostProcessor implements BeanDefiniti
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
         for (String name : registry.getBeanDefinitionNames()) {
             BeanDefinition beanDefinition = registry.getBeanDefinition(name);
-            if (beanDefinition.getClass().getName().equals("org.springframework.boot.context.properties.ConfigurationPropertiesValueObjectBeanDefinition")) {
-                GenericBeanDefinition gbd = (GenericBeanDefinition) beanDefinition;
+            if (isOldpringBootConfigPropertiesBean(beanDefinition) || isNewSpringBootConfigPropertiesBean(beanDefinition)) {
+                AbstractBeanDefinition abd = (AbstractBeanDefinition) beanDefinition;
                 Optional<AnnotationAttributes> annAttrs = Optional
-                        .ofNullable(AnnotationAttributes.fromMap(AnnotationMetadata.introspect(gbd.getBeanClass()).getAnnotationAttributes(
+                        .ofNullable(AnnotationAttributes.fromMap(AnnotationMetadata.introspect(abd.getBeanClass()).getAnnotationAttributes(
                                 SCOPE_ANNOTATION, false)));
                 ScopedProxyMode scopedProxyMode = annAttrs.map(attrs -> attrs.<ScopedProxyMode>getEnum("proxyMode")).orElse(ScopedProxyMode.NO);
-                gbd.setScope(annAttrs.map(attrs -> attrs.getString("value")).orElse(gbd.getScope()));
+                abd.setScope(annAttrs.map(attrs -> attrs.getString("value")).orElse(abd.getScope()));
                 if (scopedProxyMode == ScopedProxyMode.NO) {
                     continue;
                 }
                 boolean proxyTargetClass = scopedProxyMode == ScopedProxyMode.TARGET_CLASS;
                 registry.removeBeanDefinition(name);
-                BeanDefinitionHolder scopedProxy = ScopedProxyUtils.createScopedProxy(new BeanDefinitionHolder(gbd, name), registry, proxyTargetClass);
+                BeanDefinitionHolder scopedProxy = ScopedProxyUtils.createScopedProxy(new BeanDefinitionHolder(abd, name), registry, proxyTargetClass);
                 registry.registerBeanDefinition(scopedProxy.getBeanName(), scopedProxy.getBeanDefinition());
             }
         }
@@ -59,5 +58,21 @@ public class ConfigurationPropertiesScopingPostProcessor implements BeanDefiniti
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         //No-op
+    }
+
+
+    //Pre Spring boot 2.6
+    private boolean isOldpringBootConfigPropertiesBean(BeanDefinition beanDefinition) {
+        return beanDefinition.getClass().getName().equals("org.springframework.boot.context.properties.ConfigurationPropertiesValueObjectBeanDefinition");
+    }
+
+
+    //Spring boot 2.6+
+    private boolean isNewSpringBootConfigPropertiesBean(BeanDefinition beanDefinition) {
+        if (beanDefinition instanceof AbstractBeanDefinition) {
+            AbstractBeanDefinition abd = (AbstractBeanDefinition) beanDefinition;
+            return abd.hasBeanClass() && AnnotationMetadata.introspect(abd.getBeanClass()).hasAnnotation("org.springframework.boot.context.properties.ConfigurationProperties");
+        }
+        return false;
     }
 }
