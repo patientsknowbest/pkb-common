@@ -37,6 +37,38 @@ public interface BaseConfig {
         return getConfigStorage().getString("defaultDocumentStore", "DOC");
     }
 
+    default int getGcsInitialTimeout() {
+        return getConfigStorage().getInt("gcs.initialTimeout", 1000);
+    }
+
+    default int getGcsInitialRcpTimeout() {
+        return getConfigStorage().getInt("gcs.initialRcpTimeout", 1000);
+    }
+
+    default int getGcsTimeoutMultiplier() {
+        return getConfigStorage().getInt("gcs.timeoutMultiplier", 1);
+    }
+
+    default int getGcsRcpTimeoutMultiplier() {
+        return getConfigStorage().getInt("gcs.rcpTimeoutMultiplier", 1);
+    }
+
+    default int getGcsMaxTimeout() {
+        return getConfigStorage().getInt("gcs.maxTimeout", 1000);
+    }
+
+    default int getGcsMaxRcpTimeout() {
+        return getConfigStorage().getInt("gcs.maxRcpTimeout", 1000);
+    }
+
+    default int getGcsMaxTotalTimeout() {
+        return getConfigStorage().getInt("gcs.maxTotalTimeout", 10000);
+    }
+
+    default int getGcsMaxAttempts() {
+        return getConfigStorage().getInt("documents.gcs.maxAttempts", 5);
+    }
+
     default String getPubSubProjectName() {
         return getConfigStorage().getString("pubsub.projectname");
     }
