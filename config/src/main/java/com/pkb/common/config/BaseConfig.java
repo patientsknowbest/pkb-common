@@ -41,24 +41,24 @@ public interface BaseConfig {
         return getConfigStorage().getInt("gcs.initialTimeout", 1000);
     }
 
-    default int getGcsInitialRcpTimeout() {
-        return getConfigStorage().getInt("gcs.initialRcpTimeout", 1000);
+    default int getGcsInitialRpcTimeout() {
+        return getConfigStorage().getInt("gcs.initialRpcTimeout", 1000);
     }
 
     default int getGcsTimeoutMultiplier() {
         return getConfigStorage().getInt("gcs.timeoutMultiplier", 1);
     }
 
-    default int getGcsRcpTimeoutMultiplier() {
-        return getConfigStorage().getInt("gcs.rcpTimeoutMultiplier", 1);
+    default int getGcsRpcTimeoutMultiplier() {
+        return getConfigStorage().getInt("gcs.rpcTimeoutMultiplier", 1);
     }
 
     default int getGcsMaxTimeout() {
         return getConfigStorage().getInt("gcs.maxTimeout", 1000);
     }
 
-    default int getGcsMaxRcpTimeout() {
-        return getConfigStorage().getInt("gcs.maxRcpTimeout", 1000);
+    default int getGcsMaxRpcTimeout() {
+        return getConfigStorage().getInt("gcs.maxRpcTimeout", 1000);
     }
 
     default int getGcsMaxTotalTimeout() {
