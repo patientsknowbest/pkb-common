@@ -66,7 +66,7 @@ public interface BaseConfig {
     }
 
     default int getGcsMaxAttempts() {
-        return getConfigStorage().getInt("documents.gcs.maxAttempts", 5);
+        return getConfigStorage().getInt("gcs.maxAttempts", 5);
     }
 
     default String getPubSubProjectName() {
