@@ -13,7 +13,7 @@
 
     <properties>
         <retrofit.version>2.9.0</retrofit.version>
-        <jackson.version>2.12.5</jackson.version>
+        <jackson.version>2.13.1</jackson.version>
     </properties>
     <dependencies>
         <dependency>
