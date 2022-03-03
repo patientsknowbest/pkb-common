@@ -85,19 +85,12 @@ public abstract class AbstractNamespaceAwareRouteBuilder extends RouteBuilder {
         String fromUri = route.getInput().getEndpointUri();
 
         if (fromUri.startsWith(getNamespaceComponentPrefix())) {
-            // disable redelivery attempts for namespace exceptions
-            // The point of entry for redeliveries is the point of failure:
-            // https://camel.apache.org/manual/latest/exception-clause.html#ExceptionClause-PointofEntryforRedeliveryAttempts
-            // This causes issues with our NamespaceRoutePolicy as the framework doesn't recall the 'begin' stage of the exchange.
-            // Instead, the dead letter topic should be triggered immediately.
-            
-            // TODO: MFA - Actually, mark it has handled and just log it, so google pubsub is acked
+            // Mark it has handled and just log it, so google pubsub is acked
             // and never retried at all (because google pubsub has it's own retry policy)
-            //route.onException(InvalidNamespaceException.class).maximumRedeliveries(0);
             route.onException(InvalidNamespaceException.class)
                     .logHandled(true)
                     .handled(true)
-                    .to("log:ignoredMessages?level=INFO");
+                    .to(String.format("log:%s?level=OFF", this.getClass().getName()));
         }
     }
 

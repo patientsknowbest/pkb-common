@@ -1,30 +1,31 @@
 package com.pkb.common.testcontrol.route;
 
-import static com.github.karsaig.approvalcrest.jupiter.matcher.Matchers.sameJsonAsApproved;
-import static com.pkb.common.testcontrol.camel.route.RouteHelpers.NAMESPACE_HEADER_ATTRIBUTE;
-import static org.mockito.Mockito.when;
-
-import java.util.Map;
-
+import ch.qos.logback.classic.Level;
+import com.pkb.common.testcontrol.camel.route.AbstractNamespaceAwareRouteBuilder;
+import com.pkb.common.testcontrol.services.PubSubNamespaceService;
+import io.pkb.logcapture.LogCaptureExtension;
 import org.apache.camel.ContextTestSupport;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.google.pubsub.GooglePubsubConstants;
 import org.apache.camel.component.mock.MockEndpoint;
+import org.hamcrest.Matchers;
 import org.jetbrains.annotations.NotNull;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
-import com.github.karsaig.approvalcrest.jupiter.MatcherAssert;
+import java.util.Map;
 
-import com.pkb.common.testcontrol.camel.route.AbstractNamespaceAwareRouteBuilder;
-import com.pkb.common.testcontrol.services.PubSubNamespaceService;
+import static com.github.karsaig.approvalcrest.jupiter.MatcherAssert.assertThat;
+import static com.pkb.common.testcontrol.camel.route.RouteHelpers.NAMESPACE_HEADER_ATTRIBUTE;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
 
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
 @ExtendWith(MockitoExtension.class)
@@ -32,6 +33,9 @@ import com.pkb.common.testcontrol.services.PubSubNamespaceService;
 class AbstractNamespaceAwareRouteBuilderTest extends ContextTestSupport {
 
     public static final String INITIAL_NAMESPACE = "initialNamespace";
+
+    @RegisterExtension
+    private final LogCaptureExtension logCaptureExtension = LogCaptureExtension.create().forLevel(Level.OFF).forType(AbstractNamespaceAwareRouteBuilder.class);
 
     @Mock
     public PubSubNamespaceService service;
@@ -45,26 +49,27 @@ class AbstractNamespaceAwareRouteBuilderTest extends ContextTestSupport {
     // 67cf1f
     void namespacedRoute_noNamespaceOnIncomingMessage_throwsException(TestInfo info) throws Exception {
 
+        logCaptureExtension.forLevel(Level.ERROR);
         MockEndpoint resultEndpoint = resolveMandatoryEndpoint("mock:resultNamespaced", MockEndpoint.class);
         resultEndpoint.expectedMessageCount(0);
 
-        RuntimeException runtimeException = Assertions.assertThrows(RuntimeException.class, () -> template.sendBody("direct:namespaced", "hello"));
-        MatcherAssert.assertThat(runtimeException.getCause(), sameJsonAsApproved(info));
-
+        template.sendBody("direct:namespaced", "hello");
+        assertTrue(logCaptureExtension.isStatementAtLevel("[ERROR] Message received with invalid namespace, expected 'initialNamespace' but received 'no pubsub attributes'", Level.ERROR));
+        assertThat(resultEndpoint.getReceivedCounter(), Matchers.is(0));
         resultEndpoint.assertIsSatisfied();
     }
 
     @Test
     // e6ee57
     void namespacedRoute_differentNamespaceOnIncomingMessage_throwsException(TestInfo info) throws Exception {
-
+        logCaptureExtension.forLevel(Level.ERROR);
         MockEndpoint resultEndpoint = resolveMandatoryEndpoint("mock:resultNamespaced", MockEndpoint.class);
         resultEndpoint.expectedMessageCount(0);
 
-        RuntimeException runtimeException = Assertions.assertThrows(RuntimeException.class,
-                () -> template.sendBodyAndHeader("direct:namespaced", "hello", GooglePubsubConstants.ATTRIBUTES, Map.of(NAMESPACE_HEADER_ATTRIBUTE, "different")));
-        MatcherAssert.assertThat(runtimeException.getCause(), sameJsonAsApproved(info));
+        template.sendBodyAndHeader("direct:namespaced", "hello", GooglePubsubConstants.ATTRIBUTES, Map.of(NAMESPACE_HEADER_ATTRIBUTE, "different"));
 
+        assertTrue(logCaptureExtension.isStatementAtLevel("[ERROR] Message received with invalid namespace, expected 'initialNamespace' but received 'different'", Level.ERROR));
+        assertThat(resultEndpoint.getReceivedCounter(), Matchers.is(0));
         resultEndpoint.assertIsSatisfied();
     }
 
@@ -76,6 +81,7 @@ class AbstractNamespaceAwareRouteBuilderTest extends ContextTestSupport {
 
         template.sendBodyAndHeader("direct:namespaced", "hello", GooglePubsubConstants.ATTRIBUTES, Map.of(NAMESPACE_HEADER_ATTRIBUTE, INITIAL_NAMESPACE));
 
+        assertThat(resultEndpoint.getReceivedCounter(), Matchers.is(1));
         resultEndpoint.assertIsSatisfied();
     }
 
@@ -88,6 +94,7 @@ class AbstractNamespaceAwareRouteBuilderTest extends ContextTestSupport {
 
         template.sendBody("direct:notnamespaced", "hello");
 
+        assertThat(resultEndpoint.getReceivedCounter(), Matchers.is(1));
         resultEndpoint.assertIsSatisfied();
     }
 
@@ -99,6 +106,7 @@ class AbstractNamespaceAwareRouteBuilderTest extends ContextTestSupport {
 
         template.sendBodyAndHeader("direct:notnamespaced", "hello", GooglePubsubConstants.ATTRIBUTES, Map.of(NAMESPACE_HEADER_ATTRIBUTE, "different"));
 
+        assertThat(resultEndpoint.getReceivedCounter(), Matchers.is(1));
         resultEndpoint.assertIsSatisfied();
     }
 
@@ -110,6 +118,7 @@ class AbstractNamespaceAwareRouteBuilderTest extends ContextTestSupport {
 
         template.sendBodyAndHeader("direct:notnamespaced", "hello", GooglePubsubConstants.ATTRIBUTES, Map.of(NAMESPACE_HEADER_ATTRIBUTE, INITIAL_NAMESPACE));
 
+        assertThat(resultEndpoint.getReceivedCounter(), Matchers.is(1));
         resultEndpoint.assertIsSatisfied();
     }
 
