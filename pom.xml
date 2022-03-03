@@ -103,6 +103,7 @@
         <module>spring-boot-infrastructure</module>
         <module>spring-boot-kotlin-infrastructure</module>
         <module>pubsub</module>
+        <module>log-capture</module>
     </modules>
 
     <dependencyManagement>
@@ -122,6 +123,11 @@
                 <artifactId>commons-testing-base</artifactId>
                 <version>${commons.testing.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.pkb.pkbcommon</groupId>
+                <artifactId>log-capture</artifactId>
+                <version>${revision}${changelist}</version>
             </dependency>
             <dependency>
                 <groupId>commons-codec</groupId>
