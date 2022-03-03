@@ -90,7 +90,14 @@ public abstract class AbstractNamespaceAwareRouteBuilder extends RouteBuilder {
             // https://camel.apache.org/manual/latest/exception-clause.html#ExceptionClause-PointofEntryforRedeliveryAttempts
             // This causes issues with our NamespaceRoutePolicy as the framework doesn't recall the 'begin' stage of the exchange.
             // Instead, the dead letter topic should be triggered immediately.
-            route.onException(InvalidNamespaceException.class).maximumRedeliveries(0);
+            
+            // TODO: MFA - Actually, mark it has handled and just log it, so google pubsub is acked
+            // and never retried at all (because google pubsub has it's own retry policy)
+            //route.onException(InvalidNamespaceException.class).maximumRedeliveries(0);
+            route.onException(InvalidNamespaceException.class)
+                    .logHandled(true)
+                    .handled(true)
+                    .to("log:ignoredMessages?level=INFO");
         }
     }
 
