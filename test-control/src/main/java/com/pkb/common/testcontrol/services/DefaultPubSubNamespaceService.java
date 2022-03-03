@@ -8,6 +8,7 @@ import org.apache.camel.spi.RouteStartupOrder;
 import org.apache.camel.util.function.ThrowingConsumer;
 
 import java.util.Comparator;
+import java.util.concurrent.TimeUnit;
 
 public class DefaultPubSubNamespaceService implements PubSubNamespaceService {
     private final CamelContext context;
@@ -23,7 +24,8 @@ public class DefaultPubSubNamespaceService implements PubSubNamespaceService {
         // We want to ensure that all _currently_ processing messages are stopped before we change the namespace.
         // This ensures that any unprocessed messages are ignored and don't cause havoc by running while we try to 
         // reset the application internal state.
-        applyToRoutesExceptTestControl(route -> context.getRouteController().suspendRoute(route.getRouteId()), true);
+        // Use a very short timeout. We don't have time to hang around for routes to complete, just force it.
+        applyToRoutesExceptTestControl(route -> context.getRouteController().stopRoute(route.getRouteId(), 100, TimeUnit.MILLISECONDS), true);
         this.currentNamespace = currentNamespace;
         applyToRoutesExceptTestControl(route -> context.getRouteController().resumeRoute(route.getRouteId()), false);
     }
