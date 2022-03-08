@@ -28,7 +28,7 @@ public interface PkbConfig extends BaseConfig {
         return getConfigStorage().getBoolean("feature.documentDplEncryptionEnabled", false);
     }
 
-    default boolean isUnencryptedDocumentUploadEnabled() {
-        return getConfigStorage().getBoolean("feature.documentUploadUnencryptedEnabled", false);
+    default boolean isDocumentEncryptionEnabled() {
+        return getConfigStorage().getBoolean("feature.documentEncryptionEnabled", true);
     }
 }
