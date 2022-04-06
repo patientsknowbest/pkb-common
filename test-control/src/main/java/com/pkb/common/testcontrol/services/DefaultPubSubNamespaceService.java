@@ -9,6 +9,8 @@ import org.apache.camel.util.function.ThrowingConsumer;
 
 import java.util.Comparator;
 
+import static com.pkb.common.testcontrol.client.TestControl.IO_PKB_TESTCONTROL_PREFIX;
+
 public class DefaultPubSubNamespaceService implements PubSubNamespaceService {
     private final CamelContext context;
     
@@ -40,6 +42,7 @@ public class DefaultPubSubNamespaceService implements PubSubNamespaceService {
                 .sorted(comp)
                 .map(RouteStartupOrder::getRoute)
                 .filter(route -> !route.getProperties().containsKey(AbstractTestControlCamelRouteBuilder.ROUTE_PROPERTY_IS_TEST_CONTROL))
+                .filter(route -> !route.getEndpoint().getEndpointUri().contains(IO_PKB_TESTCONTROL_PREFIX)) //DIRECT routes from rest are hard to add properties to...
                 .forEach(route -> {
                     try {
                         routeConsumer.accept(route);

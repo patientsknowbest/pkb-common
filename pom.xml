@@ -50,7 +50,7 @@
         <approvalcrest.version>0.60.3</approvalcrest.version>
         <hamcrest.version>2.2</hamcrest.version>
         <micrometer.version>1.8.2</micrometer.version>
-        <slf4j.version>1.7.35</slf4j.version>
+        <slf4j.version>1.7.36</slf4j.version>
         <vavr.version>0.10.2</vavr.version>
         <commons-codec.version>1.15</commons-codec.version>
         <apache.httpclient.version>4.5.13</apache.httpclient.version>
@@ -64,7 +64,7 @@
         <javax.javaee-api.version>8.0</javax.javaee-api.version>
         <avro.version>1.11.0</avro.version>
         <commons.compress.version>1.21</commons.compress.version>
-        <camel.version>3.15.0</camel.version>
+        <camel.version>3.16.0</camel.version>
         <logback.version>1.2.10</logback.version>
 
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
@@ -82,7 +82,7 @@
         <javax.inject.version>1</javax.inject.version>
         <restassured.version>3.0.9-PKB</restassured.version>
 
-        <spring.version>5.3.15</spring.version> <!-- copied from PHR -->
+        <spring.version>5.3.18</spring.version> <!-- copied from PHR -->
         <commons.testing.version>49-7ad925d-174903</commons.testing.version>
         <spring-cloud.version>2021.0.0</spring-cloud.version>
         <hibernate-core.version>5.3.15.Final</hibernate-core.version>
