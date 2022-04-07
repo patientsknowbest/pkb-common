@@ -31,7 +31,7 @@ import java.util.Optional;
  * just a box for the same thing.
  */
 public interface TestControl {
-    public static final String IO_PKB_TESTCONTROL_PREFIX = "io-pkb-testcontrol-";
+    String IO_PKB_TESTCONTROL_PREFIX = "io-pkb-testcontrol-";
 
     static TestControl create(OkHttpClient httpClient, String testControlBaseURL) {
         return new Retrofit.Builder().baseUrl(testControlBaseURL)
