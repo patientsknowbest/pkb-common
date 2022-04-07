@@ -31,6 +31,8 @@ import java.util.Optional;
  * just a box for the same thing.
  */
 public interface TestControl {
+    String IO_PKB_TESTCONTROL_PREFIX = "io-pkb-testcontrol-";
+
     static TestControl create(OkHttpClient httpClient, String testControlBaseURL) {
         return new Retrofit.Builder().baseUrl(testControlBaseURL)
                 .client(httpClient)
@@ -39,21 +41,21 @@ public interface TestControl {
                 .build()
                 .create(TestControl.class);
     }
-    @PUT("setNamespace")
+    @PUT(IO_PKB_TESTCONTROL_PREFIX + "setNamespace")
     Void setNamespace(@Body NamespaceChangeRequest request);
-    @PUT("setFixedTimestamp")
+    @PUT(IO_PKB_TESTCONTROL_PREFIX + "setFixedTimestamp")
     Void setFixedTimestamp(@Body FixTimeRequest request);
-    @PUT("moveTime")
+    @PUT(IO_PKB_TESTCONTROL_PREFIX + "moveTime")
     Void moveTime(@Body MoveTimeRequest request);
-    @PUT("injectConfig")
+    @PUT(IO_PKB_TESTCONTROL_PREFIX + "injectConfig")
     Void injectConfig(@Body InjectConfigRequest request);
-    @PUT("clearInternalState")
+    @PUT(IO_PKB_TESTCONTROL_PREFIX + "clearInternalState")
     Void clearInternalState(@Body ClearInternalStateRequest request);
-    @PUT("clearStorage")
+    @PUT(IO_PKB_TESTCONTROL_PREFIX + "clearStorage")
     Void clearStorage(@Body ClearStorageRequest request);
-    @PUT("logTestName")
+    @PUT(IO_PKB_TESTCONTROL_PREFIX + "logTestName")
     Void logTestName(@Body LogTestNameRequest request);
-    @PUT("toggleDetailedLogging")
+    @PUT(IO_PKB_TESTCONTROL_PREFIX + "toggleDetailedLogging")
     Void toggleDetailedLogging(@Body DetailedLoggingRequest request);
 }
 

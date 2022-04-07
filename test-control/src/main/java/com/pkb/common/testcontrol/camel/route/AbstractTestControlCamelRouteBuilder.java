@@ -16,6 +16,8 @@ import org.apache.camel.model.rest.RestBindingMode;
 
 import java.net.URL;
 
+import static com.pkb.common.testcontrol.client.TestControl.IO_PKB_TESTCONTROL_PREFIX;
+
 /**
  * An instance of this needs to be injected into the camel context, either manually or with the relevant
  * injection framework annotation. Then the camel application will configure the endpoints and routes.
@@ -23,6 +25,7 @@ import java.net.URL;
 @SuppressWarnings({"WeakerAccess", "unused"})
 public abstract class AbstractTestControlCamelRouteBuilder extends RouteBuilder {
     public static final String ROUTE_PROPERTY_IS_TEST_CONTROL = "io.pkb.route.property.istestcontrol";
+
     /**
      * Encapsulates the app-specific config required for these routes
      */
@@ -63,14 +66,23 @@ public abstract class AbstractTestControlCamelRouteBuilder extends RouteBuilder 
             
             // Routes for test control requests
             rest()
-                    .put("setNamespace").route().routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "setNamespace").endRest()
-                    .put("setFixedTimestamp").route().routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "setFixedTimestamp").endRest()
-                    .put("moveTime").route().routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "moveTime").endRest()
-                    .put("injectConfig").route().routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "injectConfig").endRest()
-                    .put("clearInternalState").route().routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "clearInternalState").endRest()
-                    .put("clearStorage").route().routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "clearStorage").endRest()
-                    .put("logTestName").route().routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "logTestName").endRest()
-                    .put("toggleDetailedLogging").route().routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "toggleDetailedLogging").endRest();
+                .put(IO_PKB_TESTCONTROL_PREFIX + "setNamespace").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "setNamespace")
+                .put(IO_PKB_TESTCONTROL_PREFIX + "setFixedTimestamp").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "setFixedTimestamp")
+                .put(IO_PKB_TESTCONTROL_PREFIX + "moveTime").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "moveTime")
+                .put(IO_PKB_TESTCONTROL_PREFIX + "injectConfig").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "injectConfig")
+                .put(IO_PKB_TESTCONTROL_PREFIX + "clearInternalState").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "clearInternalState")
+                .put(IO_PKB_TESTCONTROL_PREFIX + "clearStorage").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "clearStorage")
+                .put(IO_PKB_TESTCONTROL_PREFIX + "logTestName").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "logTestName")
+                .put(IO_PKB_TESTCONTROL_PREFIX + "toggleDetailedLogging").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "toggleDetailedLogging");
+
+            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "setNamespace").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "setNamespace");
+            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "setFixedTimestamp").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "setFixedTimestamp");
+            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "moveTime").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "moveTime");
+            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "injectConfig").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "injectConfig");
+            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "clearInternalState").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "clearInternalState");
+            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "clearStorage").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "clearStorage");
+            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "logTestName").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "logTestName");
+            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "toggleDetailedLogging").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "toggleDetailedLogging");
         }
     }
     
