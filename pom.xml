@@ -74,7 +74,7 @@
         <javax.inject.version>1</javax.inject.version>
         <restassured.version>3.0.9-PKB</restassured.version>
 
-        <commons.testing.version>53-head-e556a98-222555-SNAPSHOT</commons.testing.version>
+        <commons.testing.version>53-0546e4f-222597</commons.testing.version>
         <spring-cloud.version>2021.0.3</spring-cloud.version>
         <spring.boot.version>2.7.0</spring.boot.version>
         <immutables.version>2.9.0</immutables.version>
