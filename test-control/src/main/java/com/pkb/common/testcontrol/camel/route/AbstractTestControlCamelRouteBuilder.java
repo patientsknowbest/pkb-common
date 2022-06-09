@@ -10,6 +10,7 @@ import com.pkb.common.testcontrol.message.InjectConfigRequest;
 import com.pkb.common.testcontrol.message.LogTestNameRequest;
 import com.pkb.common.testcontrol.message.MoveTimeRequest;
 import com.pkb.common.testcontrol.message.NamespaceChangeRequest;
+import com.pkb.common.testcontrol.message.Startup;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
@@ -39,11 +40,9 @@ public abstract class AbstractTestControlCamelRouteBuilder extends RouteBuilder 
     public void configure() throws Exception {
         if (config().getEnableTestControlEndpoint()) {
             // Configure netty-http with Jackson, listening on specified port 
-            getContext().getGlobalOptions().put("CamelJacksonEnableTypeConverter", "true");
-            getContext().getGlobalOptions().put("CamelJacksonTypeConverterToPojo", "true");
             var selfUrl = new URL(config().getApplicationTestControlCallbackURL());
 
-            restConfiguration().host("0.0.0.0").port(selfUrl.getPort()).component("netty-http").bindingMode(RestBindingMode.json);
+            restConfiguration().host("0.0.0.0").port(selfUrl.getPort()).component("netty-http").bindingMode(RestBindingMode.off);
             
             if (config().getEnableTestControlRegistration()) {
                 var testControlUrl = new URL(config().getTestControlUrl());
@@ -58,34 +57,35 @@ public abstract class AbstractTestControlCamelRouteBuilder extends RouteBuilder 
                                 .name(config().getApplicationName())
                                 .callback(config().getApplicationTestControlCallbackURL())
                                 .build()))
+                        .marshal().json(Startup.class)
                         .log(config().getApplicationName() + ": sending startup msg")
                         // Add a redelivery attempt, and die if we couldn't start up.
-                        .errorHandler(defaultErrorHandler().maximumRedeliveries(3).redeliveryDelay(100).onPrepareFailure(this::die))
+                        .errorHandler(defaultErrorHandler().maximumRedeliveries(3).redeliveryDelay(100).log(log).onPrepareFailure(this::die))
                         .to("rest://put:/register?host=" + testControlUrl.getHost() + ":" + testControlUrl.getPort());
             }
             
             // Routes for test control requests
             rest()
-                .put(IO_PKB_TESTCONTROL_PREFIX + "setNamespace").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "setNamespace")
-                .put(IO_PKB_TESTCONTROL_PREFIX + "setFixedTimestamp").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "setFixedTimestamp")
-                .put(IO_PKB_TESTCONTROL_PREFIX + "moveTime").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "moveTime")
-                .put(IO_PKB_TESTCONTROL_PREFIX + "injectConfig").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "injectConfig")
-                .put(IO_PKB_TESTCONTROL_PREFIX + "clearInternalState").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "clearInternalState")
-                .put(IO_PKB_TESTCONTROL_PREFIX + "clearStorage").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "clearStorage")
-                .put(IO_PKB_TESTCONTROL_PREFIX + "logTestName").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "logTestName")
-                .put(IO_PKB_TESTCONTROL_PREFIX + "toggleDetailedLogging").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "toggleDetailedLogging");
+                    .put(IO_PKB_TESTCONTROL_PREFIX + "setNamespace").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "setNamespace")
+                    .put(IO_PKB_TESTCONTROL_PREFIX + "setFixedTimestamp").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "setFixedTimestamp")
+                    .put(IO_PKB_TESTCONTROL_PREFIX + "moveTime").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "moveTime")
+                    .put(IO_PKB_TESTCONTROL_PREFIX + "injectConfig").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "injectConfig")
+                    .put(IO_PKB_TESTCONTROL_PREFIX + "clearInternalState").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "clearInternalState")
+                    .put(IO_PKB_TESTCONTROL_PREFIX + "clearStorage").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "clearStorage")
+                    .put(IO_PKB_TESTCONTROL_PREFIX + "logTestName").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "logTestName")
+                    .put(IO_PKB_TESTCONTROL_PREFIX + "toggleDetailedLogging").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "toggleDetailedLogging");
 
-            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "setNamespace").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "setNamespace");
-            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "setFixedTimestamp").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "setFixedTimestamp");
-            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "moveTime").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "moveTime");
-            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "injectConfig").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "injectConfig");
-            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "clearInternalState").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "clearInternalState");
-            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "clearStorage").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "clearStorage");
-            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "logTestName").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "logTestName");
-            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "toggleDetailedLogging").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).bean(this, "toggleDetailedLogging");
+            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "setNamespace").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).unmarshal().json(NamespaceChangeRequest.class).bean(this, "setNamespace");
+            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "setFixedTimestamp").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).unmarshal().json(FixTimeRequest.class).bean(this, "setFixedTimestamp");
+            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "moveTime").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).unmarshal().json(MoveTimeRequest.class).bean(this, "moveTime");
+            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "injectConfig").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).unmarshal().json(InjectConfigRequest.class).bean(this, "injectConfig");
+            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "clearInternalState").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).unmarshal().json(ClearInternalStateRequest.class).bean(this, "clearInternalState");
+            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "clearStorage").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).unmarshal().json(ClearStorageRequest.class).bean(this, "clearStorage");
+            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "logTestName").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).unmarshal().json(LogTestNameRequest.class).bean(this, "logTestName");
+            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "toggleDetailedLogging").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).unmarshal().json(DetailedLoggingRequest.class).bean(this, "toggleDetailedLogging");
         }
     }
-    
+
     public void die(Exchange ignored) {
         log.error("Failed to register application startup, dying now!!!");
         System.exit(1);

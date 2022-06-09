@@ -47,25 +47,17 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <apache.commons.text.version>1.9</apache.commons.text.version>
-        <approvalcrest.version>0.60.3</approvalcrest.version>
+        <approvalcrest.version>0.61.1</approvalcrest.version>
         <hamcrest.version>2.2</hamcrest.version>
-        <micrometer.version>1.8.2</micrometer.version>
-        <slf4j.version>1.7.36</slf4j.version>
         <vavr.version>0.10.2</vavr.version>
-        <commons-codec.version>1.15</commons-codec.version>
-        <apache.httpclient.version>4.5.13</apache.httpclient.version>
 
         <version.apache.commons.lang3>3.12.0</version.apache.commons.lang3>
         <version.jetbrain.annotations>19.0.0</version.jetbrain.annotations>
-        <junit5.version>5.8.2</junit5.version>
-        <version.mockito>4.3.1</version.mockito>
-        <version.guava>31.0.1-jre</version.guava>
+        <version.guava>31.1-jre</version.guava>
         <version.apache-commons-io>2.6</version.apache-commons-io>
         <javax.javaee-api.version>8.0</javax.javaee-api.version>
         <avro.version>1.11.0</avro.version>
-        <commons.compress.version>1.21</commons.compress.version>
-        <camel.version>3.16.0</camel.version>
-        <logback.version>1.2.10</logback.version>
+        <camel.version>3.17.0</camel.version>
 
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.source.plugin.version>3.2.1</maven.source.plugin.version>
@@ -82,13 +74,15 @@
         <javax.inject.version>1</javax.inject.version>
         <restassured.version>3.0.9-PKB</restassured.version>
 
-        <spring.version>5.3.18</spring.version> <!-- copied from PHR -->
-        <commons.testing.version>49-7ad925d-174903</commons.testing.version>
-        <spring-cloud.version>2021.0.0</spring-cloud.version>
-        <hibernate-core.version>5.3.15.Final</hibernate-core.version>
-        <spring.boot.version>2.6.3</spring.boot.version>
-        <immutables.version>2.8.8</immutables.version>
-        <checker-qual.version>3.20.0</checker-qual.version>
+        <commons.testing.version>53-0546e4f-222597</commons.testing.version>
+        <spring-cloud.version>2021.0.3</spring-cloud.version>
+        <spring.boot.version>2.7.0</spring.boot.version>
+        <immutables.version>2.9.0</immutables.version>
+        <checker-qual.version>3.22.1</checker-qual.version>
+        <kotlin.version>1.6.21</kotlin.version>
+        <errorprone.version>2.13.1</errorprone.version>
+        <groovy.version>2.5.17</groovy.version>
+        <retrofit.version>2.9.0</retrofit.version>
     </properties>
 
     <modules>
@@ -108,6 +102,28 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy</artifactId>
+                <version>${groovy.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-xml</artifactId>
+                <version>${groovy.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-json</artifactId>
+                <version>${groovy.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.pkb.pkbcommon</groupId>
                 <artifactId>infrastructure</artifactId>
                 <version>${revision}${changelist}</version>
@@ -122,16 +138,6 @@
                 <artifactId>commons-testing-base</artifactId>
                 <version>${commons.testing.version}</version>
                 <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>commons-codec</groupId>
-                <artifactId>commons-codec</artifactId>
-                <version>${commons-codec.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpclient</artifactId>
-                <version>${apache.httpclient.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -156,19 +162,9 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>io.vavr</groupId>
                 <artifactId>vavr</artifactId>
                 <version>${vavr.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>${version.apache.commons.lang3}</version>
             </dependency>
             <dependency>
                 <groupId>org.jetbrains</groupId>
@@ -199,36 +195,6 @@
                 <groupId>com.pkb.pkbcommon</groupId>
                 <artifactId>config</artifactId>
                 <version>${revision}${changelist}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-api</artifactId>
-                <version>${junit5.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter-params</artifactId>
-                <version>${junit5.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-junit-jupiter</artifactId>
-                <version>${version.mockito}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-core</artifactId>
-                <version>${version.mockito}</version>
-                <scope>test</scope>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.hamcrest</groupId>
-                        <artifactId>hamcrest-core</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
             <dependency>
                 <groupId>javax</groupId>
@@ -264,58 +230,11 @@
                 <version>${avro.version}</version>
             </dependency>
             <dependency>
-                <!-- this can be removed once org.apache.avro bumps commons-compress version -->
-                <!-- latest org.apache.avro 1.10.2 version still includes commons-compress 1.20 (owasp is complaining) -->
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-compress</artifactId>
-                <version>${commons.compress.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-core</artifactId>
-                <version>${hibernate-core.version}</version>
-                <scope>provided</scope>
-                <exclusions>
-                    <exclusion>
-                        <groupId>com.fasterxml</groupId>
-                        <artifactId>classmate</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.dom4j</groupId>
-                        <artifactId>dom4j</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context</artifactId>
-                <version>${spring.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-beans</artifactId>
-                <version>${spring.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-test</artifactId>
-                <version>${spring.boot.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-test</artifactId>
-                <version>${spring.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.camel</groupId>
@@ -324,23 +243,48 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- required to have a concrete implementation of slf4j's MDC in unit tests -->
-            <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-classic</artifactId>
-                <version>${logback.version}</version>
-                <scope>test</scope>
-            </dependency>
+
             <dependency>
                 <groupId>org.immutables</groupId>
                 <artifactId>value</artifactId>
                 <version>${immutables.version}</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.checkerframework</groupId>
                 <artifactId>checker-qual</artifactId>
                 <version>${checker-qual.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-stdlib</artifactId>
+                <version>${kotlin.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-stdlib-common</artifactId>
+                <version>${kotlin.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.google.errorprone</groupId>
+                <artifactId>error_prone_annotations</artifactId>
+                <version>${errorprone.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.retrofit2</groupId>
+                <artifactId>retrofit</artifactId>
+                <version>${retrofit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.retrofit2</groupId>
+                <artifactId>converter-jackson</artifactId>
+                <version>${retrofit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.xml.bind</groupId>
+                <artifactId>jaxb-impl</artifactId>
+                <version>2.3.6</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
