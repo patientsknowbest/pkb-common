@@ -84,6 +84,10 @@
         <retrofit.version>2.9.0</retrofit.version>
         <jakarta.persistence-api.version>2.2.3</jakarta.persistence-api.version>
         <jakarta.xml.bind-api.version>2.3.3</jakarta.xml.bind-api.version>
+        <hibernate-core.version>5.6.9.Final</hibernate-core.version> <!-- Please ensure that this remains consistent with the version specified in the spring boot bom -->
+        <jakarta.inject-api.version>1.0</jakarta.inject-api.version>
+        <jaxb-impl.version>2.3.6</jaxb-impl.version>
+        <jakarta.activation-api.version>2.0.1</jakarta.activation-api.version>
     </properties>
 
     <modules>
@@ -112,7 +116,7 @@
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-core</artifactId>
-                <version>5.6.9.Final</version>
+                <version>${hibernate-core.version}</version>
                 <exclusions>
                     <exclusion>
                         <groupId>javax.xml.bind</groupId>
@@ -209,7 +213,7 @@
             <dependency>
                 <groupId>jakarta.inject</groupId>
                 <artifactId>jakarta.inject-api</artifactId>
-                <version>1.0</version>
+                <version>${jakarta.inject-api.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.pkb.pkbcommon</groupId>
@@ -335,12 +339,12 @@
             <dependency>
                 <groupId>com.sun.xml.bind</groupId>
                 <artifactId>jaxb-impl</artifactId>
-                <version>2.3.6</version>
+                <version>${jaxb-impl.version}</version>
             </dependency>
             <dependency>
                 <groupId>jakarta.activation</groupId>
                 <artifactId>jakarta.activation-api</artifactId>
-                <version>2.0.1</version>
+                <version>${jakarta.activation-api.version}</version>
             </dependency>
             <dependency>
                 <groupId>jakarta.xml.bind</groupId>
