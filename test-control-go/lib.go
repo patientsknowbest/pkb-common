@@ -23,12 +23,17 @@ type TestControl interface {
 
 // RunTestControl / applications should call this to optionally register with the test-control server
 // and handle test-control requests.
+// ctx: when this context is cancelled, the server is stopped.
 // listenAddress: the address this application will listen on for test-control requests
 // registrationEndpoint: the address of a test-control server to register with. If empty, we won't register.
 // myName, myCallbackUrl: application name and callback URL for the test-control server to call this application on.
 // control: implementation of TestControl interface, handling this applications state etc.
-// This function blocks forever.
-func RunTestControl(listenAddress, registrationEndpoint, myName, myCallbackUrl string, control TestControl) error {
+// This function blocks until the supplied context ctx is cancelled.
+func RunTestControl(
+	ctx context.Context,
+	listenAddress, registrationEndpoint, myName, myCallbackUrl string,
+	control TestControl,
+) error {
 	if registrationEndpoint != "" {
 		err := register(registrationEndpoint, myName, myCallbackUrl)
 		if err != nil {
@@ -49,7 +54,16 @@ func RunTestControl(listenAddress, registrationEndpoint, myName, myCallbackUrl s
 	sm.HandleFunc("/"+IoPkbTestcontrolPrefix+"logTestName", impl.handleLogTestName)
 	sm.HandleFunc("/"+IoPkbTestcontrolPrefix+"toggleDetailedLogging", impl.handleToggleDetailedLogging)
 	log.Printf("starting test-control API on %s", listenAddress)
-	return http.ListenAndServe(listenAddress, sm)
+	svr := &http.Server{Addr: listenAddress, Handler: sm}
+	go func() {
+		<-ctx.Done()
+		_ = svr.Shutdown(ctx)
+	}()
+	err := svr.ListenAndServe()
+	if err != http.ErrServerClosed {
+		return err
+	}
+	return nil
 }
 
 type testControlImpl struct {
