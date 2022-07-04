@@ -53,6 +53,7 @@ func RunTestControl(
 	sm.HandleFunc("/"+IoPkbTestcontrolPrefix+"clearStorage", impl.handleClearStorage)
 	sm.HandleFunc("/"+IoPkbTestcontrolPrefix+"logTestName", impl.handleLogTestName)
 	sm.HandleFunc("/"+IoPkbTestcontrolPrefix+"toggleDetailedLogging", impl.handleToggleDetailedLogging)
+	sm.HandleFunc("/health", impl.handleHealth)
 	log.Printf("starting test-control API on %s", listenAddress)
 	svr := &http.Server{Addr: listenAddress, Handler: sm}
 	go func() {
@@ -168,6 +169,13 @@ func (t *testControlImpl) handleLogTestName(res http.ResponseWriter, req *http.R
 	handle(res, req, v, func(ctx context.Context, v *request) error {
 		return t.LogTestName(ctx, v.TestName)
 	})
+}
+
+func (t *testControlImpl) handleHealth(res http.ResponseWriter, req *http.Request) {
+	res.WriteHeader(http.StatusOK)
+	res.Write([]byte(`{
+  		"status": "pass",
+  	`))
 }
 
 func register(registrationEndpoint, myName, myCallbackUrl string) error {
