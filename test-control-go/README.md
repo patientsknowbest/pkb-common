@@ -13,6 +13,7 @@ Example:
 package main
 
 import (
+        "context"
 	"github.com/patientsknowbest/pkb-common/test-control"
 	"log"
 )
@@ -24,6 +25,6 @@ type myTestControl struct{}
 ///
 
 func main() {
-	go log.Fatal(testcontrol.RunTestControl(":9876", "http://test-control:9876", "foo", "http://foo:9876", myTestControl{}))
+	go log.Fatal(testcontrol.RunTestControl(context.Background(), ":9876", "http://test-control:9876", "foo", "http://foo:9876", myTestControl{}))
 }
 ```
