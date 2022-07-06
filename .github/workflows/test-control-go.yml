@@ -1,0 +1,28 @@
+name: 'Build and test test-control-go module'
+on:
+  workflow_dispatch:
+  pull_request:
+defaults:
+  run:
+    working-directory: test-control-go
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: "Setup Go"
+        uses: actions/setup-go@v3
+        with:
+          go-version: '^1.18'
+      - name: "Build"
+        run: go build
+      - name: "Vet"
+        run: go vet
+      # Checks that all code is correctly formatted. Use test -z to check for empty output.
+      # https://github.com/golang/go/issues/24230
+      - name: "Check format"
+        run: test -z $(gofmt -l .)
+      # Runs unit tests
+      - name: "Test"
+        run: go test
