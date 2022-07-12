@@ -88,6 +88,8 @@
         <jakarta.inject-api.version>1.0</jakarta.inject-api.version>
         <jaxb-impl.version>2.3.6</jaxb-impl.version>
         <jakarta.activation-api.version>2.0.1</jakarta.activation-api.version>
+        <hapi.version>5.5.3</hapi.version>
+        <okhttp.version>4.9.3</okhttp.version>
     </properties>
 
     <modules>
@@ -102,6 +104,7 @@
         <module>spring-boot-infrastructure</module>
         <module>spring-boot-kotlin-infrastructure</module>
         <module>pubsub</module>
+        <module>hapi</module>
     </modules>
 
     <dependencyManagement>
@@ -355,6 +358,26 @@
                 <groupId>jakarta.persistence</groupId>
                 <artifactId>jakarta.persistence-api</artifactId>
                 <version>${jakarta.persistence-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ca.uhn.hapi.fhir</groupId>
+                <artifactId>hapi-fhir-base</artifactId>
+                <version>${hapi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ca.uhn.hapi.fhir</groupId>
+                <artifactId>hapi-fhir-client</artifactId>
+                <version>${hapi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ca.uhn.hapi.fhir</groupId>
+                <artifactId>hapi-fhir-client-okhttp</artifactId>
+                <version>${hapi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>${okhttp.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
