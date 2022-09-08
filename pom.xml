@@ -73,7 +73,7 @@
         <jakarta.servlet-api.version>4.0.4</jakarta.servlet-api.version>
         <restassured.version>3.0.9-PKB</restassured.version>
 
-        <commons.testing.version>53-0546e4f-222597</commons.testing.version>
+        <commons.testing.version>54-8e2e575-247593</commons.testing.version>
         <spring-cloud.version>2021.0.3</spring-cloud.version>
         <spring.boot.version>2.7.0</spring.boot.version>
         <immutables.version>2.9.0</immutables.version>
