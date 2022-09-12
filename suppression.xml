@@ -9,9 +9,10 @@
         <packageUrl regex="true">^pkg:maven/com\.google\.http\-client/google\-http\-client\-gson@.*$</packageUrl>
         <cve>CVE-2022-25647</cve>
     </suppress>
-    <suppress until="2022-07-06Z">
-        <!-- AFAICT this was fixed a while back, and OWASP is just being daft. But according to the CVE website the
-             vulnerability is being "reassessed" so we should check back in a month and see if there's any update -->
+    <suppress until="2022-12-06Z">
+        <!-- This is a false positive. The CVE is for much lower version of springs security than this one. But
+        according to the CVE website the vulnerability is being "reassessed" so we should check back in 2 months and
+        see if there's any update -->
         <notes><![CDATA[
    file name: spring-security-crypto-5.7.1.jar
    ]]></notes>
