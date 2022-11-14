@@ -46,7 +46,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <apache.commons.text.version>1.9</apache.commons.text.version>
+        <apache.commons.text.version>1.10.0</apache.commons.text.version>
         <approvalcrest.version>0.61.1</approvalcrest.version>
         <hamcrest.version>2.2</hamcrest.version>
         <vavr.version>0.10.2</vavr.version>
@@ -57,7 +57,7 @@
         <version.apache-commons-io>2.6</version.apache-commons-io>
         <javax.javaee-api.version>8.0</javax.javaee-api.version>
         <avro.version>1.11.0</avro.version>
-        <camel.version>3.17.0</camel.version>
+        <camel.version>3.19.0</camel.version>
 
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.source.plugin.version>3.2.1</maven.source.plugin.version>
@@ -74,12 +74,12 @@
         <restassured.version>3.0.9-PKB</restassured.version>
 
         <commons.testing.version>54-8e2e575-247593</commons.testing.version>
-        <spring-cloud.version>2021.0.3</spring-cloud.version>
-        <spring.boot.version>2.7.0</spring.boot.version>
+        <spring-cloud.version>2021.0.5</spring-cloud.version>
+        <spring.boot.version>2.7.5</spring.boot.version>
         <immutables.version>2.9.0</immutables.version>
-        <checker-qual.version>3.22.1</checker-qual.version>
+        <checker-qual.version>3.25.0</checker-qual.version>
         <kotlin.version>1.6.21</kotlin.version>
-        <errorprone.version>2.13.1</errorprone.version>
+        <errorprone.version>2.16</errorprone.version>
         <groovy.version>2.5.17</groovy.version>
         <retrofit.version>2.9.0</retrofit.version>
         <jakarta.persistence-api.version>2.2.3</jakarta.persistence-api.version>
@@ -88,6 +88,18 @@
         <jakarta.inject-api.version>1.0</jakarta.inject-api.version>
         <jaxb-impl.version>2.3.6</jaxb-impl.version>
         <jakarta.activation-api.version>2.0.1</jakarta.activation-api.version>
+
+        <!-- Spring boot pom manages this too low for camel -->
+        <assertj-version>3.23.1</assertj-version>
+
+        <!-- Required to force google components like pub-sub to more recent versions than camel bom will pull in. Keep in line with PHR -->
+        <spring-cloud-gcp.version>3.4.0</spring-cloud-gcp.version>
+
+        <!-- Only needed because of a security issue, remove when spring-cloud-dependencies uses at least spring security version 5.7.5 -->
+        <spring.security.version>5.7.5</spring.security.version>
+
+        <!--Required until approvalcrest is compatible with latest gson again -->
+        <google.gson.version>2.9.0</google.gson.version>
     </properties>
 
     <modules>
@@ -106,12 +118,33 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Only needed because of a security issue, remove when spring-cloud-dependencies uses at least spring security version 5.7.5 -->
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-bom</artifactId>
+                <version>${spring.security.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.google.cloud</groupId>
+                <artifactId>spring-cloud-gcp-dependencies</artifactId>
+                <version>${spring-cloud-gcp.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring.boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>${assertj-version}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.hibernate</groupId>
@@ -356,6 +389,12 @@
                 <artifactId>jakarta.persistence-api</artifactId>
                 <version>${jakarta.persistence-api.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <!-- latest version is 2.9.0 but it is non-backwards-compatible with karsaig's approval crest -->
+                <version>${google.gson.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -407,7 +446,11 @@
                                     to pick the highest version. Otherwise we may end up unexpectedly swapping to an older
                                     version if the 'nearest' definition changes, or end up unexpectedly using a different version
                                     to what we've specified via a parent bom -->
-                                    <requireUpperBoundDeps/>
+                                    <requireUpperBoundDeps>
+                                        <excludes>
+                                            <exclude>com.google.code.gson:gson</exclude>
+                                        </excludes>
+                                    </requireUpperBoundDeps>
                                     <banCircularDependencies/>
                                     <banDuplicateClasses/>
                                     <bannedDependencies>
