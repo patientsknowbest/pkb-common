@@ -82,6 +82,7 @@
         <errorprone.version>2.16</errorprone.version>
         <groovy.version>2.5.17</groovy.version>
         <retrofit.version>2.9.0</retrofit.version>
+        <okhttp.version>4.10.0</okhttp.version>
         <jakarta.persistence-api.version>2.2.3</jakarta.persistence-api.version>
         <jakarta.xml.bind-api.version>2.3.3</jakarta.xml.bind-api.version>
         <hibernate-core.version>5.6.9.Final</hibernate-core.version> <!-- Please ensure that this remains consistent with the version specified in the spring boot bom -->
@@ -363,6 +364,11 @@
                 <groupId>com.squareup.retrofit2</groupId>
                 <artifactId>retrofit</artifactId>
                 <version>${retrofit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>${okhttp.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.squareup.retrofit2</groupId>
