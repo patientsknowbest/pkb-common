@@ -41,6 +41,12 @@ func (t *testTestControl) LogTestName(ctx context.Context, testName string) erro
 func (t *testTestControl) ToggleDetailedLogging(ctx context.Context, enable bool) error {
 	return nil
 }
+func (t *testTestControl) SuspendProcessing(ctx context.Context) error {
+	return nil
+}
+func (t *testTestControl) ResumeProcessing(ctx context.Context) error {
+	return nil
+}
 
 func TestSetNamespace(t *testing.T) {
 	withTestControlServer(t, func(t *testing.T, testControlBaseUrl string, impl *testTestControl) {

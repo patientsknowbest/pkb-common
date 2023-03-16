@@ -4,6 +4,7 @@ import com.pkb.common.ClearableInternalState;
 import com.pkb.common.config.ConfigStorage;
 import com.pkb.common.datetime.DateTimeService;
 import com.pkb.common.testcontrol.services.ClearStorageService;
+import com.pkb.common.testcontrol.services.ProcessingControllerService;
 import com.pkb.common.testlogging.DetailLoggingProvider;
 import com.pkb.common.testcontrol.services.ClearInternalStateService;
 import com.pkb.common.testcontrol.services.DefaultClearInternalStateService;
@@ -15,7 +16,6 @@ import com.pkb.common.testcontrol.services.DefaultToggleDetailedLoggingService;
 import com.pkb.common.testcontrol.services.InjectConfigValueService;
 import com.pkb.common.testcontrol.services.LogTestNameService;
 import com.pkb.common.testcontrol.services.MoveTimeService;
-import com.pkb.common.testcontrol.services.PubSubNamespaceService;
 import com.pkb.common.testcontrol.services.SetFixedTimestampService;
 import com.pkb.common.testcontrol.services.ToggleDetailedLoggingService;
 
@@ -35,13 +35,13 @@ public class TestControlServiceConfig implements ITestControlServiceConfig {
     private final ConfigStorage configStorage;
     private final Set<ClearableInternalState> clearables;
     private final DetailLoggingProvider testLoggingService;
-    private final PubSubNamespaceService namespaceService;
     private final SetFixedTimestampService setFixedTimestampService;
     private final MoveTimeService moveTimeService;
     private final InjectConfigValueService injectConfigValueService;
     private final ClearInternalStateService clearInternalStateService;
     private final LogTestNameService logTestNameService;
     private final ToggleDetailedLoggingService toggleDetailedLoggingService;
+    private final ProcessingControllerService processingControllerService;
     private final Optional<ClearStorageService> clearStorageService;
     
 
@@ -54,7 +54,7 @@ public class TestControlServiceConfig implements ITestControlServiceConfig {
                                     ConfigStorage configStorage,
                                     Set<ClearableInternalState> clearables,
                                     DetailLoggingProvider testLoggingService,
-                                    PubSubNamespaceService namespaceService,
+                                    ProcessingControllerService processingControllerService,
                                     Optional<ClearStorageService> clearStorageService) {
         this.applicationName = applicationName;
         this.applicationTestControlCallbackURL = applicationTestControlCallbackURL;
@@ -65,13 +65,13 @@ public class TestControlServiceConfig implements ITestControlServiceConfig {
         this.configStorage = configStorage;
         this.clearables = clearables;
         this.testLoggingService = testLoggingService;
-        this.namespaceService = namespaceService;
         this.setFixedTimestampService = new DefaultSetFixedTimestampService(dateTimeService);
         this.moveTimeService = new DefaultMoveTimeService(dateTimeService);
         this.injectConfigValueService = new DefaultInjectConfigValueService(configStorage);
         this.clearStorageService = clearStorageService;
         this.clearInternalStateService = new DefaultClearInternalStateService(dateTimeService, configStorage, clearables);
         this.toggleDetailedLoggingService = new DefaultToggleDetailedLoggingService(testLoggingService);
+        this.processingControllerService = processingControllerService;
         this.logTestNameService = new DefaultLogTestNameService();
     }
 
@@ -121,12 +121,6 @@ public class TestControlServiceConfig implements ITestControlServiceConfig {
     }
 
     @Override
-    public PubSubNamespaceService getNamespaceService() {
-        return namespaceService;
-    }
-
-
-    @Override
     public SetFixedTimestampService getSetFixedTimestampService() {
         return setFixedTimestampService;
     }
@@ -154,6 +148,11 @@ public class TestControlServiceConfig implements ITestControlServiceConfig {
     @Override
     public LogTestNameService getLogTestNameService() {
         return logTestNameService;
+    }
+
+    @Override
+    public ProcessingControllerService getProcessingControllerService() {
+        return processingControllerService;
     }
 
     @Override

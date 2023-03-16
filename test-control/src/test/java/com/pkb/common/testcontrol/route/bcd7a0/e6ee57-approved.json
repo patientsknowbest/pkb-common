@@ -1,8 +1,0 @@
-/*com.pkb.common.testcontrol.route.AbstractNamespaceAwareRouteBuilderTest.namespacedRoute_differentNamespaceOnIncomingMessage_throwsException*/
-{
-  "0x1": {
-    "class": "com.pkb.common.testcontrol.camel.InvalidNamespaceException",
-    "detailMessage": "Message received with invalid namespace, expected \u0027initialNamespace\u0027 but received \u0027different\u0027",
-    "suppressedExceptions": []
-  }
-}

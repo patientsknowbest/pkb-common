@@ -9,8 +9,9 @@ import com.pkb.common.testcontrol.message.ImmutableStartup;
 import com.pkb.common.testcontrol.message.InjectConfigRequest;
 import com.pkb.common.testcontrol.message.LogTestNameRequest;
 import com.pkb.common.testcontrol.message.MoveTimeRequest;
-import com.pkb.common.testcontrol.message.NamespaceChangeRequest;
+import com.pkb.common.testcontrol.message.ResumeProcessingRequest;
 import com.pkb.common.testcontrol.message.Startup;
+import com.pkb.common.testcontrol.message.SuspendProcessingRequest;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
@@ -66,16 +67,16 @@ public abstract class AbstractTestControlCamelRouteBuilder extends RouteBuilder 
             
             // Routes for test control requests
             rest()
-                    .put(IO_PKB_TESTCONTROL_PREFIX + "setNamespace").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "setNamespace")
                     .put(IO_PKB_TESTCONTROL_PREFIX + "setFixedTimestamp").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "setFixedTimestamp")
                     .put(IO_PKB_TESTCONTROL_PREFIX + "moveTime").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "moveTime")
                     .put(IO_PKB_TESTCONTROL_PREFIX + "injectConfig").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "injectConfig")
                     .put(IO_PKB_TESTCONTROL_PREFIX + "clearInternalState").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "clearInternalState")
                     .put(IO_PKB_TESTCONTROL_PREFIX + "clearStorage").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "clearStorage")
                     .put(IO_PKB_TESTCONTROL_PREFIX + "logTestName").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "logTestName")
-                    .put(IO_PKB_TESTCONTROL_PREFIX + "toggleDetailedLogging").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "toggleDetailedLogging");
+                    .put(IO_PKB_TESTCONTROL_PREFIX + "toggleDetailedLogging").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "toggleDetailedLogging")
+                    .put(IO_PKB_TESTCONTROL_PREFIX + "suspendProcessing").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "suspendProcessing")
+                    .put(IO_PKB_TESTCONTROL_PREFIX + "resumeProcessing").to("direct:" + IO_PKB_TESTCONTROL_PREFIX + "resumeProcessing");
 
-            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "setNamespace").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).unmarshal().json(NamespaceChangeRequest.class).bean(this, "setNamespace");
             from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "setFixedTimestamp").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).unmarshal().json(FixTimeRequest.class).bean(this, "setFixedTimestamp");
             from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "moveTime").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).unmarshal().json(MoveTimeRequest.class).bean(this, "moveTime");
             from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "injectConfig").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).unmarshal().json(InjectConfigRequest.class).bean(this, "injectConfig");
@@ -83,6 +84,8 @@ public abstract class AbstractTestControlCamelRouteBuilder extends RouteBuilder 
             from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "clearStorage").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).unmarshal().json(ClearStorageRequest.class).bean(this, "clearStorage");
             from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "logTestName").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).unmarshal().json(LogTestNameRequest.class).bean(this, "logTestName");
             from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "toggleDetailedLogging").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).unmarshal().json(DetailedLoggingRequest.class).bean(this, "toggleDetailedLogging");
+            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "suspendProcessing").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).unmarshal().json(SuspendProcessingRequest.class).bean(this, "suspendProcessing");
+            from("direct:" + IO_PKB_TESTCONTROL_PREFIX + "resumeProcessing").routeProperty(ROUTE_PROPERTY_IS_TEST_CONTROL, Boolean.TRUE.toString()).unmarshal().json(ResumeProcessingRequest.class).bean(this, "resumeProcessing");
         }
     }
 
@@ -91,13 +94,6 @@ public abstract class AbstractTestControlCamelRouteBuilder extends RouteBuilder 
         System.exit(1);
     }
 
-    /**
-     * Camel will automatically transform empty string to a 204 response.
-     */
-    public String setNamespace(NamespaceChangeRequest ncr) {
-        config().getNamespaceService().setCurrentNamespace(ncr.newNamespace());
-        return "";
-    }
     public String setFixedTimestamp(FixTimeRequest request) {
         config().getSetFixedTimestampService().process(request);
         return "";
@@ -124,6 +120,14 @@ public abstract class AbstractTestControlCamelRouteBuilder extends RouteBuilder 
     }
     public String toggleDetailedLogging(DetailedLoggingRequest request) {
         config().getToggleDetailedLoggingService().process(request);
+        return "";
+    }
+    public String suspendProcessing(SuspendProcessingRequest request) {
+        config().getProcessingControllerService().process(request);
+        return "";
+    }
+    public String resumeProcessing(ResumeProcessingRequest request) {
+        config().getProcessingControllerService().process(request);
         return "";
     }
 }

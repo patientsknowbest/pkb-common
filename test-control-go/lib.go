@@ -19,6 +19,8 @@ type TestControl interface {
 	ClearStorage(ctx context.Context) error
 	LogTestName(ctx context.Context, testName string) error
 	ToggleDetailedLogging(ctx context.Context, enable bool) error
+	SuspendProcessing(ctx context.Context) error
+	ResumeProcessing(ctx context.Context) error
 }
 
 // RunTestControl / applications should call this to optionally register with the test-control server
@@ -53,6 +55,8 @@ func RunTestControl(
 	sm.HandleFunc("/"+IoPkbTestcontrolPrefix+"clearStorage", impl.handleClearStorage)
 	sm.HandleFunc("/"+IoPkbTestcontrolPrefix+"logTestName", impl.handleLogTestName)
 	sm.HandleFunc("/"+IoPkbTestcontrolPrefix+"toggleDetailedLogging", impl.handleToggleDetailedLogging)
+	sm.HandleFunc("/"+IoPkbTestcontrolPrefix+"suspendProcessing", impl.handleSuspendProcessing)
+	sm.HandleFunc("/"+IoPkbTestcontrolPrefix+"resumeProcessing", impl.handleResumeProcessing)
 	sm.HandleFunc("/health", impl.handleHealth)
 	log.Printf("starting test-control API on %s", listenAddress)
 	svr := &http.Server{Addr: listenAddress, Handler: sm}
@@ -168,6 +172,22 @@ func (t *testControlImpl) handleLogTestName(res http.ResponseWriter, req *http.R
 	v := &request{}
 	handle(res, req, v, func(ctx context.Context, v *request) error {
 		return t.LogTestName(ctx, v.TestName)
+	})
+}
+
+func (t *testControlImpl) handleSuspendProcessing(res http.ResponseWriter, req *http.Request) {
+	type request struct{}
+	v := &request{}
+	handle(res, req, v, func(ctx context.Context, v *request) error {
+		return t.SuspendProcessing(ctx)
+	})
+}
+
+func (t *testControlImpl) handleResumeProcessing(res http.ResponseWriter, req *http.Request) {
+	type request struct{}
+	v := &request{}
+	handle(res, req, v, func(ctx context.Context, v *request) error {
+		return t.ResumeProcessing(ctx)
 	})
 }
 

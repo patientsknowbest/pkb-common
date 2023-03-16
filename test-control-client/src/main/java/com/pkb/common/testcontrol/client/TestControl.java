@@ -7,7 +7,8 @@ import com.pkb.common.testcontrol.message.FixTimeRequest;
 import com.pkb.common.testcontrol.message.InjectConfigRequest;
 import com.pkb.common.testcontrol.message.LogTestNameRequest;
 import com.pkb.common.testcontrol.message.MoveTimeRequest;
-import com.pkb.common.testcontrol.message.NamespaceChangeRequest;
+import com.pkb.common.testcontrol.message.ResumeProcessingRequest;
+import com.pkb.common.testcontrol.message.SuspendProcessingRequest;
 import okhttp3.OkHttpClient;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -41,8 +42,7 @@ public interface TestControl {
                 .build()
                 .create(TestControl.class);
     }
-    @PUT(IO_PKB_TESTCONTROL_PREFIX + "setNamespace")
-    Void setNamespace(@Body NamespaceChangeRequest request);
+
     @PUT(IO_PKB_TESTCONTROL_PREFIX + "setFixedTimestamp")
     Void setFixedTimestamp(@Body FixTimeRequest request);
     @PUT(IO_PKB_TESTCONTROL_PREFIX + "moveTime")
@@ -57,6 +57,10 @@ public interface TestControl {
     Void logTestName(@Body LogTestNameRequest request);
     @PUT(IO_PKB_TESTCONTROL_PREFIX + "toggleDetailedLogging")
     Void toggleDetailedLogging(@Body DetailedLoggingRequest request);
+    @PUT(IO_PKB_TESTCONTROL_PREFIX + "suspendProcessing")
+    Void suspendProcessing(@Body SuspendProcessingRequest request);
+    @PUT(IO_PKB_TESTCONTROL_PREFIX + "resumeProcessing")
+    Void resumeProcessing(@Body ResumeProcessingRequest request);
 }
 
 

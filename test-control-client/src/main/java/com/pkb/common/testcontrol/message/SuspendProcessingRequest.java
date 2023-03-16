@@ -5,8 +5,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.immutables.value.Value;
 
 @Value.Immutable
-@JsonSerialize(as = ImmutableNamespaceChangeRequest.class)
-@JsonDeserialize(as = ImmutableNamespaceChangeRequest.class)
-public interface NamespaceChangeRequest {
-    String newNamespace();
-}
+@JsonSerialize(as = ImmutableSuspendProcessingRequest.class)
+@JsonDeserialize(as = ImmutableSuspendProcessingRequest.class)
+public interface SuspendProcessingRequest {}

@@ -117,6 +117,13 @@ public interface BaseConfig {
     }
 
     /**
+     * Should this application suspend any ongoing processing (e.g. camel routes, database polling, scheduled tasks)?
+     */
+    default boolean isProcessingSuspended() {
+        return getConfigStorage().getBoolean("testcontrol.processing.suspended", false);
+    }
+
+    /**
      * @param protocol defaults to http
      * @param host     valid value required
      * @param port     defaults to none specified (defaults ports 80/443 if specified will be removed)
