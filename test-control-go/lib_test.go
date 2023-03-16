@@ -10,16 +10,11 @@ import (
 )
 
 type testTestControl struct {
-	didSetNamespace     bool
-	namespace           string
-	errorOnSetNamespace error
+	didLogTestName     bool
+	testName           string
+	errorOnLogTestName error
 }
 
-func (t *testTestControl) SetNamespace(ctx context.Context, newNamespace string) error {
-	t.didSetNamespace = true
-	t.namespace = newNamespace
-	return t.errorOnSetNamespace
-}
 func (t *testTestControl) InjectConfig(ctx context.Context, key string, value string) error {
 	return nil
 }
@@ -36,7 +31,9 @@ func (t *testTestControl) ClearStorage(ctx context.Context) error {
 	return nil
 }
 func (t *testTestControl) LogTestName(ctx context.Context, testName string) error {
-	return nil
+	t.didLogTestName = true
+	t.testName = testName
+	return t.errorOnLogTestName
 }
 func (t *testTestControl) ToggleDetailedLogging(ctx context.Context, enable bool) error {
 	return nil
@@ -48,9 +45,9 @@ func (t *testTestControl) ResumeProcessing(ctx context.Context) error {
 	return nil
 }
 
-func TestSetNamespace(t *testing.T) {
+func TestLogTestName(t *testing.T) {
 	withTestControlServer(t, func(t *testing.T, testControlBaseUrl string, impl *testTestControl) {
-		request, err := http.NewRequest(http.MethodPut, testControlBaseUrl+"/io-pkb-testcontrol-setNamespace", strings.NewReader(`{"newNamespace": "fooNamespace"}`))
+		request, err := http.NewRequest(http.MethodPut, testControlBaseUrl+"/io-pkb-testcontrol-logTestName", strings.NewReader(`{"testName": "class#method"}`))
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -63,19 +60,19 @@ func TestSetNamespace(t *testing.T) {
 			t.Fatalf("unexpected status %s", response.Status)
 		}
 
-		if !impl.didSetNamespace {
-			t.Errorf("expected didSetNamespace=true")
+		if !impl.didLogTestName {
+			t.Errorf("expected didLogTestName=true")
 		}
-		if impl.namespace != "fooNamespace" {
-			t.Errorf("expected namespace=fooNamespace")
+		if impl.testName != "class#method" {
+			t.Errorf("expected class#method")
 		}
 	})
 }
 
-func TestSetNamespaceError(t *testing.T) {
+func TestLogTestNameError(t *testing.T) {
 	withTestControlServer(t, func(t *testing.T, testControlBaseUrl string, impl *testTestControl) {
-		impl.errorOnSetNamespace = fmt.Errorf("oh noes an error")
-		request, err := http.NewRequest(http.MethodPut, testControlBaseUrl+"/io-pkb-testcontrol-setNamespace", strings.NewReader(`{"newNamespace": "fooNamespace"}`))
+		impl.errorOnLogTestName = fmt.Errorf("oh noes an error")
+		request, err := http.NewRequest(http.MethodPut, testControlBaseUrl+"/io-pkb-testcontrol-logTestName", strings.NewReader(`{"testName": "class#method"}`))
 		if err != nil {
 			t.Fatal(err)
 		}

@@ -11,7 +11,6 @@ import (
 
 // TestControl / applications should provide an implementation of this interface to participate in test-control.
 type TestControl interface {
-	SetNamespace(ctx context.Context, newNamespace string) error
 	InjectConfig(ctx context.Context, key string, value string) error
 	SetFixedTimestamp(ctx context.Context, timestamp string) error
 	MoveTime(ctx context.Context, amount int, unit string) error
@@ -46,7 +45,6 @@ func RunTestControl(
 	impl := testControlImpl{control}
 	sm := http.NewServeMux()
 	IoPkbTestcontrolPrefix := "io-pkb-testcontrol-"
-	sm.HandleFunc("/"+IoPkbTestcontrolPrefix+"setNamespace", impl.handleSetNamespace)
 	sm.HandleFunc("/"+IoPkbTestcontrolPrefix+"injectConfig", impl.handleInjectConfig)
 	sm.HandleFunc("/"+IoPkbTestcontrolPrefix+"setFixedTimestamp", impl.handleSetFixedTimestamp)
 	sm.HandleFunc("/"+IoPkbTestcontrolPrefix+"moveTime", impl.handleMoveTime)
@@ -93,16 +91,6 @@ func handle[T any](res http.ResponseWriter, req *http.Request, t T, f func(conte
 	}
 	res.WriteHeader(http.StatusNoContent)
 	log.Printf("handling test control request %s complete", req.URL.Path)
-}
-
-func (t *testControlImpl) handleSetNamespace(res http.ResponseWriter, req *http.Request) {
-	type setNamespaceReq struct {
-		NewNamespace string `json:"newNamespace"`
-	}
-	v := &setNamespaceReq{}
-	handle(res, req, v, func(ctx context.Context, v *setNamespaceReq) error {
-		return t.SetNamespace(req.Context(), v.NewNamespace)
-	})
 }
 
 func (t *testControlImpl) handleToggleDetailedLogging(res http.ResponseWriter, req *http.Request) {
