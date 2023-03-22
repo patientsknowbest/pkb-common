@@ -77,7 +77,7 @@
         <spring-cloud.version>2021.0.5</spring-cloud.version>
         <spring.boot.version>2.7.5</spring.boot.version>
         <immutables.version>2.9.0</immutables.version>
-        <checker-qual.version>3.25.0</checker-qual.version>
+        <checker-qual.version>3.32.0</checker-qual.version>
         <kotlin.version>1.6.21</kotlin.version>
         <errorprone.version>2.16</errorprone.version>
         <groovy.version>2.5.17</groovy.version>
@@ -88,7 +88,6 @@
         <hibernate-core.version>5.6.9.Final</hibernate-core.version> <!-- Please ensure that this remains consistent with the version specified in the spring boot bom -->
         <jakarta.inject-api.version>1.0</jakarta.inject-api.version>
         <jaxb-impl.version>2.3.6</jaxb-impl.version>
-        <jakarta.activation-api.version>2.0.1</jakarta.activation-api.version>
 
         <!-- Spring boot pom manages this too low for camel -->
         <assertj-version>3.23.1</assertj-version>
@@ -381,14 +380,15 @@
                 <version>${jaxb-impl.version}</version>
             </dependency>
             <dependency>
-                <groupId>jakarta.activation</groupId>
-                <artifactId>jakarta.activation-api</artifactId>
-                <version>${jakarta.activation-api.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>jakarta.xml.bind</groupId>
                 <artifactId>jakarta.xml.bind-api</artifactId>
                 <version>${jakarta.xml.bind-api.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>jakarta.activation</groupId>
+                        <artifactId>jakarta.activation-api</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>jakarta.persistence</groupId>
