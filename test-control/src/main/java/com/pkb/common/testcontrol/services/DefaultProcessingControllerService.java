@@ -6,6 +6,7 @@ import com.pkb.common.testcontrol.message.SuspendProcessingRequest;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Route;
 import org.apache.camel.impl.engine.AbstractCamelContext;
+import org.apache.camel.impl.engine.DefaultShutdownStrategy;
 import org.apache.camel.spi.RouteStartupOrder;
 import org.apache.camel.util.function.ThrowingConsumer;
 import org.slf4j.Logger;
@@ -46,6 +47,9 @@ public class DefaultProcessingControllerService implements ProcessingControllerS
         if (reverseOrder) {
             comp = comp.reversed();
         }
+        // don't let camel wait gracefully to shut down processing as this can time out tests (and there's no point in
+        // waiting for anything at the point of calling suspend in test-control)
+        context.getShutdownStrategy().setTimeout(1);
         ((AbstractCamelContext) context).getRouteStartupOrder()
                 .stream()
                 .sorted(comp)
