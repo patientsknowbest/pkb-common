@@ -98,6 +98,7 @@
 
 
         <jackson-bom.version>2.14.2</jackson-bom.version>
+        <google.gson.version>2.10.1</google.gson.version>
     </properties>
 
     <modules>
@@ -398,6 +399,11 @@
                 <artifactId>jakarta.persistence-api</artifactId>
                 <version>${jakarta.persistence-api.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${google.gson.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -449,11 +455,7 @@
                                     to pick the highest version. Otherwise we may end up unexpectedly swapping to an older
                                     version if the 'nearest' definition changes, or end up unexpectedly using a different version
                                     to what we've specified via a parent bom -->
-                                    <requireUpperBoundDeps>
-                                        <excludes>
-                                            <exclude>com.google.code.gson:gson</exclude>
-                                        </excludes>
-                                    </requireUpperBoundDeps>
+                                    <requireUpperBoundDeps/>
                                     <banCircularDependencies/>
                                     <banDuplicateClasses/>
                                     <bannedDependencies>
