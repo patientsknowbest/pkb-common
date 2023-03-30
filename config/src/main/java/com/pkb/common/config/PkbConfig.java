@@ -31,4 +31,8 @@ public interface PkbConfig extends BaseConfig {
     default boolean isDocumentEncryptionEnabled() {
         return getConfigStorage().getBoolean("feature.documentEncryptionEnabled", true);
     }
+
+    default boolean getRestrictNHSNumberToTestRanges() {
+        return getConfigStorage().getBoolean("restrictNHSNumberToTestRanges", false);
+    }
 }
