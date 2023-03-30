@@ -1,6 +1,8 @@
 package com.pkb.common.datetime;
 
 import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.time.temporal.TemporalAmount;
 
 /**
@@ -16,10 +18,22 @@ public class AutoAdvanceFakeDateTimeService extends FakeDateTimeService {
 
     @Override
     public Clock clock() {
-        if (this.currentFixedClock != null && autoAdvanceDuration != null) {
-            moveTime(autoAdvanceDuration);
+        return new AutoAdvanceClockShim(getCurrentZoneId());
+    }
+
+    private class AutoAdvanceClockShim extends ClockShim {
+
+        AutoAdvanceClockShim(ZoneId zone) {
+            super(zone);
         }
-        return super.clock();
+
+        @Override
+        public Instant instant() {
+            if (currentFixedTime != null && autoAdvanceDuration != null) {
+                moveTime(autoAdvanceDuration);
+            }
+            return super.instant();
+        }
     }
 
     public void setAutoAdvanceDuration(TemporalAmount autoAdvanceDuration) {

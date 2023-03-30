@@ -6,16 +6,17 @@ import org.slf4j.LoggerFactory;
 import java.lang.invoke.MethodHandles;
 import java.time.Clock;
 import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.TemporalAmount;
 import java.time.temporal.TemporalUnit;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 public class FakeDateTimeService implements DateTimeService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    protected volatile ZonedDateTime currentFixedTime;
-    protected volatile Clock currentFixedClock;
+    volatile ZonedDateTime currentFixedTime;
 
     private final DateTimeService fallbackService;
 
@@ -29,10 +30,11 @@ public class FakeDateTimeService implements DateTimeService {
 
     @Override
     public Clock clock() {
-        if (currentFixedClock == null) {
-            return fallbackService.clock();
-        }
-        return currentFixedClock;
+        return new ClockShim(getCurrentZoneId());
+    }
+
+    ZoneId getCurrentZoneId() {
+        return Optional.ofNullable(currentFixedTime).map(ZonedDateTime::getZone).orElseGet(fallbackService.clock()::getZone);
     }
 
     @Override
@@ -58,13 +60,37 @@ public class FakeDateTimeService implements DateTimeService {
 
     @Override
     public void forgetFixedCurrentTimeForTesting() {
-        this.currentFixedClock = null;
+        this.currentFixedTime = null;
         LOGGER.info("Cleared fixed fake date time.");
     }
 
     private void fixTime(ZonedDateTime zdt) {
         currentFixedTime = zdt;
-        currentFixedClock = Clock.fixed(zdt.toInstant(), zdt.getZone());
-        LOGGER.info("Set fixed fake date time to: {}", currentFixedClock);
+        LOGGER.info("Set fixed fake date time to: {}", currentFixedTime);
+    }
+
+
+    class ClockShim extends Clock {
+
+        private final ZoneId zone;
+
+        ClockShim(ZoneId zone) {
+            this.zone = zone;
+        }
+
+        @Override
+        public ZoneId getZone() {
+            return zone;
+        }
+
+        @Override
+        public Clock withZone(ZoneId zone) {
+            return new ClockShim(zone);
+        }
+
+        @Override
+        public Instant instant() {
+            return Optional.ofNullable(currentFixedTime).map(ZonedDateTime::toInstant).orElseGet(fallbackService.clock()::instant);
+        }
     }
 }
