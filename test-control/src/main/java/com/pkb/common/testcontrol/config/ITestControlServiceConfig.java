@@ -4,12 +4,12 @@ import com.pkb.common.ClearableInternalState;
 import com.pkb.common.config.ConfigStorage;
 import com.pkb.common.datetime.DateTimeService;
 import com.pkb.common.testcontrol.services.ClearStorageService;
+import com.pkb.common.testcontrol.services.ProcessingControllerService;
 import com.pkb.common.testlogging.DetailLoggingProvider;
 import com.pkb.common.testcontrol.services.ClearInternalStateService;
 import com.pkb.common.testcontrol.services.InjectConfigValueService;
 import com.pkb.common.testcontrol.services.LogTestNameService;
 import com.pkb.common.testcontrol.services.MoveTimeService;
-import com.pkb.common.testcontrol.services.PubSubNamespaceService;
 import com.pkb.common.testcontrol.services.SetFixedTimestampService;
 import com.pkb.common.testcontrol.services.ToggleDetailedLoggingService;
 
@@ -51,7 +51,6 @@ public interface ITestControlServiceConfig {
     ConfigStorage getConfigStorage();
     Set<ClearableInternalState> getClearables();
     DetailLoggingProvider getTestLoggingService();
-    PubSubNamespaceService getNamespaceService();
     SetFixedTimestampService getSetFixedTimestampService();
     MoveTimeService getMoveTimeService();
     InjectConfigValueService getInjectConfigValueService();
@@ -59,4 +58,5 @@ public interface ITestControlServiceConfig {
     Optional<ClearStorageService> getClearStorageService();
     LogTestNameService getLogTestNameService();
     ToggleDetailedLoggingService getToggleDetailedLoggingService();
+    ProcessingControllerService getProcessingControllerService();
 }

@@ -24,7 +24,8 @@ public class SerializationTest {
                 {InjectConfigRequest.class, ImmutableInjectConfigRequest.builder().key("nofoo").value(null).build()},
                 {LogTestNameRequest.class, ImmutableLogTestNameRequest.builder().testName("zoo").build()},
                 {MoveTimeRequest.class, ImmutableMoveTimeRequest.builder().amount(1).unit("foo").build()},
-                {NamespaceChangeRequest.class, ImmutableNamespaceChangeRequest.builder().newNamespace("qoo").build()},
+                {SuspendProcessingRequest.class, ImmutableSuspendProcessingRequest.builder().build()},
+                {ResumeProcessingRequest.class, ImmutableResumeProcessingRequest.builder().build()},
                 {Startup.class, ImmutableStartup.builder().name("doo").callback("woo").build()},
         };
     }

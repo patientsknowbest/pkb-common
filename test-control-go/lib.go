@@ -11,7 +11,6 @@ import (
 
 // TestControl / applications should provide an implementation of this interface to participate in test-control.
 type TestControl interface {
-	SetNamespace(ctx context.Context, newNamespace string) error
 	InjectConfig(ctx context.Context, key string, value string) error
 	SetFixedTimestamp(ctx context.Context, timestamp string) error
 	MoveTime(ctx context.Context, amount int, unit string) error
@@ -19,6 +18,8 @@ type TestControl interface {
 	ClearStorage(ctx context.Context) error
 	LogTestName(ctx context.Context, testName string) error
 	ToggleDetailedLogging(ctx context.Context, enable bool) error
+	SuspendProcessing(ctx context.Context) error
+	ResumeProcessing(ctx context.Context) error
 }
 
 // RunTestControl / applications should call this to optionally register with the test-control server
@@ -44,7 +45,6 @@ func RunTestControl(
 	impl := testControlImpl{control}
 	sm := http.NewServeMux()
 	IoPkbTestcontrolPrefix := "io-pkb-testcontrol-"
-	sm.HandleFunc("/"+IoPkbTestcontrolPrefix+"setNamespace", impl.handleSetNamespace)
 	sm.HandleFunc("/"+IoPkbTestcontrolPrefix+"injectConfig", impl.handleInjectConfig)
 	sm.HandleFunc("/"+IoPkbTestcontrolPrefix+"setFixedTimestamp", impl.handleSetFixedTimestamp)
 	sm.HandleFunc("/"+IoPkbTestcontrolPrefix+"moveTime", impl.handleMoveTime)
@@ -53,6 +53,8 @@ func RunTestControl(
 	sm.HandleFunc("/"+IoPkbTestcontrolPrefix+"clearStorage", impl.handleClearStorage)
 	sm.HandleFunc("/"+IoPkbTestcontrolPrefix+"logTestName", impl.handleLogTestName)
 	sm.HandleFunc("/"+IoPkbTestcontrolPrefix+"toggleDetailedLogging", impl.handleToggleDetailedLogging)
+	sm.HandleFunc("/"+IoPkbTestcontrolPrefix+"suspendProcessing", impl.handleSuspendProcessing)
+	sm.HandleFunc("/"+IoPkbTestcontrolPrefix+"resumeProcessing", impl.handleResumeProcessing)
 	sm.HandleFunc("/health", impl.handleHealth)
 	log.Printf("starting test-control API on %s", listenAddress)
 	svr := &http.Server{Addr: listenAddress, Handler: sm}
@@ -89,16 +91,6 @@ func handle[T any](res http.ResponseWriter, req *http.Request, t T, f func(conte
 	}
 	res.WriteHeader(http.StatusNoContent)
 	log.Printf("handling test control request %s complete", req.URL.Path)
-}
-
-func (t *testControlImpl) handleSetNamespace(res http.ResponseWriter, req *http.Request) {
-	type setNamespaceReq struct {
-		NewNamespace string `json:"newNamespace"`
-	}
-	v := &setNamespaceReq{}
-	handle(res, req, v, func(ctx context.Context, v *setNamespaceReq) error {
-		return t.SetNamespace(req.Context(), v.NewNamespace)
-	})
 }
 
 func (t *testControlImpl) handleToggleDetailedLogging(res http.ResponseWriter, req *http.Request) {
@@ -168,6 +160,22 @@ func (t *testControlImpl) handleLogTestName(res http.ResponseWriter, req *http.R
 	v := &request{}
 	handle(res, req, v, func(ctx context.Context, v *request) error {
 		return t.LogTestName(ctx, v.TestName)
+	})
+}
+
+func (t *testControlImpl) handleSuspendProcessing(res http.ResponseWriter, req *http.Request) {
+	type request struct{}
+	v := &request{}
+	handle(res, req, v, func(ctx context.Context, v *request) error {
+		return t.SuspendProcessing(ctx)
+	})
+}
+
+func (t *testControlImpl) handleResumeProcessing(res http.ResponseWriter, req *http.Request) {
+	type request struct{}
+	v := &request{}
+	handle(res, req, v, func(ctx context.Context, v *request) error {
+		return t.ResumeProcessing(ctx)
 	})
 }
 

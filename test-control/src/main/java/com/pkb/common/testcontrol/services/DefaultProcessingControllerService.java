@@ -1,43 +1,56 @@
 package com.pkb.common.testcontrol.services;
 
 import com.pkb.common.testcontrol.camel.route.AbstractTestControlCamelRouteBuilder;
+import com.pkb.common.testcontrol.message.ResumeProcessingRequest;
+import com.pkb.common.testcontrol.message.SuspendProcessingRequest;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Route;
 import org.apache.camel.impl.engine.AbstractCamelContext;
+import org.apache.camel.impl.engine.DefaultShutdownStrategy;
 import org.apache.camel.spi.RouteStartupOrder;
 import org.apache.camel.util.function.ThrowingConsumer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Comparator;
 
 import static com.pkb.common.testcontrol.client.TestControl.IO_PKB_TESTCONTROL_PREFIX;
 
-public class DefaultPubSubNamespaceService implements PubSubNamespaceService {
-    private final CamelContext context;
-    
-    private String currentNamespace = "defaultNS";
+public class DefaultProcessingControllerService implements ProcessingControllerService {
 
-    public DefaultPubSubNamespaceService(CamelContext context) {
+    private static final Logger LOGGER = LoggerFactory.getLogger(java.lang.invoke.MethodHandles.lookup().lookupClass());
+
+    private final CamelContext context;
+
+    public DefaultProcessingControllerService(CamelContext context) {
         this.context = context;
     }
 
     @Override
-    public void setCurrentNamespace(String currentNamespace) {
-        // We want to ensure that all _currently_ processing messages are stopped before we change the namespace.
-        // This ensures that any unprocessed messages are ignored and don't cause havoc by running while we try to 
-        // reset the application internal state.
+    public void process(SuspendProcessingRequest message) {
+        LOGGER.info("SuspendProcessingRequest.process message received");
         applyToRoutesExceptTestControl(route -> context.getRouteController().suspendRoute(route.getRouteId()), true);
-        this.currentNamespace = currentNamespace;
+        LOGGER.info("SuspendProcessingRequest.process done.");
+    }
+
+    @Override
+    public void process(ResumeProcessingRequest message) {
+        LOGGER.info("ResumeProcessingRequest.process message received");
         applyToRoutesExceptTestControl(route -> context.getRouteController().resumeRoute(route.getRouteId()), false);
+        LOGGER.info("ResumeProcessingRequest.process done.");
     }
 
     private void applyToRoutesExceptTestControl(ThrowingConsumer<Route, Exception> routeConsumer, boolean reverseOrder) {
-        // This reproduces a bit of logic inside camel; but adding filtering so we can startup and shutdown 
+        // This reproduces a bit of logic inside camel; but adding filtering so we can startup and shutdown
         // non-test-control routes only.
         var comp = Comparator.comparingInt(RouteStartupOrder::getStartupOrder);
         if (reverseOrder) {
             comp = comp.reversed();
         }
-        ((AbstractCamelContext)context).getRouteStartupOrder()
+        // don't let camel wait gracefully to shut down processing as this can time out tests (and there's no point in
+        // waiting for anything at the point of calling suspend in test-control)
+        context.getShutdownStrategy().setTimeout(1);
+        ((AbstractCamelContext) context).getRouteStartupOrder()
                 .stream()
                 .sorted(comp)
                 .map(RouteStartupOrder::getRoute)
@@ -50,10 +63,5 @@ public class DefaultPubSubNamespaceService implements PubSubNamespaceService {
                         throw new RuntimeException(e);
                     }
                 });
-    }
-
-    @Override
-    public String getCurrentNamespace() {
-        return currentNamespace;
     }
 }
