@@ -24,21 +24,6 @@
         <packageUrl regex="true">^pkg:maven/org\.springframework\.security/spring\-security\-crypto@.*$</packageUrl>
         <vulnerabilityName>CVE-2020-5408</vulnerabilityName>
     </suppress>
-
-    <suppress until="2024-01-01Z">
-        <notes><![CDATA[
-   file name: guava-31.1-jre.jar
-   ]]></notes>
-        <packageUrl regex="true">^pkg:maven/com\.google\.guava/guava@.*$</packageUrl>
-        <vulnerabilityName>CVE-2020-8908</vulnerabilityName>
-    </suppress>
-    <suppress until="2024-01-01Z">
-        <notes><![CDATA[
-   file name: guava-31.1-jre.jar
-   ]]></notes>
-        <packageUrl regex="true">^pkg:maven/com\.google\.guava/guava@.*$</packageUrl>
-        <vulnerabilityName>CVE-2023-2976</vulnerabilityName>
-    </suppress>
     <suppress until="2024-01-01Z">
         <notes><![CDATA[
    file name: netty-handler-4.1.90.Final.jar
