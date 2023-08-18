@@ -109,4 +109,74 @@
         <packageUrl regex="true">^pkg:maven/com\.squareup\.okio/okio\-jvm@.*$</packageUrl>
         <cve>CVE-2023-3635</cve>
     </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: camel-core-3.20.2.jar
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.camel/camel\-core@.*$</packageUrl>
+        <cve>CVE-2023-34442</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: camel-core-model-3.20.2.jar
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.camel/camel\-core\-model@.*$</packageUrl>
+        <cve>CVE-2023-34442</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: camel-tooling-model-3.20.2.jar
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.camel/camel\-tooling\-model@.*$</packageUrl>
+        <cve>CVE-2020-36460</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: camel-tooling-model-3.20.2.jar
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.camel/camel\-tooling\-model@.*$</packageUrl>
+        <cve>CVE-2023-34442</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: camel-validator-3.20.2.jar
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.camel/camel\-validator@.*$</packageUrl>
+        <cve>CVE-2021-3765</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: camel-validator-3.20.2.jar
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.camel/camel\-validator@.*$</packageUrl>
+        <cve>CVE-2023-34442</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: grpc-api-1.53.0.jar
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/io\.grpc/grpc\-api@.*$</packageUrl>
+        <cve>CVE-2023-32731</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: grpc-api-1.53.0.jar
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/io\.grpc/grpc\-api@.*$</packageUrl>
+        <cve>CVE-2023-33953</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: grpc-protobuf-lite-1.53.0.jar
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/io\.grpc/grpc\-protobuf\-lite@.*$</packageUrl>
+        <cve>CVE-2023-32731</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: grpc-protobuf-lite-1.53.0.jar
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/io\.grpc/grpc\-protobuf\-lite@.*$</packageUrl>
+        <cve>CVE-2023-33953</cve>
+    </suppress>
 </suppressions>
