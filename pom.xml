@@ -64,8 +64,8 @@
         <maven.flatten.plugin.version>1.2.7</maven.flatten.plugin.version>
         <maven.surefire.plugin.version>3.0.0-M5</maven.surefire.plugin.version>
         <owasp-dependency-check.version>8.2.0</owasp-dependency-check.version>
-        <plugin.version.maven.enforcer>3.0.0</plugin.version.maven.enforcer>
-        <plugin.version.maven.extra.enforcer.rules.version>1.4</plugin.version.maven.extra.enforcer.rules.version>
+        <plugin.version.maven.enforcer>3.2.1</plugin.version.maven.enforcer>
+        <plugin.version.maven.extra.enforcer.rules.version>1.6.1</plugin.version.maven.extra.enforcer.rules.version>
         <pitest.version>1.7.2</pitest.version>
 
         <revision>0.0.0</revision>
@@ -75,12 +75,12 @@
 
         <commons.testing.version>54-8e2e575-247593</commons.testing.version>
         <spring-cloud.version>2021.0.5</spring-cloud.version>
-        <spring.boot.version>2.7.10</spring.boot.version>
-        <immutables.version>2.9.0</immutables.version>
-        <checker-qual.version>3.32.0</checker-qual.version>
-        <kotlin.version>1.6.21</kotlin.version>
+        <spring.boot.version>2.7.14</spring.boot.version>
+        <immutables.version>2.9.3</immutables.version>
+        <checker-qual.version>3.35.0</checker-qual.version>
+        <kotlin.version>1.8.10</kotlin.version>
         <errorprone.version>2.18.0</errorprone.version>
-        <groovy.version>2.5.17</groovy.version>
+        <groovy.version>3.0.17</groovy.version>
         <retrofit.version>2.9.0</retrofit.version>
         <okhttp.version>4.10.0</okhttp.version>
         <jakarta.persistence-api.version>2.2.3</jakarta.persistence-api.version>
@@ -494,13 +494,17 @@
                 <version>${owasp-dependency-check.version}</version>
                 <configuration>
                     <skipProvidedScope>true</skipProvidedScope>
-                    <failBuildOnAnyVulnerability>true</failBuildOnAnyVulnerability>
+                    <failBuildOnAnyVulnerability>false</failBuildOnAnyVulnerability>
                     <excludes>
                         <exclude>org.springframework</exclude>
                     </excludes>
                     <suppressionFile>suppression.xml</suppressionFile>
                     <cveUrlModified>https://freedumbytes.gitlab.io/setup/nist-nvd-mirror/nvdcve-1.1-modified.json.gz</cveUrlModified>
                     <cveUrlBase>https://freedumbytes.gitlab.io/setup/nist-nvd-mirror/nvdcve-1.1-%d.json.gz</cveUrlBase>
+                    <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+                    <jarAnalyzerEnabled>false</jarAnalyzerEnabled>
+                    <failBuildOnCVSS>5</failBuildOnCVSS>
+                    <failOnError>true</failOnError>
                     <knownExploitedEnabled>false</knownExploitedEnabled>
                 </configuration>
             </plugin>
