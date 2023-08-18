@@ -228,4 +228,18 @@
         <packageUrl regex="true">^pkg:maven/io\.grpc/grpc\-xds@.*$</packageUrl>
         <cve>CVE-2023-32731</cve>
     </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: grpc-stub-1.53.0.jar
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/io\.grpc/grpc\-stub@.*$</packageUrl>
+        <cve>CVE-2023-32731</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: grpc-stub-1.53.0.jar
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/io\.grpc/grpc\-stub@.*$</packageUrl>
+        <cve>CVE-2023-33953</cve>
+    </suppress>
 </suppressions>
