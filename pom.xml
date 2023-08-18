@@ -499,8 +499,6 @@
                         <exclude>org.springframework</exclude>
                     </excludes>
                     <suppressionFile>suppression.xml</suppressionFile>
-                    <cveUrlModified>https://freedumbytes.gitlab.io/setup/nist-nvd-mirror/nvdcve-1.1-modified.json.gz</cveUrlModified>
-                    <cveUrlBase>https://freedumbytes.gitlab.io/setup/nist-nvd-mirror/nvdcve-1.1-%d.json.gz</cveUrlBase>
                     <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
                     <jarAnalyzerEnabled>false</jarAnalyzerEnabled>
                     <failBuildOnCVSS>5</failBuildOnCVSS>
