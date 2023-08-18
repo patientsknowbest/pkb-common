@@ -270,4 +270,18 @@
         <packageUrl regex="true">^pkg:maven/io\.grpc/grpc\-context@.*$</packageUrl>
         <cve>CVE-2023-32731</cve>
     </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: grpc-services-1.53.0.jar
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/io\.grpc/grpc\-services@.*$</packageUrl>
+        <cve>CVE-2023-32731</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: grpc-services-1.53.0.jar
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/io\.grpc/grpc\-services@.*$</packageUrl>
+        <cve>CVE-2023-33953</cve>
+    </suppress>
 </suppressions>
