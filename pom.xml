@@ -78,7 +78,7 @@
         <spring.boot.version>2.7.14</spring.boot.version>
         <immutables.version>2.9.3</immutables.version>
         <checker-qual.version>3.35.0</checker-qual.version>
-        <kotlin.version>1.8.10</kotlin.version>
+        <kotlin.version>1.6.21</kotlin.version>
         <errorprone.version>2.18.0</errorprone.version>
         <groovy.version>3.0.17</groovy.version>
         <retrofit.version>2.9.0</retrofit.version>
