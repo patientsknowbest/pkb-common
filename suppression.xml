@@ -19,14 +19,24 @@
         <packageUrl regex="true">^pkg:maven/org\.springframework\.security/spring\-security\-.*$</packageUrl>
         <vulnerabilityName>CVE-2020-5408</vulnerabilityName>
     </suppress>
-    <suppress until="2023-06-01Z">
-        <!-- Refer to https://github.com/google/guava/issues/4011 -->
-        <!-- Hopefully Google will either remove or update the deprecated method that is affected by this CVE; until then we suppress it -->
+    <suppress>
+        <!-- Please refer to https://github.com/FasterXML/jackson-databind/issues/3972 -->
+        <!-- According to the issue discussion this should not be considered a CVE hence the suppression -->
         <notes><![CDATA[
-   file name: guava-31.1-jre.jar
+   file name: jackson-databind-2.15.2.jar
+   ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.fasterxml\.jackson\.core/jackson\-databind@.*$</packageUrl>
+        <cve>CVE-2023-35116</cve>
+    </suppress>
+    <suppress>
+        <!-- [CVE-2020-8908] - The problem is not fixed but the method that is causing it is deprecated -->
+        <!-- [CVE-2023-2976] - The issue mentions a problem in Guava version up to 32 (exclusive) and we are now at 32.1.2 -->
+        <notes><![CDATA[
+   file name: auto-value-1.10.1.jar (shaded: com.google.guava:guava:31.1-jre)
    ]]></notes>
         <packageUrl regex="true">^pkg:maven/com\.google\.guava/guava@.*$</packageUrl>
         <cve>CVE-2020-8908</cve>
+        <cve>CVE-2023-2976</cve>
     </suppress>
 
 </suppressions>

@@ -53,17 +53,17 @@
 
         <version.apache.commons.lang3>3.12.0</version.apache.commons.lang3>
         <version.jetbrain.annotations>19.0.0</version.jetbrain.annotations>
-        <version.guava>31.1-jre</version.guava>
+        <version.guava>32.1.2-jre</version.guava>
         <version.apache-commons-io>2.6</version.apache-commons-io>
         <javax.javaee-api.version>8.0</javax.javaee-api.version>
         <avro.version>1.11.0</avro.version>
-        <camel.version>3.20.2</camel.version>
+        <camel.version>3.20.6</camel.version>
 
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.source.plugin.version>3.2.1</maven.source.plugin.version>
         <maven.flatten.plugin.version>1.2.7</maven.flatten.plugin.version>
         <maven.surefire.plugin.version>3.0.0-M5</maven.surefire.plugin.version>
-        <owasp-dependency-check.version>6.4.1</owasp-dependency-check.version>
+        <owasp-dependency-check.version>8.4.0</owasp-dependency-check.version>
         <plugin.version.maven.enforcer>3.0.0</plugin.version.maven.enforcer>
         <plugin.version.maven.extra.enforcer.rules.version>1.4</plugin.version.maven.extra.enforcer.rules.version>
         <pitest.version>1.7.2</pitest.version>
@@ -75,14 +75,14 @@
 
         <commons.testing.version>54-8e2e575-247593</commons.testing.version>
         <spring-cloud.version>2021.0.5</spring-cloud.version>
-        <spring.boot.version>2.7.10</spring.boot.version>
+        <spring.boot.version>2.7.14</spring.boot.version>
         <immutables.version>2.9.0</immutables.version>
-        <checker-qual.version>3.32.0</checker-qual.version>
-        <kotlin.version>1.6.21</kotlin.version>
+        <checker-qual.version>3.37.0</checker-qual.version>
+        <kotlin.version>1.9.0</kotlin.version>
         <errorprone.version>2.18.0</errorprone.version>
         <groovy.version>2.5.17</groovy.version>
         <retrofit.version>2.9.0</retrofit.version>
-        <okhttp.version>4.10.0</okhttp.version>
+        <okhttp.version>4.11.0</okhttp.version>
         <jakarta.persistence-api.version>2.2.3</jakarta.persistence-api.version>
         <jakarta.xml.bind-api.version>2.3.3</jakarta.xml.bind-api.version>
         <hibernate-core.version>5.6.15.Final</hibernate-core.version> <!-- Please ensure that this remains consistent with the version specified in the spring boot bom -->
@@ -97,8 +97,14 @@
         <spring-cloud-gcp.version>3.4.7</spring-cloud-gcp.version>
 
 
-        <jackson-bom.version>2.14.2</jackson-bom.version>
+        <jackson-bom.version>2.15.2</jackson-bom.version>
         <google.gson.version>2.10.1</google.gson.version>
+
+        <google-cloud-bom-version>26.17.0</google-cloud-bom-version>
+        <grpc.version>1.57.2</grpc.version>
+        <j2objc-annotations.version>2.8</j2objc-annotations.version>
+
+        <okio.version>3.5.0</okio.version> <!-- Pinning version to avoid issue with 3.2.0 (from okhttp) -->
     </properties>
 
     <modules>
@@ -117,6 +123,13 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-bom</artifactId>
+                <version>${grpc.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <dependency>
                 <groupId>com.google.cloud</groupId>
                 <artifactId>spring-cloud-gcp-dependencies</artifactId>
@@ -360,6 +373,18 @@
                 <scope>provided</scope>
             </dependency>
             <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-stdlib-jdk7</artifactId>
+                <version>${kotlin.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-stdlib-jdk8</artifactId>
+                <version>${kotlin.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
                 <groupId>com.google.errorprone</groupId>
                 <artifactId>error_prone_annotations</artifactId>
                 <version>${errorprone.version}</version>
@@ -403,6 +428,16 @@
                 <groupId>com.google.code.gson</groupId>
                 <artifactId>gson</artifactId>
                 <version>${google.gson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.j2objc</groupId>
+                <artifactId>j2objc-annotations</artifactId>
+                <version>${j2objc-annotations.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.okio</groupId>
+                <artifactId>okio</artifactId>
+                <version>${okio.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -494,6 +529,7 @@
                 <configuration>
                     <skipProvidedScope>true</skipProvidedScope>
                     <failBuildOnAnyVulnerability>true</failBuildOnAnyVulnerability>
+                    <knownExploitedEnabled>false</knownExploitedEnabled>
                     <excludes>
                         <exclude>org.springframework</exclude>
                     </excludes>
