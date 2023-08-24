@@ -119,6 +119,7 @@
         <module>spring-boot-infrastructure</module>
         <module>spring-boot-kotlin-infrastructure</module>
         <module>pubsub</module>
+        <module>util</module>
     </modules>
 
     <dependencyManagement>
