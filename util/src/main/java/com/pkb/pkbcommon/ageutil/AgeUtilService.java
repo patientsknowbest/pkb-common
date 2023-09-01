@@ -14,8 +14,6 @@ public class AgeUtilService {
         this.dateTimeService = dateTimeService;
     }
 
-    public final static int MINIMUM_AGE_LETTER_INVITATION = 16;
-
     public boolean patientIsOlderThan(LocalDate dateOfBirth, int ageInYears) {
         return dateOfBirth.plus(ageInYears, ChronoUnit.YEARS)
                 .atStartOfDay(ZoneOffset.UTC)
