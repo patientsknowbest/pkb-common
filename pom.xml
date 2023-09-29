@@ -56,7 +56,7 @@
         <version.guava>32.1.2-jre</version.guava>
         <version.apache-commons-io>2.6</version.apache-commons-io>
         <javax.javaee-api.version>8.0</javax.javaee-api.version>
-        <avro.version>1.11.0</avro.version>
+        <avro.version>1.11.3</avro.version>
         <camel.version>3.20.6</camel.version>
 
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
