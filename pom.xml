@@ -47,7 +47,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <apache.commons.text.version>1.10.0</apache.commons.text.version>
-        <approvalcrest.version>0.61.2</approvalcrest.version>
+        <approvalcrest.version>0.61.6</approvalcrest.version>
         <hamcrest.version>2.2</hamcrest.version>
         <vavr.version>0.10.2</vavr.version>
 
@@ -56,15 +56,15 @@
         <version.guava>32.1.2-jre</version.guava>
         <version.apache-commons-io>2.6</version.apache-commons-io>
         <javax.javaee-api.version>8.0</javax.javaee-api.version>
-        <avro.version>1.11.0</avro.version>
-        <camel.version>3.20.6</camel.version>
+        <avro.version>1.11.3</avro.version>
+        <camel.version>3.21.1</camel.version>
 
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.source.plugin.version>3.2.1</maven.source.plugin.version>
         <maven.flatten.plugin.version>1.2.7</maven.flatten.plugin.version>
         <maven.surefire.plugin.version>3.0.0-M5</maven.surefire.plugin.version>
         <owasp-dependency-check.version>8.4.0</owasp-dependency-check.version>
-        <plugin.version.maven.enforcer>3.0.0</plugin.version.maven.enforcer>
+        <plugin.version.maven.enforcer>3.4.1</plugin.version.maven.enforcer>
         <plugin.version.maven.extra.enforcer.rules.version>1.4</plugin.version.maven.extra.enforcer.rules.version>
         <pitest.version>1.7.2</pitest.version>
 
@@ -73,12 +73,12 @@
         <jakarta.servlet-api.version>4.0.4</jakarta.servlet-api.version>
         <restassured.version>3.0.9-PKB</restassured.version>
 
-        <commons.testing.version>54-8e2e575-247593</commons.testing.version>
-        <spring-cloud.version>2021.0.5</spring-cloud.version>
-        <spring.boot.version>2.7.14</spring.boot.version>
+        <commons.testing.version>57-head-3fabd87-352221-SNAPSHOT</commons.testing.version>
+        <spring-cloud.version>2021.0.8</spring-cloud.version>
+        <spring.boot.version>2.7.16</spring.boot.version>
         <immutables.version>2.9.0</immutables.version>
         <checker-qual.version>3.37.0</checker-qual.version>
-        <kotlin.version>1.9.0</kotlin.version>
+        <kotlin.version>1.9.10</kotlin.version>
         <errorprone.version>2.18.0</errorprone.version>
         <groovy.version>2.5.17</groovy.version>
         <retrofit.version>2.9.0</retrofit.version>
@@ -91,7 +91,7 @@
         <jakarta.activation-api.version>2.0.1</jakarta.activation-api.version>
 
         <!-- Spring boot pom manages this too low for camel -->
-        <assertj-version>3.23.1</assertj-version>
+        <assertj-version>3.24.1</assertj-version>
 
         <!-- Required to force google components like pub-sub to more recent versions than camel bom will pull in. Keep in line with PHR -->
         <spring-cloud-gcp.version>3.4.7</spring-cloud-gcp.version>
@@ -104,7 +104,8 @@
         <grpc.version>1.57.2</grpc.version>
         <j2objc-annotations.version>2.8</j2objc-annotations.version>
 
-        <okio.version>3.5.0</okio.version> <!-- Pinning version to avoid issue with 3.2.0 (from okhttp) -->
+        <okio.version>3.6.0</okio.version> <!-- Pinning version to avoid issue with 3.2.0 (from okhttp) -->
+        <commons-compress.version>1.24.0</commons-compress.version> <!-- avro 1.11.3 brings in an older version of this with a vuln -->
     </properties>
 
     <modules>
@@ -128,6 +129,13 @@
                 <groupId>io.grpc</groupId>
                 <artifactId>grpc-bom</artifactId>
                 <version>${grpc.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-bom</artifactId>
+                <version>${kotlin.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -368,24 +376,6 @@
                 <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-stdlib-common</artifactId>
-                <version>${kotlin.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-stdlib-jdk7</artifactId>
-                <version>${kotlin.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-stdlib-jdk8</artifactId>
-                <version>${kotlin.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
                 <groupId>com.google.errorprone</groupId>
                 <artifactId>error_prone_annotations</artifactId>
                 <version>${errorprone.version}</version>
@@ -399,6 +389,16 @@
                 <groupId>com.squareup.okhttp3</groupId>
                 <artifactId>okhttp</artifactId>
                 <version>${okhttp.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-stdlib-jdk7</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-stdlib-jdk8</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.squareup.retrofit2</groupId>
@@ -439,6 +439,11 @@
                 <groupId>com.squareup.okio</groupId>
                 <artifactId>okio</artifactId>
                 <version>${okio.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-compress</artifactId>
+                <version>${commons-compress.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
