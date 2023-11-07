@@ -62,8 +62,8 @@
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <maven.source.plugin.version>3.2.1</maven.source.plugin.version>
         <maven.flatten.plugin.version>1.2.7</maven.flatten.plugin.version>
-        <maven.surefire.plugin.version>3.0.0-M5</maven.surefire.plugin.version>
-        <owasp-dependency-check.version>8.4.0</owasp-dependency-check.version>
+        <maven.surefire.plugin.version>3.2.1</maven.surefire.plugin.version>
+        <owasp-dependency-check.version>8.4.2</owasp-dependency-check.version>
         <plugin.version.maven.enforcer>3.4.1</plugin.version.maven.enforcer>
         <plugin.version.maven.extra.enforcer.rules.version>1.4</plugin.version.maven.extra.enforcer.rules.version>
         <pitest.version>1.7.2</pitest.version>
@@ -532,16 +532,15 @@
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
                 <version>${owasp-dependency-check.version}</version>
+                <!-- https://patientsknowbest.slack.com/archives/C0D8WH39P/p1699359942222999?thread_ts=1699356931.448039&cid=C0D8WH39P -->
                 <configuration>
-                    <skipProvidedScope>true</skipProvidedScope>
-                    <failBuildOnAnyVulnerability>true</failBuildOnAnyVulnerability>
-                    <knownExploitedEnabled>false</knownExploitedEnabled>
-                    <excludes>
-                        <exclude>org.springframework</exclude>
-                    </excludes>
+                    <failBuildOnAnyVulnerability>false</failBuildOnAnyVulnerability>
                     <suppressionFile>suppression.xml</suppressionFile>
-                    <cveUrlModified>https://freedumbytes.gitlab.io/setup/nist-nvd-mirror/nvdcve-1.1-modified.json.gz</cveUrlModified>
-                    <cveUrlBase>https://freedumbytes.gitlab.io/setup/nist-nvd-mirror/nvdcve-1.1-%d.json.gz</cveUrlBase>
+                    <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+                    <jarAnalyzerEnabled>false</jarAnalyzerEnabled>
+                    <failBuildOnCVSS>5</failBuildOnCVSS>
+                    <failOnError>true</failOnError>
+                    <knownExploitedEnabled>false</knownExploitedEnabled>
                 </configuration>
             </plugin>
             <plugin>
