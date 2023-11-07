@@ -103,6 +103,7 @@ public interface DateTimeService {
     /**
      * @deprecated Use {@link java.time} instead of {@link Date}, then there is no need for this method.
      */
+    @SuppressWarnings("DeprecatedIsStillUsed")
     @Deprecated
     default String dateToString(Date input, DateTimeFormatter formatter) {
         return input.toInstant().atZone(ZoneId.systemDefault()).format(formatter);

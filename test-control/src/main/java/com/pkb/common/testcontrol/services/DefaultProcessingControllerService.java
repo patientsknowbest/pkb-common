@@ -6,7 +6,6 @@ import com.pkb.common.testcontrol.message.SuspendProcessingRequest;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Route;
 import org.apache.camel.impl.engine.AbstractCamelContext;
-import org.apache.camel.impl.engine.DefaultShutdownStrategy;
 import org.apache.camel.spi.RouteStartupOrder;
 import org.apache.camel.util.function.ThrowingConsumer;
 import org.slf4j.Logger;
