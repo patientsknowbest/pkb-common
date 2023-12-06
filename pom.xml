@@ -546,7 +546,6 @@
                 <version>${owasp-dependency-check.version}</version>
                 <!-- https://patientsknowbest.slack.com/archives/C0D8WH39P/p1699359942222999?thread_ts=1699356931.448039&cid=C0D8WH39P -->
                 <configuration>
-                    <nvdApiKey>bdf959a1-380c-4f94-9ae8-c275ef65f4fe</nvdApiKey>
                     <failBuildOnAnyVulnerability>false</failBuildOnAnyVulnerability>
                     <suppressionFile>suppression.xml</suppressionFile>
                     <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
