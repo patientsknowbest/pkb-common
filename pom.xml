@@ -63,7 +63,7 @@
         <maven.source.plugin.version>3.2.1</maven.source.plugin.version>
         <maven.flatten.plugin.version>1.2.7</maven.flatten.plugin.version>
         <maven.surefire.plugin.version>3.2.1</maven.surefire.plugin.version>
-        <owasp-dependency-check.version>8.4.2</owasp-dependency-check.version>
+        <owasp-dependency-check.version>9.0.2</owasp-dependency-check.version>
         <plugin.version.maven.enforcer>3.4.1</plugin.version.maven.enforcer>
         <plugin.version.maven.extra.enforcer.rules.version>1.4</plugin.version.maven.extra.enforcer.rules.version>
         <pitest.version>1.7.2</pitest.version>
@@ -75,7 +75,7 @@
 
         <commons.testing.version>57-8a5d6ba-352333</commons.testing.version>
         <spring-cloud.version>2021.0.8</spring-cloud.version>
-        <spring.boot.version>2.7.16</spring.boot.version>
+        <spring.boot.version>2.7.18</spring.boot.version>
         <immutables.version>2.9.0</immutables.version>
         <checker-qual.version>3.37.0</checker-qual.version>
         <kotlin.version>1.9.10</kotlin.version>
@@ -106,6 +106,8 @@
 
         <okio.version>3.6.0</okio.version> <!-- Pinning version to avoid issue with 3.2.0 (from okhttp) -->
         <commons-compress.version>1.24.0</commons-compress.version> <!-- avro 1.11.3 brings in an older version of this with a vuln -->
+
+        <logback.version>1.2.13</logback.version>
     </properties>
 
     <modules>
@@ -444,6 +446,16 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-compress</artifactId>
                 <version>${commons-compress.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>${logback.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
